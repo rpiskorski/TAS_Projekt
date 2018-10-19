@@ -1,0 +1,9 @@
+<h2> Produkty </h2>
+
+<ul class="products">
+  <li *ngFor="let product of products">
+    <div>
+      <p>{{ product.name | uppercase}} </p>
+    </div>
+  </li>
+</ul>
