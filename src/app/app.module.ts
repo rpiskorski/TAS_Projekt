@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
+import { FormsModule } from "@angular/forms";
 
 import { AppComponent } from './app.component';
 import { ProductsComponent } from './products/products.component';
@@ -13,6 +14,8 @@ import { ServiceDetailComponent } from './service-detail/service-detail.componen
 import { MessagesComponent } from './messages/messages.component';
 import { MainComponent } from './main/main.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { SignupFormComponent } from './signup-form/signup-form.component';
 
 @NgModule({
   declarations: [
@@ -23,15 +26,16 @@ import { CategoriesComponent } from './categories/categories.component';
     ServiceDetailComponent,
     MessagesComponent,
     MainComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    LoginFormComponent,
+    SignupFormComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    // TODO API powinno się odwoływać do Spring
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    ),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, { dataEncapsulation: false }
+    // ),
     AppRoutingModule
   ],
   providers: [],

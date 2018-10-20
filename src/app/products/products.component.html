@@ -3,7 +3,7 @@
 <ul class="products">
   <li *ngFor="let product of products">
     <div>
-      <p>{{ product.name | uppercase}} </p>
+      <a routerLink="/product/{{product.id}}">{{ product.name | uppercase }}</a>
     </div>
   </li>
 </ul>
