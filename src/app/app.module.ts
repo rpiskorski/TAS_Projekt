@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ServiceDetailComponent } from './service-detail/service-detail.component';
 import { MessagesComponent } from './messages/messages.component';
+import { MainComponent } from './main/main.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { MessagesComponent } from './messages/messages.component';
     ServicesComponent,
     ProductDetailComponent,
     ServiceDetailComponent,
-    MessagesComponent
+    MessagesComponent,
+    MainComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,
