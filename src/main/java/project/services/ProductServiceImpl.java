@@ -28,13 +28,46 @@ public class ProductServiceImpl implements ProductService {
         return this.productRepository.findByCat(cat_id);
     }
 
-    //PROBLEM Z TYM ZAPYTANIEM
-//    public List<Product> getAllByRaitingAsc(){
-//        return this.productRepository.findProductOrderByRaiting();
-//    }
+    public List<Product> getProductsOrderByNameInCategoryAsc(int cat_id){
+        return this.productRepository.findByCatOrderedByNameAsc(cat_id);
+    }
+    public List<Product> getProductsOrderByRaitingInCategoryAsc(int cat_id){
+        return this.productRepository.findByCatOrderedByRaitingAsc(cat_id);
+    }
+    public List<Product> getProductsOrderByNameInCategoryDesc(int cat_id){
+        return this.productRepository.findByCatOrderedByNameDesc(cat_id);
+    }
+    public List<Product> getProductsOrderByRaitingInCategoryDesc(int cat_id){
+        return this.productRepository.findByCatOrderedByRaitingDesc(cat_id);
+    }
 
-//    public List<Product> getAllByRaitingDesc(){
-//        return this.productRepository.findEveryOrderByAvgDesc();
+
+    public List<Product> getProductsOrderByRaitingAsc(){
+        return this.productRepository.findProductOrderByRaitingAsc();
+    }
+
+    public List<Product> getProductsOrderByRaitingDesc(){
+        return this.productRepository.findProductOrderByRaitingDesc();
+    }
+
+    @Override
+    public List<Product> getProductsOrderByNameAsc(){
+        return this.productRepository.findProductOrderByNameAsc();
+    }
+
+    @Override
+    public List<Product> getProductsOrderByNameDesc(){
+        return this.productRepository.findProductOrderByNameDesc();
+    }
+
+//    @Override
+//    public List<Product> getProductsOrderByName(String asc){
+//        return this.productRepository.findProductOrderByName(asc);
+//    }
+//
+//    @Override
+//    public List<Product> getProductsOrderByRaiting(String asc){
+//        return this.productRepository.findProductOrderByRaiting(asc);
 //    }
 
     @Override

@@ -22,8 +22,8 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    private CategoryService categoryService;
+//    @Autowired
+//    private CategoryService categoryService;
 
     //Add Product
     @RequestMapping(value="/product",method= RequestMethod.POST)
@@ -54,12 +54,67 @@ public class ProductController {
         return this.productService.getAllProductsInCategory(categoryid);
     }
 
+
+    //Get Products Ordered By Name Or Raiting In Category
+    @RequestMapping(value="/products/sort/{categoryid}",method=RequestMethod.GET)
+    public List<Product> getAllSortedProductsInCategory(@PathVariable int categoryid,@RequestParam(value="type",required = true) String type,
+                                              @RequestParam(value="order",required=true) String order){
+        if(type.contentEquals("name")){
+
+            if(order.contentEquals("asc")){
+                return this.productService.getProductsOrderByNameInCategoryAsc(categoryid);
+            }else if(order.contentEquals("desc")){
+                return this.productService.getProductsOrderByNameInCategoryDesc(categoryid);
+            }
+
+        }
+        else if(type.contentEquals("raiting")){
+
+            if(order.contentEquals("asc")){
+                return this.productService.getProductsOrderByRaitingInCategoryAsc(categoryid);
+            }else if(order.contentEquals("desc")){
+                return this.productService.getProductsOrderByRaitingInCategoryDesc(categoryid);
+            }
+        }
+        return null;
+//        return productService.getAllProducts();
+    }
+
     //Get Products By Name
 
     @RequestMapping(value="/products/name/{name}",method=RequestMethod.GET)
     public List<Product> getProductsByName(@PathVariable String name){
         return this.productService.getProductsByName(name);
     }
+
+    //Get Products Ordered By Name
+    @RequestMapping(value="/products/sort",method=RequestMethod.GET)
+    public List<Product> getAllSortedProducts(@RequestParam(value="type",required = true) String type,
+                                              @RequestParam(value="order",required=true) String order){
+        if(type.contentEquals("name")){
+
+            if(order.contentEquals("asc")){
+                return this.productService.getProductsOrderByNameAsc();
+            }else if(order.contentEquals("desc")){
+                return this.productService.getProductsOrderByNameDesc();
+            }
+
+        }
+        else if(type.contentEquals("raiting")){
+
+            if(order.contentEquals("asc")){
+                return this.productService.getProductsOrderByRaitingAsc();
+            }else if(order.contentEquals("desc")){
+                return this.productService.getProductsOrderByRaitingDesc();
+            }
+        }
+        return null;
+//        return productService.getAllProducts();
+    }
+
+
+
+
 
 //    //Get Products In Ascending Order Considering Raiting
 //    @RequestMapping(value="/products/asc", method=RequestMethod.GET)

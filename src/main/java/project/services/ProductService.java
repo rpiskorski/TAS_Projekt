@@ -16,12 +16,19 @@ public interface ProductService {
 
     public List<Product> getAllProductsInCategory(int cat_id);
 
+    public List<Product> getProductsOrderByNameInCategoryAsc(int cat_id);
+    public List<Product> getProductsOrderByNameInCategoryDesc(int cat_id);
+    public List<Product> getProductsOrderByRaitingInCategoryAsc(int cat_id);
+    public List<Product> getProductsOrderByRaitingInCategoryDesc(int cat_id);
 
-    //PROBLEM Z TYM ZAPYTANIEM
-    //public List<Product> getAllByRaitingAsc();
 
-    //public List<Product> getAllByRaitingDesc();
-
+    public List<Product> getProductsOrderByRaitingAsc();
+    public List<Product> getProductsOrderByRaitingDesc();
+    public List<Product> getProductsOrderByNameAsc();
+    public List<Product> getProductsOrderByNameDesc();
+//
+//    public List<Product> getProductsOrderByName(String asc);
+//    public List<Product> getProductsOrderByRaiting(String asc);
     public Product addProduct(Product product);
 
     public void deleteProduct(int productID);

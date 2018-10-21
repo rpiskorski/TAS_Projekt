@@ -23,6 +23,10 @@ public class Category implements Serializable {
     @JsonIgnore
     private Set<Product> products;
 
+    @OneToMany(mappedBy = "cat")
+    @JsonIgnore
+    private Set<Serv> services;
+
 
     public int getId() {
         return id;
@@ -46,5 +50,13 @@ public class Category implements Serializable {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    public Set<Serv> getServices() {
+        return services;
+    }
+
+    public void setServices(Set<Serv> services) {
+        this.services = services;
     }
 }

@@ -10,7 +10,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories("project.repositories")
 
-public class TASProjectApp {
+public class TASProjectApp {//extends SpringBootServletInitializer {
+
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//        return application.sources(TASProjectApp.class);
+//    }
 
 
     public static void main(String[] args){

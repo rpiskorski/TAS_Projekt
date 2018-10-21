@@ -9,8 +9,5 @@
         <module name="TAS_Project" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="TAS_Project" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
