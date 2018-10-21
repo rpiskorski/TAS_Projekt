@@ -16,6 +16,7 @@ import { MainComponent } from './main/main.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
+import { CategoryComponent } from './category/category.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
     MainComponent,
     CategoriesComponent,
     LoginFormComponent,
-    SignupFormComponent
+    SignupFormComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,

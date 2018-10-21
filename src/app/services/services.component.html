@@ -1,3 +1,9 @@
-<p>
-  services works!
-</p>
+<h2>Usługi</h2>
+
+<ul class="services">
+  <li *ngFor="let service of services">
+    <div>
+      <a routerLink="/services/{{service.id}}">{{ service.name | uppercase }}</a>
+    </div>
+  </li>
+</ul>

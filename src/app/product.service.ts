@@ -21,7 +21,7 @@ export class ProductService {
 
   // TODO ID zamiast name (backend!)
   getProduct(id: number): Observable<Product> {
-    const url = `http://localhost:8080/api/product/${id}`;
+    const url = `${this.productsUrl}/${id}`;
     return this.httpClient.get<Product>(url);
   }
 }
