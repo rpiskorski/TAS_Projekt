@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from "../product";
-import { Input } from "@angular/core";
+import { Product } from '../product';
+import { Input } from '@angular/core';
 import { ProductService } from '../product.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -22,7 +22,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   getProduct(): void {
-    const id = +this.route.snapshot.paramMap.get("id");
+    const id = +this.route.snapshot.paramMap.get('id');
     this.productService.getProduct(id).subscribe(product => this.product = product);
   }
 

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, of } from "rxjs";
-import { MessageService } from "./message.service";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { MessageService } from './message.service';
 import { Product } from './product';
-import { catchError } from "rxjs/operators";
+import { catchError } from 'rxjs/operators';
 
 // TODO Łapanie błędów
 @Injectable({
@@ -11,7 +11,7 @@ import { catchError } from "rxjs/operators";
 })
 export class ProductService {
 
-  private productsUrl = "http://localhost:8080/api/products";
+  private productsUrl = 'http://localhost:8080/api/products';
 
   constructor(private httpClient: HttpClient, private messageService: MessageService) {}
 
