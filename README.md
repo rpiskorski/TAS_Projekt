@@ -1,4 +1,38 @@
-# Tas
+# Tas - informacje
+
+To README zostało napisane w celu rozwiania wątpliwości odnośnie stawiania Angulara z tego repozytorium.
+
+## Instalacja Angulara
+
+Do zainstalowania samego Angulara wykorzystuje się program
+
+`npm install -g @angular/cli`
+
+Dzięki temu będzie globalnie dostępny program `ng`
+
+Oczywiście, by mieć npm należy zainstalować [Node.js](https://nodejs.org/en/)
+
+## Stawianie projektu
+
+`git pull https://github.com/Varmen8/TAS_Projekt`
+
+I zmieniamy gałąź na frontendową (aktualnie `frontend-features`).
+
+W repo nie znajdują się `node_modules`: moduły, które Node i spółka pozyskuje z `package.json` projektu. Wchodzimy przez terminal do naszego repo i wpisujemy lub kopiujemy:
+
+`npm install`
+
+Jeśli wszystko się powiodło to "server" można uruchomić poleceniem:
+
+`ng serve --open`
+
+lub
+
+`ng s --open`
+
+jeśli komuś szkoda czasu.
+
+# Tas - dodatkowe, wygenerowane info
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.4.
 
