@@ -1,3 +1,16 @@
-<p>
-  signup-form works!
-</p>
+<!-- TODO Walidacja, stany formularza dirty/touched/etc -->
+<h2>Zarejestruj się</h2>
+<form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+
+  <div>
+    <label for="name">Nazwa</label>
+    <input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel">
+  </div>
+
+  <div>
+    <label for="password">Hasło</label>
+    <input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel">
+  </div>
+
+  <button type="submit" [disabled]="!signupForm.form.valid">Zarejestruj</button>
+</form>

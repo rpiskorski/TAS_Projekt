@@ -34,6 +34,7 @@ import { CategoryComponent } from './category/category.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     // HttpClientInMemoryWebApiModule.forRoot(
     //   InMemoryDataService, { dataEncapsulation: false }
