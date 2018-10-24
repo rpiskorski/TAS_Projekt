@@ -14,7 +14,7 @@ Oczywiście, by mieć npm należy zainstalować [Node.js](https://nodejs.org/en/
 
 ## Stawianie projektu
 
-`git pull https://github.com/Varmen8/TAS_Projekt`
+`git clone https://github.com/Varmen8/TAS_Projekt`
 
 I zmieniamy gałąź na frontendową (aktualnie `frontend-features`).
 
