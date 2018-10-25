@@ -4,6 +4,8 @@ To README zostało napisane w celu rozwiania wątpliwości odnośnie stawiania A
 
 ## Instalacja Angulara
 
+[Na komputerach wydziałowych](#Stawianie-projektu-na-komputerach-wydziałowych)
+
 Do zainstalowania samego Angulara wykorzystuje się program
 
 `npm install -g @angular/cli`
@@ -11,6 +13,7 @@ Do zainstalowania samego Angulara wykorzystuje się program
 Dzięki temu będzie globalnie dostępny program `ng`
 
 Oczywiście, by mieć npm należy zainstalować [Node.js](https://nodejs.org/en/)
+
 
 ## Stawianie projektu
 
@@ -31,6 +34,20 @@ lub
 `ng s --open`
 
 jeśli komuś szkoda czasu.
+
+## Stawianie projektu na komputerach wydziałowych
+
+`git clone https://github.com/Varmen8/TAS_Projekt`
+
+Wchodzimy przez terminal do repo i
+
+`npm install`
+
+`npm install @angular/cli`
+
+`npm run-script ng serve`
+
+Uruchamianie Angulara może trochę potrwać (~13s)
 
 # Tas - dodatkowe, wygenerowane info
 
