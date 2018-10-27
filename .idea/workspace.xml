@@ -2,205 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f11f4d5-1593-4266-846c-71ac633cf58a" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/angular.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/e2e/protractor.conf.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/e2e/src/app.e2e-spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/e2e/src/app.po.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/e2e/tsconfig.e2e.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/app-routing.module.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/app-routing.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/app.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/app.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/app.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/app.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/app.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/categories/categories.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/categories/categories.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/categories/categories.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/categories/categories.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/category.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/category.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/category.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/category/category.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/category/category.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/category/category.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/category/category.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/in-memory-data.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/login-form/login-form.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/login-form/login-form.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/login-form/login-form.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/login-form/login-form.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/main/main.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/main/main.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/main/main.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/main/main.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/message.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/message.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/messages/messages.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/messages/messages.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/messages/messages.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/messages/messages.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/product-detail/product-detail.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/product-detail/product-detail.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/product-detail/product-detail.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/product-detail/product-detail.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/product.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/product.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/product.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/products/products.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/products/products.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/products/products.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/products/products.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/service-detail/service-detail.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/service-detail/service-detail.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/service-detail/service-detail.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/service-detail/service-detail.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/service.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/service.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/services.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/services.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/services.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/services.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/signup-form/signup-form.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/signup-form/signup-form.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/signup-form/signup-form.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/signup-form/signup-form.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/user.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/browserslist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/environments/environment.prod.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/environments/environment.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/karma.conf.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/polyfills.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tsconfig.app.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tsconfig.spec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tslint.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tslint.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_3_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_9_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_9_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_9_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_dataformat_jackson_dataformat_xml_2_9_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_9_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_9_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_jaxb_annotations_2_9_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_parameter_names_2_9_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_woodstox_woodstox_core_5_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jayway_jsonpath_json_path_2_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_zaxxer_HikariCP_2_7_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__dom4j_dom4j_1_6_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_annotation_javax_annotation_api_1_3_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_transaction_javax_transaction_api_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_validation_validation_api_2_0_1_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_xml_bind_jaxb_api_2_3_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_45.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_7_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_agent_1_7_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_accessors_smart_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_json_smart_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_10_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_to_slf4j_2_10_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_8_5_28.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_8_5_28.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_8_5_28.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_8_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_assertj_assertj_core_3_9_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_woodstox_stax2_api_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_library_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_common_hibernate_commons_annotations_5_0_1_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_core_5_2_14_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_javax_persistence_hibernate_jpa_2_1_api_1_0_0_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_validator_hibernate_validator_6_0_7_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_javassist_javassist_3_22_0_GA.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_jandex_2_0_3_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_3_2_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_core_2_15_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_objenesis_objenesis_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_5_0_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_skyscreamer_jsonassert_1_5_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_25.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_25.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_devtools_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_aop_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_jpa_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_json_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_commons_2_0_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_jpa_2_0_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aspects_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jcl_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_orm_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_xmlunit_xmlunit_core_2_5_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAS_Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TAS_Project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/TASProjectApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/TASProjectApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/controllers/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/controllers/CategoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/controllers/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/controllers/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/model/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/model/Product.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/repositories/CategoryRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/repositories/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/repositories/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/services/CategoryService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/services/CategoryServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/services/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/services/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/services/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/services/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/TASProjectApp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/controllers/CategoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/controllers/CategoryController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/controllers/ProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/controllers/ProductController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/model/Category.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/model/Category.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/model/Product.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/repositories/CategoryRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/repositories/ProductRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/repositories/ProductRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/services/CategoryService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/services/CategoryServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/services/ProductService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/services/ProductService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/services/ProductServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/services/ProductServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/project/controllers/CategoryController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/project/controllers/ProductController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/project/controllers/ServController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/project/model/Category.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/project/model/Serv.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/project/repositories/ProductRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/project/repositories/ServiceRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/project/services/ProductService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/project/services/ProductServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/project/services/ServService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/project/services/ServServiceImpl.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -243,7 +57,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ServController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ServController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/project/controllers/ServController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="281">
@@ -255,8 +69,8 @@
       <file leaf-file-name="Category.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/project/model/Category.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-8">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="324">
+              <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -271,6 +85,22 @@
                 <element signature="e#573#574#0" expanded="true" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProductController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/project/controllers/ProductController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1422">
+              <caret line="94" column="51" selection-start-line="94" selection-start-column="51" selection-end-line="94" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1026" />
           </provider>
         </entry>
       </file>
@@ -342,11 +172,11 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="50" />
-    <option name="y" value="-4" />
-    <option name="width" value="1231" />
-    <option name="height" value="1029" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="77" />
+    <option name="y" value="72" />
+    <option name="width" value="1229" />
+    <option name="height" value="993" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -532,22 +362,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="50" y="-11" width="1231" height="1036" extended-state="7" />
-    <editor active="true" />
+    <frame x="111" y="192" width="1229" height="993" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="10" weight="0.32925472" />
+      <window_info anchor="bottom" id="Messages" order="6" visible="true" weight="0.34262484" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.042265426" />
+      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.042337004" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.16276477" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32925472" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27979714" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.254022" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -560,7 +390,6 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
-      <window_info anchor="bottom" id="Messages" order="6" weight="0.32925472" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -572,13 +401,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/project/model/Category.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="24" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/project/model/Product.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/project/repositories/ProductRepository.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -763,13 +585,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/project/controllers/ProductController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1422">
-          <caret line="94" column="51" selection-start-line="94" selection-start-column="51" selection-end-line="94" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/project/repositories/ServiceRepository.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -814,13 +629,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties" />
     <entry file="file://$PROJECT_DIR$/src/main/java/project/model/Product.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/project/model/Category.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/project/model/Serv.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-8">
@@ -833,6 +641,25 @@
         <state relative-caret-position="281">
           <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/project/model/Category.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/project/controllers/ProductController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1422">
+          <caret line="94" column="51" selection-start-line="94" selection-start-column="51" selection-end-line="94" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1026" />
       </provider>
     </entry>
   </component>
