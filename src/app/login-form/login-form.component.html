@@ -1,0 +1,16 @@
+<!-- TODO Walidacja, stany formularza dirty/touched/etc -->
+<h2>Zaloguj się</h2>
+<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+
+  <div>
+    <label for="name">Nazwa</label>
+    <input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel">
+  </div>
+
+  <div>
+    <label for="password">Hasło</label>
+    <input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel">
+  </div>
+
+  <button type="submit" [disabled]="!loginForm.form.valid">Zaloguj</button>
+</form>

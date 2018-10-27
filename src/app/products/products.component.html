@@ -1,0 +1,9 @@
+<h2> Produkty </h2>
+
+<ul class="products">
+  <li *ngFor="let product of products">
+    <div>
+      <a routerLink="/products/{{product.id}}">{{ product.name | uppercase }}</a>
+    </div>
+  </li>
+</ul>
