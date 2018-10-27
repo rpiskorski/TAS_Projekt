@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class ServController {
@@ -17,7 +18,7 @@ public class ServController {
     private ServService servService;
 
     //Add Service
-    @RequestMapping(value="/service",method= RequestMethod.POST)
+    @RequestMapping(value="/services",method= RequestMethod.POST)
     public Serv create(@RequestBody @Valid @NotNull Serv service)
     {
 
@@ -31,14 +32,14 @@ public class ServController {
     }
 
     //Delete Service
-    @RequestMapping(value = "/service/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/services/{id}",method = RequestMethod.DELETE)
     public void deleteService(@PathVariable int id){
         this.servService.deleteService(id);
 
     }
 
     //Get All Services in Category
-    @RequestMapping(value="/services/{categoryid}",method=RequestMethod.GET)
+    @RequestMapping(value="/services/cat/{categoryid}",method=RequestMethod.GET)
     public List<Serv> getServicesInCategory(@PathVariable int categoryid)
     {
         //Category myCategory = this.categoryService.getCategory(categoryid);
@@ -69,7 +70,7 @@ public class ServController {
             }
         }
         return null;
-//        return productService.getAllProducts();
+
     }
 
     //Get Service By Name
@@ -78,6 +79,15 @@ public class ServController {
     public List<Serv> getServicesByName(@PathVariable String name){
         return this.servService.getServicesByName(name);
     }
+
+
+    //Get Service By Id
+    @RequestMapping(value="/services/{id}",method=RequestMethod.GET)
+    public Serv getServicesById(@PathVariable int id){
+        return this.servService.getServicesById(id);
+    }
+
+
 
     //Get Services Ordered By Name
     @RequestMapping(value="/services/sort",method=RequestMethod.GET)

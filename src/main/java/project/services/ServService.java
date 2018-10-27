@@ -10,6 +10,8 @@ public interface ServService {
 
     public List<Serv> getServicesByName(String name);
 
+    public Serv getServicesById(int id);
+
     public List<Serv> getAllServicesInCategory(int cat_id);
 
     public List<Serv> getServicesOrderByNameInCategoryAsc(int cat_id);

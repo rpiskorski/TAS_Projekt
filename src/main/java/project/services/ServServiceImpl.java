@@ -18,6 +18,9 @@ public class ServServiceImpl implements ServService {
         return this.serviceRepository.findAll();
     }
 
+    public Serv getServicesById(int id){
+        return this.serviceRepository.findById(id);
+    }
 
     public List<Serv> getServicesByName(String name){
         return this.serviceRepository.findByName(name);

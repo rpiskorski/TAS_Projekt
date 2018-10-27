@@ -16,6 +16,8 @@ public interface ProductService {
 
     public List<Product> getAllProductsInCategory(int cat_id);
 
+    public Product getProductsById(int id);
+
     public List<Product> getProductsOrderByNameInCategoryAsc(int cat_id);
     public List<Product> getProductsOrderByNameInCategoryDesc(int cat_id);
     public List<Product> getProductsOrderByRaitingInCategoryAsc(int cat_id);

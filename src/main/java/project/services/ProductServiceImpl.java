@@ -19,6 +19,9 @@ public class ProductServiceImpl implements ProductService {
         return this.productRepository.findAll();
     }
 
+    public Product getProductsById(int id){
+        return this.productRepository.findById(id);
+    }
 
     public List<Product> getProductsByName(String name){
         return this.productRepository.findByName(name);

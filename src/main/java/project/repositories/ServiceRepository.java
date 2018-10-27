@@ -18,6 +18,9 @@ public interface ServiceRepository extends JpaRepository<Serv,Integer> {
     @Query(value="SELECT * FROM services s WHERE s.category_id=:cat_id", nativeQuery = true)
     List<Serv> findByCat(@Param("cat_id") int cat_id);
 
+    @Query(value="SELECT * FROM services s WHERE s.id=:id", nativeQuery = true)
+    Serv findById(@Param("id") int id);
+
 
     @Query(value="SELECT * FROM services s WHERE s.category_id=:cat_id ORDER BY s.name ASC", nativeQuery = true)
     List<Serv> findByCatOrderedByNameAsc(@Param("cat_id") int cat_id);

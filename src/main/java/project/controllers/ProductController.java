@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class ProductController {
@@ -26,7 +27,7 @@ public class ProductController {
 //    private CategoryService categoryService;
 
     //Add Product
-    @RequestMapping(value="/product",method= RequestMethod.POST)
+    @RequestMapping(value="/products",method= RequestMethod.POST)
     public Product create(@RequestBody @Valid @NotNull Product product)
     {
 
@@ -40,14 +41,14 @@ public class ProductController {
     }
 
     //Delete Product
-    @RequestMapping(value = "/product/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/products/{id}",method = RequestMethod.DELETE)
     public void deleteProduct(@PathVariable int id){
         this.productService.deleteProduct(id);
 
     }
 
     //Get All Products in Category
-    @RequestMapping(value="/products/{categoryid}",method=RequestMethod.GET)
+    @RequestMapping(value="/products/cat/{categoryid}",method=RequestMethod.GET)
     public List<Product> getProductsInCategory(@PathVariable int categoryid)
     {
         //Category myCategory = this.categoryService.getCategory(categoryid);
@@ -85,6 +86,13 @@ public class ProductController {
     @RequestMapping(value="/products/name/{name}",method=RequestMethod.GET)
     public List<Product> getProductsByName(@PathVariable String name){
         return this.productService.getProductsByName(name);
+    }
+
+    //Get Products By Id
+
+    @RequestMapping(value="/products/{id}",method=RequestMethod.GET)
+    public Product getProductsById(@PathVariable int id){
+        return this.productService.getProductsById(id);
     }
 
     //Get Products Ordered By Name

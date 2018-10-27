@@ -15,6 +15,10 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     @Query(value="SELECT * FROM products p WHERE p.name LIKE %:name%", nativeQuery = true)
     List<Product> findByName(@Param("name") String name);
 
+
+    @Query(value="SELECT * FROM products p WHERE p.id=:id", nativeQuery = true)
+    Product findById(@Param("id") int id);
+
     @Query(value="SELECT * FROM products p WHERE p.category_id=:cat_id", nativeQuery = true)
     List<Product> findByCat(@Param("cat_id") int cat_id);
 

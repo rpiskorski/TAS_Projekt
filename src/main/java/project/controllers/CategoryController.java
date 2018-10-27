@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class CategoryController {
@@ -19,17 +20,17 @@ public class CategoryController {
     private CategoryService categoryService;
 
     //ADD Category
-    @RequestMapping(value="/category",method= RequestMethod.POST)
+    @RequestMapping(value="/categories",method= RequestMethod.POST)
     public Category create(@RequestBody @Valid @NotNull Category category){
         return this.categoryService.addCategory(category);
     }
     //Delete Category
-    @RequestMapping(value="/category/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value="/categories/{id}",method = RequestMethod.DELETE)
     public void delete(@PathVariable int id){
         this.categoryService.deleteCategory(id);
     }
     //GET Category by id
-    @RequestMapping(value="/category/{id}",method = RequestMethod.GET)
+    @RequestMapping(value="/categories/{id}",method = RequestMethod.GET)
     public Category get(@PathVariable int id){
         return this.categoryService.getCategory(id);
     }
