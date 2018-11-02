@@ -1,3 +1,16 @@
-<p>
-  category works!
-</p>
+<div *ngIf="category">
+
+  <h1>{{category.name}}</h1>
+
+  <ul *ngFor="let product of products">
+    <li>
+      <a routerLink="/products/{{product.id}}">{{product.name}}</a>
+    </li>
+  </ul>
+
+  <ol *ngFor="let service of services">
+    <li>
+      <a routerLink="/services/{{service.id}}">{{service.name}}</a>
+    </li>
+  </ol>
+</div>

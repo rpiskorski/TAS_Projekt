@@ -13,15 +13,21 @@ export class ProductService {
 
   private productsUrl = 'http://localhost:8080/api/products';
 
-  constructor(private httpClient: HttpClient, private messageService: MessageService) {}
+  constructor(
+    private httpClient: HttpClient,
+    private messageService: MessageService) {}
 
   getProducts(): Observable<Product[]> {
     return this.httpClient.get<Product[]>(this.productsUrl);
   }
 
-  // TODO ID zamiast name (backend!)
   getProduct(id: number): Observable<Product> {
     const url = `${this.productsUrl}/${id}`;
     return this.httpClient.get<Product>(url);
+  }
+
+  getProductsByCategory(id: number): Observable<Product[]> {
+    const url = `${this.productsUrl}/cat/${id}`;
+    return this.httpClient.get<Product[]>(url);
   }
 }

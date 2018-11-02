@@ -1,8 +1,11 @@
+import { Category } from './category';
+
 export class Service {
   id: number;
   name: string;
-  ownerName: string;
+  owner_name: string;
   localization: string;
-  avgRating: number;
-  numOfVotes: number;
+  raiting: number;
+  num: number;
+  cat: Category;
 }
