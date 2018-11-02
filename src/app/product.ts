@@ -17,10 +17,19 @@ export class Product {
   //   category: Category
   // ) {}
 
-  id: number;
-  name: string;
-  manufacturer_name: string;
-  raiting: number;
-  num: number;
-  cat: Category;
+  // id: number;
+  // name: string;
+  // manufacturer_name: string;
+  // raiting: number;
+  // num: number;
+  // cat: Category;
+
+  constructor(
+    public id: number,
+    public name: string,
+    public manufacturer_name: string,
+    public raiting: number,
+    public num: number,
+    public cat: Category
+  ) {}
 }

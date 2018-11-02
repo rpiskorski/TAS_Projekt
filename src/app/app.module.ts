@@ -16,6 +16,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { CategoryComponent } from './category/category.component';
 import { ProductFormComponent } from './product-form/product-form.component';
+import { ServiceFormComponent } from './service-form/service-form.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ProductFormComponent } from './product-form/product-form.component';
     LoginFormComponent,
     SignupFormComponent,
     CategoryComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    ServiceFormComponent
   ],
   imports: [
     BrowserModule,

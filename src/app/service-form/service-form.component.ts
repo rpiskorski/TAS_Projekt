@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../product.service';
-import { Product } from '../product';
+import { ServiceService } from '../service.service';
 import { CategoryService } from '../category.service';
 import { Category } from '../category';
+import { Service } from '../service';
 
 @Component({
-  selector: 'app-product-form',
-  templateUrl: './product-form.component.html',
-  styleUrls: ['./product-form.component.css']
+  selector: 'app-service-form',
+  templateUrl: './service-form.component.html',
+  styleUrls: ['./service-form.component.css']
 })
-export class ProductFormComponent implements OnInit {
+export class ServiceFormComponent implements OnInit {
 
   categories: Category[];
 
   submitted = false;
 
-  model = new Product(0, '', '', 0, 0, new Category(0, ''));
+  model = new Service(0, '', '', '', 0, 0, new Category(0, ''));
 
   constructor(
-    private productService: ProductService,
+    private serviceService: ServiceService,
     private categoryService: CategoryService) { }
 
   ngOnInit() {
@@ -27,7 +27,7 @@ export class ProductFormComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.productService.add(this.model).subscribe();
+    this.serviceService.add(this.model).subscribe();
   }
 
   getCategories() {

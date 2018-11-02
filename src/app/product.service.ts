@@ -3,7 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { Product } from './product';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 // TODO Łapanie błędów
 @Injectable({
@@ -31,7 +37,7 @@ export class ProductService {
     return this.httpClient.get<Product[]>(url);
   }
 
-  add(product: Product) {
-    this.httpClient.post(this.productsUrl, product);
+  add(product: Product): Observable<Product> {
+    return this.httpClient.post<Product>(this.productsUrl, product, httpOptions);
   }
 }

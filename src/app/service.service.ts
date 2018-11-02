@@ -26,4 +26,8 @@ export class ServiceService {
     const url = `${this.servicesUrl}/cat/${id}`;
     return this.httpClient.get<Service[]>(url);
   }
+
+  add(service: Service): Observable<Service> {
+    return this.httpClient.post<Service>(this.servicesUrl, service);
+  }
 }

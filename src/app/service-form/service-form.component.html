@@ -1,7 +1,7 @@
 <div [hidden]="submitted">
-  <h2>Dodaj nowy produkt</h2>
-  <!-- {{ diagnostic }} -->
-  <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+  <h2>Dodaj nową usługę</h2>
+
+  <form (ngSubmit)="onSubmit()" #serviceForm="ngForm">
 
     <div>
       <label for="name">Nazwa</label>
@@ -9,14 +9,14 @@
     </div>
 
     <div>
-      <label for="manufacturer">Producent</label>
-      <input type="text" required [(ngModel)]="model.manufacturer_name" name="manufacturer" #manufacturer="ngModel">
+      <label for="owner">Wykonawca</label>
+      <input type="text" required [(ngModel)]="model.owner_name" name="owner" #owner="ngModel">
     </div>
 
-    <!-- <div>
-      <label for="category">Kategoria</label>
-      <input type="text" required [(ngModel)]="model.category" name="category" #category="ngModel">
-    </div> -->
+    <div>
+      <label for="localization">Lokalizacja</label>
+      <input type="text" required [(ngModel)]="model.localization" name="localization" #localization="ngModel">
+    </div>
 
     <div>
       <label for="category">Kategoria</label>
@@ -27,7 +27,7 @@
       </select>
     </div>
 
-    <button type="submit" [disabled]="!productForm.form.valid">Dodaj</button>
+    <button type="submit" [disabled]="!serviceForm.form.valid">Dodaj</button>
   </form>
 </div>
 
