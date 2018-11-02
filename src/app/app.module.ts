@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -17,6 +15,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { CategoryComponent } from './category/category.component';
+import { ProductFormComponent } from './product-form/product-form.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +29,8 @@ import { CategoryComponent } from './category/category.component';
     CategoriesComponent,
     LoginFormComponent,
     SignupFormComponent,
-    CategoryComponent
+    CategoryComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,

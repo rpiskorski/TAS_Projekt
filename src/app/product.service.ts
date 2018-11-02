@@ -30,4 +30,8 @@ export class ProductService {
     const url = `${this.productsUrl}/cat/${id}`;
     return this.httpClient.get<Product[]>(url);
   }
+
+  add(product: Product) {
+    this.httpClient.post(this.productsUrl, product);
+  }
 }
