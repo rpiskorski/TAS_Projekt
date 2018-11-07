@@ -27,5 +27,8 @@ export class ProductDetailComponent implements OnInit {
     this.productService.getProduct(id).subscribe(product => this.product = { ...product });
   }
 
+  delete() {
+    this.productService.delete(this.product).subscribe();
+  }
   // @Input() product: Product;
 }

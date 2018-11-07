@@ -40,4 +40,17 @@ export class ProductService {
   add(product: Product): Observable<Product> {
     return this.httpClient.post<Product>(this.productsUrl, product, httpOptions);
   }
+
+  delete(product: Product): Observable<Product> {
+    const id = product.id;
+    const url = `${this.productsUrl}/${id}`;
+
+    return this.httpClient.delete<Product>(url).pipe(
+      tap(_ => console.log(`Usunięto produkt ${id}`))
+    );
+  }
+
+  funkcyja() {
+
+  }
 }

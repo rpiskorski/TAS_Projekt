@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Service } from './service';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,14 @@ export class ServiceService {
 
   add(service: Service): Observable<Service> {
     return this.httpClient.post<Service>(this.servicesUrl, service);
+  }
+
+  delete(product: Service): Observable<Service> {
+    const id = product.id;
+    const url = `${this.servicesUrl}/${id}`;
+
+    return this.httpClient.delete<Service>(url).pipe(
+      tap(_ => console.log(`Usunięto produkt ${id}`))
+    );
   }
 }
