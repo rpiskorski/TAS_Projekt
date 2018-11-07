@@ -1,0 +1,36 @@
+<div [hidden]="submitted">
+  <h2>Dodaj nową usługę</h2>
+
+  <form (ngSubmit)="onSubmit()" #serviceForm="ngForm">
+
+    <div>
+      <label for="name">Nazwa</label>
+      <input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel">
+    </div>
+
+    <div>
+      <label for="owner">Wykonawca</label>
+      <input type="text" required [(ngModel)]="model.owner_name" name="owner" #owner="ngModel">
+    </div>
+
+    <div>
+      <label for="localization">Lokalizacja</label>
+      <input type="text" required [(ngModel)]="model.localization" name="localization" #localization="ngModel">
+    </div>
+
+    <div>
+      <label for="category">Kategoria</label>
+      <select id="cat" required [(ngModel)]="model.cat.id" name="category" #category="ngModel">
+        <option *ngFor="let category of categories" value="{{ category.id }}">
+          {{ category.name }}
+        </option>
+      </select>
+    </div>
+
+    <button type="submit" [disabled]="!serviceForm.form.valid">Dodaj</button>
+  </form>
+</div>
+
+<div [hidden]="!submitted">
+  <p>Sukces</p>
+</div>

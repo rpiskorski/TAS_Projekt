@@ -3,6 +3,7 @@ import { Product } from '../product';
 import { Input } from '@angular/core';
 import { ProductService } from '../product.service';
 import { ActivatedRoute } from '@angular/router';
+import { Category } from '../category';
 
 @Component({
   selector: 'app-product-detail',
@@ -21,9 +22,9 @@ export class ProductDetailComponent implements OnInit {
     this.getProduct();
   }
 
-  getProduct(): void {
+  getProduct() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.productService.getProduct(id).subscribe(product => this.product = product);
+    this.productService.getProduct(id).subscribe(product => this.product = { ...product });
   }
 
   // @Input() product: Product;

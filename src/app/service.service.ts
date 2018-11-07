@@ -21,4 +21,13 @@ export class ServiceService {
     const url = `${this.servicesUrl}/${id}`;
     return this.httpClient.get<Service>(url);
   }
+
+  getServicesByCategory(id: number): Observable<Service[]> {
+    const url = `${this.servicesUrl}/cat/${id}`;
+    return this.httpClient.get<Service[]>(url);
+  }
+
+  add(service: Service): Observable<Service> {
+    return this.httpClient.post<Service>(this.servicesUrl, service);
+  }
 }

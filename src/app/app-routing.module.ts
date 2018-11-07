@@ -9,6 +9,8 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoryComponent } from './category/category.component';
+import { ProductFormComponent } from './product-form/product-form.component';
+import { ServiceFormComponent } from './service-form/service-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full'},
@@ -20,7 +22,9 @@ const routes: Routes = [
   { path: 'services', component: ServicesComponent },
   { path: 'services/:id', component: ServiceDetailComponent },
   { path: 'login', component: LoginFormComponent },
-  { path: 'signup', component: SignupFormComponent}
+  { path: 'signup', component: SignupFormComponent },
+  { path: 'product-form', component: ProductFormComponent },
+  { path: 'service-form', component: ServiceFormComponent }
 ];
 
 @NgModule({
