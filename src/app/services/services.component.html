@@ -2,6 +2,7 @@
 
 <div class="container">
 	
+	<app-service-search></app-service-search>
 	<div *ngFor="let service of services">
 		<div class="col-sm-4">
 			<h2 class="text-center"><a routerLink="/services/{{service.id}}">{{ service.name }}</a></h2>

@@ -50,7 +50,13 @@ export class ProductService {
     );
   }
 
-  funkcyja() {
+  search(term: String): Observable<Product[]> {
+    if (!term.trim()) {
+      return of([]);
+    }
 
+    return this.httpClient.get<Product[]>(`${this.productsUrl}/name/${term}`).pipe(
+      tap(_ => console.log(`Znaleziono ${term}`))
+    );
   }
 }

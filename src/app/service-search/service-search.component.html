@@ -1,0 +1,9 @@
+<input #searchBox (keyup)="search(searchBox.value)">
+
+<ul>
+  <li *ngFor="let service of services$ | async">
+    <a routerLink="./{{service.id}}">
+      {{service.name}}
+    </a>
+  </li>
+</ul>

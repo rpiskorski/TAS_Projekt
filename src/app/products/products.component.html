@@ -2,6 +2,7 @@
 
 <div class="container">
 	
+	<app-product-search></app-product-search>
 	<div *ngFor="let product of products">
 		<div class="col-sm-4">
 			<h2 class="text-center"><a routerLink="/products/{{product.id}}">{{ product.name }}</a></h2>
