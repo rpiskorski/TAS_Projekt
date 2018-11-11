@@ -6,34 +6,35 @@
 		<div class="col-sm-4"></div>
 		<div class="col-sm-4">
 			<form (ngSubmit)="onSubmit()" #signupForm="ngForm">
-
+			<div class="form-group">
 			  <div>
 				<label for="name">Nazwa</label>
-				<input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel">
+				<input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel" class="form-control">
 			  </div>
 			  
 			  <div>
 				<label for="name">Login</label>
-				<input type="text" required [(ngModel)]="model.login" name="login" #name="ngModel">
+				<input type="text" required [(ngModel)]="model.login" name="login" #name="ngModel" class="form-control">
 			  </div>
 
 			  <div>
 				<label for="password">Hasło</label>
-				<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel">
+				<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
 			  </div>
 			  
 			  <div>
 				<label for="password">Powtórz hasło</label>
-				<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel">
+				<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
 			  </div>
 			  
 			  <div>
 				<label for="email">Adres email</label>
-				<input type="email" required [(ngModel)]="model.email" name="email" #password="ngModel">
+				<input type="email" required [(ngModel)]="model.email" name="email" #password="ngModel" class="form-control">
 			  </div>
 			  
 				<br>
-			  <button type="submit" [disabled]="!signupForm.form.valid">Zarejestruj</button>
+			  <button type="submit" [disabled]="!signupForm.form.valid" class="btn btn-primary">Zarejestruj</button>
+			  </div>
 			</form>
 		</div>
 	</div>
@@ -48,7 +49,7 @@ input, button{
 }
 
 input:focus{
-	border-color: rgba(126, 239, 104, 0.8);
+	border-color: blue;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
   outline: 0 none;
 }

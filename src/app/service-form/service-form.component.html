@@ -1,36 +1,58 @@
 <div [hidden]="submitted">
-  <h2>Dodaj nową usługę</h2>
-
+  <h2 class="text-center">Dodaj nową usługę</h2>
+<div class="container">
+<div class="row">
+<div class="col-sm-4 col-sm-offset-4">
   <form (ngSubmit)="onSubmit()" #serviceForm="ngForm">
-
+	<div class="form-group">
     <div>
       <label for="name">Nazwa</label>
-      <input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel">
+      <input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel" class="form-control">
     </div>
 
     <div>
       <label for="owner">Wykonawca</label>
-      <input type="text" required [(ngModel)]="model.owner_name" name="owner" #owner="ngModel">
+      <input type="text" required [(ngModel)]="model.owner_name" name="owner" #owner="ngModel" class="form-control">
     </div>
 
     <div>
       <label for="localization">Lokalizacja</label>
-      <input type="text" required [(ngModel)]="model.localization" name="localization" #localization="ngModel">
+      <input type="text" required [(ngModel)]="model.localization" name="localization" #localization="ngModel" class="form-control">
     </div>
 
     <div>
       <label for="category">Kategoria</label>
-      <select id="cat" required [(ngModel)]="model.cat.id" name="category" #category="ngModel">
+      <select id="cat" required [(ngModel)]="model.cat.id" name="category" #category="ngModel" class="form-control">
         <option *ngFor="let category of categories" value="{{ category.id }}">
           {{ category.name }}
         </option>
       </select>
     </div>
-
-    <button type="submit" [disabled]="!serviceForm.form.valid">Dodaj</button>
+<br>
+    <button type="submit" [disabled]="!serviceForm.form.valid" class="btn btn-primary">Dodaj</button>
+	</div>
   </form>
+</div>
+</div>
+</div>
 </div>
 
 <div [hidden]="!submitted">
   <p>Sukces</p>
 </div>
+
+<style>
+label, h1{
+	text-align:center;
+}
+
+input, button{
+	width:100%;
+}
+
+input:focus, select:focus{
+	border-color: blue;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
+  outline: 0 none;
+}
+</style>

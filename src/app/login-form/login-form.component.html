@@ -7,18 +7,19 @@
 		<div class="col-sm-4"></div>
 		<div class="col-sm-4">
 			<form (ngSubmit)="onSubmit()" #loginForm="ngForm" style="margin:0px auto;">
-
+			<div class="form-group">
 			  <div>
 				<label for="name">Nazwa</label>
-				<input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel" >
+				<input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel" class="form-control" >
 			  </div>
 
 			  <div>
 				<label for="password">Hasło</label>
-				<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel">
+				<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
 			  </div>
 				<br>
-			  <button type="submit" [disabled]="!loginForm.form.valid">Zaloguj</button>
+			  <button type="submit" [disabled]="!loginForm.form.valid" class="btn btn-primary">Zaloguj</button>
+			  </div>
 			</form>
 		</div>
 	</div>
