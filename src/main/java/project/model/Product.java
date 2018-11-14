@@ -1,10 +1,13 @@
 package project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name ="Products")
@@ -31,6 +34,10 @@ public class Product implements Serializable {
     @ManyToOne
     @JoinColumn(name = "Category_ID",nullable = false)
     private Category cat;
+
+    @OneToMany(mappedBy = "product")
+//    @JsonIgnore
+    private List<ProductUser> productUsers;
 
 
     public int getId() {
@@ -79,5 +86,13 @@ public class Product implements Serializable {
 
     public void setCat(Category cat) {
         this.cat = cat;
+    }
+
+    public List<ProductUser> getProductUsers() {
+        return productUsers;
+    }
+
+    public void setProductUsers(List<ProductUser> productUsers) {
+        this.productUsers = productUsers;
     }
 }

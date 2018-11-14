@@ -31,6 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+
     @Override
     public  void configure(AuthenticationManagerBuilder authManBuild) throws Exception{
 
@@ -56,7 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE,"/products/*").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/services/*").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/categories/*").hasAuthority("ADMIN")
-                .antMatchers("/register**").permitAll()
+                .antMatchers("/register**").anonymous()
                 .antMatchers("/services**").permitAll()
                 .antMatchers("/products**").permitAll()
                 .antMatchers("/categories**").permitAll()

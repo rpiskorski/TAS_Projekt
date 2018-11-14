@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,7 +23,7 @@ public class Role implements Serializable {
 
     @OneToMany(mappedBy = "role")
     @JsonIgnore
-    private Set<User> user;
+    private List<User> user;
 
 //    public Role(){
 //        this.id=2;
@@ -45,4 +46,22 @@ public class Role implements Serializable {
     public void setRolename(String name) {
         this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<User> getUser() {
+        return user;
+    }
+
+    public void setUser(List<User> user) {
+        this.user = user;
+    }
+
+
 }

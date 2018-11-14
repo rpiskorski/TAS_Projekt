@@ -1,10 +1,13 @@
 package project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="Users")
@@ -22,12 +25,21 @@ public class User implements Serializable {
     @Column(name="password",nullable = false)
     private String password;
 
-    @Column(name="enabled",nullable = false,columnDefinition = "boolean default true")
+    @Column(name="enabled",columnDefinition = "boolean default true")
     private boolean enabled;
 
     @ManyToOne
     @JoinColumn(name = "role",nullable=false)
     private Role role;
+
+    @OneToMany(mappedBy = "userP")
+//    @JsonIgnore
+    private List<ProductUser> usersP;
+
+
+    @OneToMany(mappedBy = "userS")
+//    @JsonIgnore
+    private List<ServUser> usersS;
 
     public User(){
 
@@ -80,5 +92,21 @@ public class User implements Serializable {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public List<ProductUser> getUsersP() {
+        return usersP;
+    }
+
+    public void setUsersP(List<ProductUser> usersP) {
+        this.usersP = usersP;
+    }
+
+    public List<ServUser> getUsersS() {
+        return usersS;
+    }
+
+    public void setUsersS(List<ServUser> usersS) {
+        this.usersS = usersS;
     }
 }

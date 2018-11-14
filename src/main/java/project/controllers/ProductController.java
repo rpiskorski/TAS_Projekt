@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import project.model.Category;
 import project.model.Product;
+import project.model.ProductUser;
 import project.services.CategoryService;
 import project.services.ProductService;
 
@@ -232,7 +233,6 @@ public class ProductController {
             List<Product> nullProductList=null;
             return new ResponseEntity<List<Product>>(nullProductList,HttpStatus.NOT_FOUND);
         }
-
 
 
 

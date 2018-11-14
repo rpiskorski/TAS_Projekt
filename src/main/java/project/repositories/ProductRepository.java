@@ -78,6 +78,8 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     //Find All Products Order BY Raiting Descending
     @Query(value="SELECT * FROM products p ORDER BY p.avg_rating DESC",nativeQuery = true)
     List<Product> findProductOrderByRaitingDesc(Pageable pageable);
+
+
 }
 
 

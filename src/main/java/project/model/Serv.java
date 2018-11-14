@@ -1,7 +1,11 @@
 package project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="Services")
@@ -30,6 +34,10 @@ public class Serv implements Serializable {
     @ManyToOne
     @JoinColumn(name = "Category_ID",nullable = false)
     private Category cat;
+
+    @OneToMany(mappedBy = "service")
+//    @JsonIgnore
+    private List<ServUser> servUsers;
 
 
     public int getId() {
@@ -86,6 +94,14 @@ public class Serv implements Serializable {
 
     public void setCat(Category cat) {
         this.cat = cat;
+    }
+
+    public List<ServUser> getServUsers() {
+        return servUsers;
+    }
+
+    public void setServUsers(List<ServUser> servUsers) {
+        this.servUsers = servUsers;
     }
 }
 

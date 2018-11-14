@@ -13,6 +13,7 @@ import project.services.RoleService;
 import project.services.UserService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.List;
 import java.util.Optional;
@@ -30,13 +31,16 @@ public class UserController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     //ResponseEntity zamiast RedirectView
-    public ResponseEntity<String> addUser(@Valid @RequestBody User user){
+    public ResponseEntity<String> addUser(@RequestBody @Valid @NotNull User user){
 
 
        Optional<User> users = this.userService.getUsersByName(user.getName());
         if(!users.isPresent()){
+
+            System.out.println(user.getName()+" ; "+user.getPassword());
 
             //Set Role
             Role role = this.roleService.getRoleByName("USER");
@@ -47,11 +51,11 @@ public class UserController {
             user.setPassword(pass);
 
             this.userService.addUser(user);
-            return new ResponseEntity<String>("Account Created Successfully",HttpStatus.CREATED);
+            return new ResponseEntity<String>("Account created successfully",HttpStatus.CREATED);
         }
         else{
 
-            return new ResponseEntity<String>("Your Login Has Already Been Taken",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Your login has already been taken",HttpStatus.BAD_REQUEST);
 
         }
 
@@ -62,11 +66,11 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable int id){
         User user = this.userService.getUserById(id);
         if(user==null){
-            return new ResponseEntity<String>("This User Does Not Exist",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("This user does not exist",HttpStatus.BAD_REQUEST);
         }
         else {
             this.userService.deleteUser(id);
-            return new ResponseEntity<String>("User Deleted",HttpStatus.ACCEPTED);
+            return new ResponseEntity<String>("User deleted successfully",HttpStatus.ACCEPTED);
         }
     }
 

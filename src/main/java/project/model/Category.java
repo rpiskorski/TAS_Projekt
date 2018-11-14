@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,11 +22,11 @@ public class Category implements Serializable {
 
     @OneToMany(mappedBy = "cat")
     @JsonIgnore
-    private Set<Product> products;
+    private List<Product> products;
 
     @OneToMany(mappedBy = "cat")
     @JsonIgnore
-    private Set<Serv> services;
+    private List<Serv> services;
 
 
     public int getId() {
@@ -44,19 +45,19 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 
-    public Set<Serv> getServices() {
+    public List<Serv> getServices() {
         return services;
     }
 
-    public void setServices(Set<Serv> services) {
+    public void setServices(List<Serv> services) {
         this.services = services;
     }
 }
