@@ -13,6 +13,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 
 import javax.sql.DataSource;
@@ -57,6 +60,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE,"/products/*").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/services/*").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/categories/*").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST,"/products/*").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers(HttpMethod.DELETE,"/products/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/products/**").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/register**").anonymous()
                 .antMatchers("/services**").permitAll()
                 .antMatchers("/products**").permitAll()
@@ -74,9 +80,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedPage("/403")
                 .and()
+//                .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+//                .csrf().csrfTokenRepository(csrfTokenRepository());
                 .csrf().disable();
 
 
+    }
+
+
+    private CsrfTokenRepository csrfTokenRepository() {
+        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+        repository.setHeaderName("X-XSRF-TOKEN");
+        return repository;
     }
 
     @Bean

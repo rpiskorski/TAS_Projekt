@@ -13,4 +13,8 @@ public interface ProductUserService {
     public boolean checkIfExists(int commentID);
 
     public ProductUser getProductUser(int id);
+
+    public boolean editComment(String comment,Integer rating,int id);
+
+    public boolean isOwner(int id);
 }

@@ -3,6 +3,7 @@ package project.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -95,16 +96,16 @@ public class ProductUserController {
         }
     }
 
-//
-//    @RequestMapping(value = "/productuser",method = RequestMethod.POST)
-//    public ResponseEntity<ProductUser> create(@RequestBody @Valid @NotNull ProductUser productUser){
-//
-//        ProductUser pu = this.productUserService.add(productUser);
-//        if(pu!=null) {
-//            return new ResponseEntity<ProductUser>(pu, HttpStatus.CREATED);
-//        }
-//        else{
-//            return new ResponseEntity<ProductUser>(pu, HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @RequestMapping(value="/products/{id}/{commentId}",method=RequestMethod.PUT)
+    public ResponseEntity<String> editComment(@RequestBody @Nullable String comment, @RequestParam(value="rating",required = false) Integer rating, @PathVariable int commentId) {
+
+        if(this.productUserService.editComment(comment,rating,commentId)){
+            return new ResponseEntity<String>("Edited successfully!",HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<String>("Comment does not exist or you don't have permission!",HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }
