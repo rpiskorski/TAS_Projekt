@@ -31,21 +31,15 @@ public class ProductUserServiceImpl implements ProductUserService{
         ProductUser pu = getProductUser(id);
 
         //Check if current user is the owner of that comment
-        if(pu!=null && pu.getUserP()==currentUser){
+        if(pu!=null && pu.getUserP().getId()==currentUser.getId()){
             return true;
         }
         else return false;
     }
 
     public ProductUser add(ProductUser productUser){
-        if(!checkIfExists(productUser.getProduct().getId(),productUser.getUserP().getId()))
-        {
 
             return this.productUserRespository.save(productUser);
-        }
-        else{
-            return null;
-        }
     }
 
     public void delete(int id){
@@ -84,16 +78,31 @@ public class ProductUserServiceImpl implements ProductUserService{
 
     public boolean editComment(String comment,Integer rating,int id){
         if(isOwner(id)){
-            int newRaiting = 0;
-            if(rating==null) {
-                newRaiting=getProductUser(id).getRating();
-
-            }else{
-                newRaiting = rating.intValue();
+            int newRating = 0;
+            String newComment = "";
+            if(rating!=null){
+                if(rating.intValue()>=0 && rating.intValue()<=6)
+                {
+                    newRating = rating.intValue();
+                }
             }
+            if(newComment != null){
+                newComment = comment;
+            }
+//            if(rating==null) {
+//                newRating=getProductUser(id).getRating();
+//
+//            }else{
+//                newRating = rating.intValue();
+//            }
+//            if(comment == null){
+//                newComment = getProductUser(id).getComment();
+//            }else{
+//                newComment=comment;
+//            }
             long date = Calendar.getInstance(TimeZone.getTimeZone("Europe/Warsaw")).getTimeInMillis();
 
-            this.productUserRespository.updateComment(comment, newRaiting, date, id);
+            this.productUserRespository.updateComment(newComment, newRating, date, id);
             return true;
 
         }

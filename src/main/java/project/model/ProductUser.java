@@ -38,7 +38,7 @@ public class ProductUser implements Serializable {
     @ManyToOne
     @JoinColumn(name="user_id" ,nullable = false)
  //   @JsonIgnore
-    @JsonIgnoreProperties({"name","password","enabled","role","usersP","usersS",""})
+    @JsonIgnoreProperties({"id","password","enabled","role","usersP","usersS",""})
     private User userP;
 
     public ProductUser(){

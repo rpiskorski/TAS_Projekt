@@ -1,9 +1,12 @@
 package project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 @Entity
 @Table(name="ServUser")
@@ -30,8 +33,13 @@ public class ServUser implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="user_id" ,nullable = false)
-    @JsonIgnore
+    @JsonIgnoreProperties({"id","password","enabled","role","usersP","usersS",""})
     private User userS;
+
+
+    public ServUser(){
+        this.timestamp = Calendar.getInstance(TimeZone.getTimeZone("Europe/Warsaw")).getTimeInMillis();
+    }
 
     public int getId() {
         return id;
