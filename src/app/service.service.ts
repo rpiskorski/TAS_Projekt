@@ -15,8 +15,9 @@ export class ServiceService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getServices(): Observable<Service[]> {
-    return this.httpClient.get<Service[]>(this.servicesUrl);
+  getServices(id: number): Observable<Service[]> {
+    const url = `${this.servicesUrl}?page=${id}`;
+    return this.httpClient.get<Service[]>(url);
   }
 
   getService(id: number): Observable<Service> {

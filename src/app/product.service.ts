@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { Product } from './product';
 import { catchError, tap } from 'rxjs/operators';
+import { ProductUser } from './product-user';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,8 +24,9 @@ export class ProductService {
     private httpClient: HttpClient,
     private messageService: MessageService) {}
 
-  getProducts(): Observable<Product[]> {
-    return this.httpClient.get<Product[]>(this.productsUrl);
+  getProducts(id: number): Observable<Product[]> {
+    const url = `${this.productsUrl}?page=${id}`;
+    return this.httpClient.get<Product[]>(url);
   }
 
   getProduct(id: number): Observable<Product> {
@@ -37,6 +39,15 @@ export class ProductService {
     return this.httpClient.get<Product[]>(url);
   }
 
+  getProductUsers(id: number): Observable<ProductUser[]> {
+    // FIXME (Backend ma zwracać wiele komentarzy)
+    const url = `${this.productsUrl}/${id}/1`;
+    const x = this.httpClient.get<ProductUser[]>(url);
+    // const com = [1, 2, 3];
+    // console.log(x);
+    return x;
+  }
+
   add(product: Product): Observable<Product> {
     return this.httpClient.post<Product>(this.productsUrl, product, httpOptions);
   }
@@ -45,9 +56,7 @@ export class ProductService {
     const id = product.id;
     const url = `${this.productsUrl}/${id}`;
 
-    return this.httpClient.delete<Product>(url).pipe(
-      tap(_ => console.log(`Usunięto produkt ${id}`))
-    );
+    return this.httpClient.delete<Product>(url);
   }
 
   search(term: String): Observable<Product[]> {
@@ -55,8 +64,6 @@ export class ProductService {
       return of([]);
     }
 
-    return this.httpClient.get<Product[]>(`${this.productsUrl}/name/${term}`).pipe(
-      tap(_ => console.log(`Znaleziono ${term}`))
-    );
+    return this.httpClient.get<Product[]>(`${this.productsUrl}/name/${term}`);
   }
 }

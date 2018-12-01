@@ -18,7 +18,12 @@ export class ProductsComponent implements OnInit {
     this.getProducts();
   }
 
+  changePage(page: number) {
+    this.productService.getProducts(page).subscribe(products => this.products = products);
+    return page;
+  }
+
   getProducts() {
-    this.productService.getProducts().subscribe(products => this.products = products);
+    this.productService.getProducts(1).subscribe(products => this.products = products);
   }
 }

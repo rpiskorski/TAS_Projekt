@@ -19,7 +19,12 @@ export class ServicesComponent implements OnInit {
     this.getServices();
   }
 
-  getServices(): void {
-    this.serviceService.getServices().subscribe(services => this.services = services);
+  changePage(page: number) {
+    this.serviceService.getServices(page).subscribe(services => this.services = services);
+    return page;
+  }
+
+  getServices() {
+    this.serviceService.getServices(1).subscribe(services => this.services = services);
   }
 }
