@@ -11,6 +11,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CategoryComponent } from './category/category.component';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ServiceFormComponent } from './service-form/service-form.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full'},
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'login', component: LoginFormComponent },
   { path: 'signup', component: SignupFormComponent },
   { path: 'product-form', component: ProductFormComponent },
-  { path: 'service-form', component: ServiceFormComponent }
+  { path: 'service-form', component: ServiceFormComponent },
+  { path: 'profile', component: ProfileComponent }
 ];
 
 @NgModule({

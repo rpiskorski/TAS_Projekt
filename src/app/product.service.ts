@@ -66,4 +66,12 @@ export class ProductService {
 
     return this.httpClient.get<Product[]>(`${this.productsUrl}/name/${term}`);
   }
+
+  searchInCategory(term: String, category: number): Observable<Product[]> {
+    if (!term.trim()) {
+      return of([]);
+    }
+
+    return this.httpClient.get<Product[]>(`${this.productsUrl}/sort/${category}?type=name&order=asc`);
+  }
 }

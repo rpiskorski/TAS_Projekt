@@ -29,5 +29,4 @@ export class ProductSearchComponent implements OnInit {
     this.searchTerm.next(term);
   }
 
-
 }

@@ -21,6 +21,8 @@ import { ProductFormComponent } from './product-form/product-form.component';
 import { ServiceFormComponent } from './service-form/service-form.component';
 import { ProductSearchComponent } from './product-search/product-search.component';
 import { ServiceSearchComponent } from './service-search/service-search.component';
+import { ItemSearchComponent } from './item-search/item-search.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { ServiceSearchComponent } from './service-search/service-search.componen
     ProductFormComponent,
     ServiceFormComponent,
     ProductSearchComponent,
-    ServiceSearchComponent
+    ServiceSearchComponent,
+    ItemSearchComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

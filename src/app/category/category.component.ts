@@ -20,7 +20,6 @@ export class CategoryComponent implements OnInit {
 
   services: Service[];
 
-  // constructor() {}
   constructor(
     private route: ActivatedRoute,
     private categoryService: CategoryService,

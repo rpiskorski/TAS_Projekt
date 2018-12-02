@@ -6,11 +6,7 @@
 		<div class="col-sm-4 offset-sm-4">
 			<form (ngSubmit)="onSubmit()" #signupForm="ngForm">
 			<div class="form-group">
-			  <div>
-				<label for="name">Nazwa</label>
-				<input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel" class="form-control">
-			  </div>
-			  
+
 			  <div>
 				<label for="name">Login</label>
 				<input type="text" required [(ngModel)]="model.login" name="login" #name="ngModel" class="form-control">
@@ -25,13 +21,7 @@
 				<label for="password">Powtórz hasło</label>
 				<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
 			  </div>
-			  
-			  <div>
-				<label for="email">Adres email</label>
-				<input type="email" required [(ngModel)]="model.email" name="email" #password="ngModel" class="form-control">
-			  </div>
-			  
-				<br>
+			  <br>
 			  <button type="submit" [disabled]="!signupForm.form.valid" class="btn btn-primary">Zarejestruj</button>
 			  </div>
 			</form>

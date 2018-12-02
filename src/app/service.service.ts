@@ -48,8 +48,14 @@ export class ServiceService {
       return of([]);
     }
 
-    return this.httpClient.get<Service[]>(`${this.servicesUrl}/name/${term}`).pipe(
-      tap(_ => console.log(`Znaleziono ${term}`))
-    );
+    return this.httpClient.get<Service[]>(`${this.servicesUrl}/name/${term}`);
+  }
+
+  searchInCategory(term: String, category: number): Observable<Service[]> {
+    if (!term.trim()) {
+      return of([]);
+    }
+
+    return this.httpClient.get<Service[]>(`${this.servicesUrl}/sort/${category}?type=name&order=asc`);
   }
 }
