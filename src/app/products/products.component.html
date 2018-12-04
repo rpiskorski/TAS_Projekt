@@ -4,11 +4,13 @@
 	<app-product-search></app-product-search>
 
 	<div *ngFor="let product of products | paginate: { itemsPerPage: 10, currentPage: p, totalItems: 100 }">
-		<div class="col-sm-4">
-			<h2 class="text-center"><a routerLink="/products/{{product.id}}">{{ product.name }}</a></h2>
-			<p align="justify">Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker
-				<a routerLink="/products/{{product.id}}" rel="nofollow">Więcej...</a>
-			</p>
+		<div *ngIf="product.id % 3 == 0" class="row">
+			<div class="col-sm-4">
+				<h2 class="text-center"><a routerLink="/products/{{product.id}}">{{ product.name }}</a></h2>
+				<p align="justify">Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker
+					<a routerLink="/products/{{product.id}}" rel="nofollow">Więcej...</a>
+				</p>
+			</div>
 		</div>
 	</div>
 	<pagination-controls (pageChange)="p = changePage($event)"></pagination-controls>
