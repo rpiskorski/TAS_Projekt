@@ -1,6 +1,7 @@
 package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -17,6 +18,9 @@ import project.services.ProductUserService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -35,7 +39,7 @@ public class ProductUserController {
 
     //Add Comment etc.
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    @RequestMapping(value="/products/{id}",method=RequestMethod.POST)
+    @RequestMapping(value="/products/{id}/comments",method=RequestMethod.POST)
     public ResponseEntity<String> createComment(@RequestBody @Nullable String comment,@RequestParam(value="rating",required = false) Integer rating,@PathVariable int id ){
 
         //Get current logged user
@@ -83,7 +87,7 @@ public class ProductUserController {
 
     //Delete Comment
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    @RequestMapping(value = "/products/{id}/{commentId}",method=RequestMethod.DELETE)
+    @RequestMapping(value = "/products/{id}/comments/{commentId}",method=RequestMethod.DELETE)
     public ResponseEntity<String> deleteComment(@PathVariable int commentId,@PathVariable int id)
     {
         //Get current logged user
@@ -117,7 +121,7 @@ public class ProductUserController {
     }
     //Edit
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    @RequestMapping(value="/products/{id}/{commentId}",method=RequestMethod.PUT)
+    @RequestMapping(value="/products/{id}/comments/{commentId}",method=RequestMethod.PUT)
     public ResponseEntity<String> editComment(@RequestBody @Nullable String comment, @RequestParam(value="rating",required = false) Integer rating, @PathVariable int commentId,@PathVariable int id) {
 
         if(this.productService.getProductsById(id)!=null && this.productUserService.editComment(comment,rating,commentId)){
@@ -129,16 +133,54 @@ public class ProductUserController {
 
     }
 
-    //Get
-    @RequestMapping(value="products/{id}/{commentId}",method = RequestMethod.GET)
-    public ResponseEntity<ProductUser> getCommentsById(@PathVariable int id,@PathVariable int commentId){
+    //Get comment by id
+    @RequestMapping(value="products/{id}/comments/{commentId}",method = RequestMethod.GET)
+    public ResponseEntity<Object> getCommentsById(@PathVariable int id,@PathVariable int commentId){
         Product product = this.productService.getProductsById(id);
         ProductUser pu = this.productUserService.getProductUser(commentId);
         if(product!=null && pu!=null){
-            return new ResponseEntity<ProductUser>(pu,HttpStatus.OK);
+            return new ResponseEntity<Object>(pu,HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<ProductUser>(pu,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Object>("Comment does not exist!",HttpStatus.BAD_REQUEST);
         }
+    }
+
+    //Get all comments
+    @RequestMapping(value="products/{id}/comments",method = RequestMethod.GET)
+    public ResponseEntity<Map<String,Object>> getComments(@RequestParam(value = "page",required = false) Integer pageNumber,@PathVariable int id){
+        Product product = this.productService.getProductsById(id);
+//        List<ProductUser> pu = this.productUserService.getAllProductUsers(id,PageRequest.of(pageNumber.intValue()-1,10));
+
+        int numberOfPages = this.productUserService.getNumberOfPagesForProduct(id);
+        int numberOfProductUsers = this.productUserService.getNumberOfProductUsersForProduct(id);
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        List<ProductUser> productUsersList;
+
+        map.put("sumOfComments",numberOfProductUsers);
+        map.put("sumOfPages",numberOfPages);
+
+
+        if(numberOfPages!=0) {
+            if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPages) {
+
+                productUsersList = this.productUserService.getAllProductUsers(id, PageRequest.of(pageNumber.intValue() - 1, 10));
+                map.put("listOfComments",productUsersList);
+
+                return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+            } else {
+
+                productUsersList = this.productUserService.getAllProductUsers(id, PageRequest.of(0, 10));
+                map.put("listOfComments",productUsersList);
+
+                return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+            }
+        }else{
+
+            map.put("listOfComments","empty");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.NOT_FOUND);
+        }
+
     }
 }

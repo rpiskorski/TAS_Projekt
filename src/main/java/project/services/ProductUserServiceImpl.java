@@ -9,7 +9,9 @@ import project.model.User;
 import project.repositories.ProductUserRespository;
 import project.repositories.UserRepository;
 
+import org.springframework.data.domain.Pageable;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 import java.util.TimeZone;
 
@@ -36,6 +38,25 @@ public class ProductUserServiceImpl implements ProductUserService{
         }
         else return false;
     }
+
+
+    public int getNumberOfProductUsersForProduct(int id){
+        return this.productUserRespository.getNumberOfProductUsersForProduct(id);
+    }
+
+    public int getNumberOfPagesForProduct(int id){
+        int numberOfProductUsers = getNumberOfProductUsersForProduct(id);
+        int numberOfPages = 0;
+        if(numberOfProductUsers%10==0){
+            numberOfPages = numberOfProductUsers/10;
+        }
+        else{
+            numberOfPages = (int)(numberOfProductUsers/10)+1;
+        }
+        return numberOfPages;
+    }
+
+
 
     public ProductUser add(ProductUser productUser){
 
@@ -108,4 +129,10 @@ public class ProductUserServiceImpl implements ProductUserService{
         }
         return false;
     }
+
+    public List<ProductUser> getAllProductUsers(int productID,Pageable pageable){
+        return this.productUserRespository.findAllProductUsers(productID,pageable);
+    }
+
+
 }

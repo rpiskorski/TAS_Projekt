@@ -12,9 +12,12 @@ import project.model.User;
 import project.services.RoleService;
 import project.services.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import java.security.Principal;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,9 +90,24 @@ public class UserController {
     }
 
 
-//    @RequestMapping(value="/login",method = RequestMethod.POST)
-//    public ResponseEntity<String> login(@Valid @RequestBody User user){
-//
-//
-//    }
+    @RequestMapping(value="/login",method = RequestMethod.POST)
+    public boolean login(@Valid @RequestBody User user,HttpServletRequest request){
+        Optional<User> users = this.userService.getUsersByName(user.getName());
+        String password = bCryptPasswordEncoder.encode(user.getPassword());
+
+        if(users.isPresent() && password.contentEquals(users.get().getPassword())) {
+
+            this.userService.authenticateUser(request,user.getName(),password);
+
+            return true;
+        }
+        else{
+
+            return false;
+        }
+    }
+
+
+
+
 }

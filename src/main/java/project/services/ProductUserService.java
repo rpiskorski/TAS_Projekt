@@ -2,6 +2,9 @@ package project.services;
 
 import project.model.ProductUser;
 
+import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 public interface ProductUserService {
 
     public ProductUser add(ProductUser productUser);
@@ -17,4 +20,11 @@ public interface ProductUserService {
     public boolean editComment(String comment,Integer rating,int id);
 
     public boolean isOwner(int id);
+
+    public List<ProductUser> getAllProductUsers(int productID,Pageable pageable);
+
+    public int getNumberOfProductUsersForProduct(int id);
+
+    public int getNumberOfPagesForProduct(int id);
+
 }

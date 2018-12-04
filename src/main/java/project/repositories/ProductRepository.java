@@ -29,6 +29,15 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     @Query(value="SELECT * FROM products p WHERE p.name LIKE %:name%", nativeQuery = true)
     List<Product> findByName(@Param("name") String name,Pageable pageable);
 
+    //Find Products By Name In Category
+    @Query(value="SELECT * FROM products p WHERE p.name LIKE %:name% AND p.category_id=:cat_id", nativeQuery = true)
+    List<Product> findByNameInCategory(@Param("cat_id") int cat_id,@Param("name") String name,Pageable pageable);
+
+    //Count number of products with name in category
+    @Query(value = "SELECT COUNT(p.id) FROM products p WHERE p.name LIKE %:name% AND p.category_id=:cat_id",nativeQuery = true)
+    int getNumberOfProductsWithNameInCategory(@Param("cat_id")int cat_id,@Param("name")String name);
+
+
     //Count number of products with name
     @Query(value = "SELECT COUNT(p.id) FROM products p WHERE p.name LIKE %:name%",nativeQuery = true)
     int getNumberOfProductsWithName(@Param("name")String name);
@@ -55,11 +64,11 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     List<Product> findByCatOrderedByNameDesc(@Param("cat_id") int cat_id,Pageable pageable);
 
     //Find All Products In Category Order BY Raiting Ascending
-    @Query(value="SELECT * FROM products p WHERE p.category_id=:cat_id ORDER BY p.avg_raiting ", nativeQuery = true)
+    @Query(value="SELECT * FROM products p WHERE p.category_id=:cat_id ORDER BY p.avg_raiting ASC", nativeQuery = true)
     List<Product> findByCatOrderedByRaitingAsc(@Param("cat_id") int cat_id,Pageable pageable);
 
     //Find All Products In Category Order By Raiting Descending
-    @Query(value="SELECT * FROM products p WHERE p.category_id=:cat_id ORDER BY p.avg_raiting ", nativeQuery = true)
+    @Query(value="SELECT * FROM products p WHERE p.category_id=:cat_id ORDER BY p.avg_raiting DESC", nativeQuery = true)
     List<Product> findByCatOrderedByRaitingDesc(@Param("cat_id") int cat_id,Pageable pageable);
 
 

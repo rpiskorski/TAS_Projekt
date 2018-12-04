@@ -2,6 +2,7 @@ package project.services;
 
 import project.model.User;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,4 +14,6 @@ public interface UserService {
     public void deleteUser(int id);
     public User getUserById(int id);
     public List<User> getAllUsers();
+
+
 }

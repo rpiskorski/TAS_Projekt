@@ -82,6 +82,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getProductsByNameInCategory(int cat_id, String name, Pageable pageable) {
+        return this.productRepository.findByNameInCategory(cat_id,name,pageable);
+    }
+
+    @Override
     public int getNumberOfProductsWithName(String name){
         return this.productRepository.getNumberOfProductsWithName(name);
     }
@@ -99,6 +104,22 @@ public class ProductServiceImpl implements ProductService {
         }
         return numberOfPages;
 
+    }
+
+    public int getNumberOfProductsWithNameInCategory(int cat_id,String name){
+        return this.productRepository.getNumberOfProductsWithNameInCategory(cat_id,name);
+    }
+    public int getNumberOfPagesWithNameInCategory(int cat_id,String name){
+
+        int numberOfProducts = getNumberOfProductsWithNameInCategory(cat_id,name);
+        int numberOfPages = 0;
+        if(numberOfProducts%10==0){
+            numberOfPages = numberOfProducts/10;
+        }
+        else{
+            numberOfPages = (int)(numberOfProducts/10)+1;
+        }
+        return numberOfPages;
     }
 
     @Override

@@ -37,6 +37,7 @@ public class ServController {
     }
 
     //Get All Services
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value="/services",method=RequestMethod.GET)
     public ResponseEntity<List<Serv>> getAllServices(@RequestParam(value = "page",required = false) Integer pageNumber){
         int numberOfPages = this.servService.getNumberOfPages();

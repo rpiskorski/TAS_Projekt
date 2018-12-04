@@ -25,8 +25,14 @@ public interface ProductService {
     public int getNumberOfPagesInCategory(int cat_id);
 
     public List<Product> getProductsByName(String name, Pageable pageable);
+    public List<Product> getProductsByNameInCategory(int cat_id,String name, Pageable pageable);
+
+
     public int getNumberOfProductsWithName(String name);
     public int getNumberOfPagesWithName(String name);
+
+    public int getNumberOfProductsWithNameInCategory(int cat_id,String name);
+    public int getNumberOfPagesWithNameInCategory(int cat_id,String name);
 
     public List<Product> getAllProductsInCategory(int cat_id,Pageable pageable);
 

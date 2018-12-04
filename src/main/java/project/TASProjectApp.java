@@ -13,21 +13,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 @EnableJpaRepositories("project.repositories")
 
-public class TASProjectApp {//extends SpringBootServletInitializer {
-
-//    @Override
-//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-//        return application.sources(TASProjectApp.class);
-//    }
-
+public class TASProjectApp {
 
     public static void main(String[] args){
         SpringApplication.run(TASProjectApp.class,args);
 
-
-
-    }
-
-
+        }
 
 }

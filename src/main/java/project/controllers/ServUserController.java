@@ -33,7 +33,7 @@ public class ServUserController {
 
     //Add Comment etc.
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    @RequestMapping(value="/services/{id}",method=RequestMethod.POST)
+    @RequestMapping(value="/services/{id}/comments",method=RequestMethod.POST)
     public ResponseEntity<String> createComment(@RequestBody @Nullable String comment, @RequestParam(value="rating",required = false) Integer rating, @PathVariable int id ){
 
         //Get current logged user
@@ -87,7 +87,7 @@ public class ServUserController {
 
     //Delete Comment
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    @RequestMapping(value = "/services/{id}/{commentId}",method=RequestMethod.DELETE)
+    @RequestMapping(value = "/services/{id}/comments/{commentId}",method=RequestMethod.DELETE)
     public ResponseEntity<String> deleteComment(@PathVariable int commentId,@PathVariable int id)
     {
         //Get current logged user
@@ -121,7 +121,7 @@ public class ServUserController {
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    @RequestMapping(value="/services/{id}/{commentId}",method=RequestMethod.PUT)
+    @RequestMapping(value="/services/{id}/comments/{commentId}",method=RequestMethod.PUT)
     public ResponseEntity<String> editComment(@RequestBody @Nullable String comment, @RequestParam(value="rating",required = false) Integer rating, @PathVariable int commentId,@PathVariable int id) {
 
         if(this.servService.getServicesById(id)!=null && this.servUserService.editComment(comment,rating,commentId)){
@@ -133,7 +133,7 @@ public class ServUserController {
 
     }
 
-    @RequestMapping(value="services/{id}/{commentId}",method = RequestMethod.GET)
+    @RequestMapping(value="services/{id}/comments/{commentId}",method = RequestMethod.GET)
     public ResponseEntity<ServUser> getCommentsById(@PathVariable int id,@PathVariable int commentId){
         Serv service = this.servService.getServicesById(id);
         ServUser su = this.servUserService.getServUser(commentId);
