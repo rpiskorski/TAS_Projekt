@@ -1,0 +1,10 @@
+<div *ngIf="productComments">
+  <div *ngFor="let comment of productComments">
+    <div>{{ comment.userP.name }}</div>
+    <!-- <div> {{ new Date(comment.timestamp) }} </div> -->
+    <div>{{ comment.rating }}</div>
+    <div>{{ comment.comment }} </div>
+  </div>
+</div>
+
+<!-- <app-messages></app-messages> -->

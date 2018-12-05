@@ -1,4 +1,4 @@
-<div [hidden]="submitted">
+<div>
   <h2 class="text-center">Dodaj nowy produkt</h2>
   <!-- {{ diagnostic }} -->
   <div class="container">
@@ -16,11 +16,6 @@
       <input type="text" required [(ngModel)]="model.manufacturer_name" name="manufacturer" #manufacturer="ngModel" class="form-control">
     </div>
 
-    <!-- <div>
-      <label for="category">Kategoria</label>
-      <input type="text" required [(ngModel)]="model.category" name="category" #category="ngModel">
-    </div> -->
-
     <div>
       <label for="category">Kategoria</label>
       <select id="cat" required [(ngModel)]="model.cat.id" name="category" #category="ngModel" class="form-control">
@@ -37,6 +32,4 @@
 </div>
 </div>
 
-<div [hidden]="!submitted">
-  <p>Sukces</p>
-</div>
+<app-messages></app-messages>

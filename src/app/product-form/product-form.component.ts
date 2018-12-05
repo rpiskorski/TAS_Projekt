@@ -3,6 +3,7 @@ import { ProductService } from '../product.service';
 import { Product } from '../product';
 import { CategoryService } from '../category.service';
 import { Category } from '../category';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-product-form',

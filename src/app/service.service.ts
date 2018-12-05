@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import { Service } from './service';
-import { tap } from 'rxjs/operators';
-import { Product } from './product';
+import { tap, catchError } from 'rxjs/operators';
+import { MessageService } from './message.service';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +19,9 @@ export class ServiceService {
 
   private servicesUrl = 'http://localhost:8080/api/services';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private messageService: MessageService) { }
 
   getServices(id: number): Observable<Service[]> {
     const url = `${this.servicesUrl}?page=${id}`;
@@ -31,15 +39,21 @@ export class ServiceService {
   }
 
   add(service: Service): Observable<Service> {
-    return this.httpClient.post<Service>(this.servicesUrl, service);
+    return this.httpClient.post<Service>(this.servicesUrl, service, httpOptions).pipe(
+      tap(_ => this.log('Usługa dodana!'),
+      catchError(err => {
+        this.log(err.error);
+        return of(null as Service);
+      })
+    ));
   }
 
-  delete(product: Service): Observable<Service> {
-    const id = product.id;
+  delete(service: Service): Observable<Service> {
+    const id = service.id;
     const url = `${this.servicesUrl}/${id}`;
 
     return this.httpClient.delete<Service>(url).pipe(
-      tap(_ => console.log(`Usunięto produkt ${id}`))
+      tap(_ => console.log(`Usunięto usługę ${id}`))
     );
   }
 
@@ -57,5 +71,9 @@ export class ServiceService {
     }
 
     return this.httpClient.get<Service[]>(`${this.servicesUrl}/sort/${category}?type=name&order=asc`);
+  }
+
+  private log(message: string) {
+    this.messageService.add(message);
   }
 }

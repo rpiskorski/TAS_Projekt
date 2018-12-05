@@ -2,9 +2,13 @@
   <div>{{product.name}}</div>
   <div>{{product.manufacturer_name}}</div>
   <div>{{product.cat.name}}</div>
+  <div>{{product.raiting}}</div>
   <button (click)="delete(product)">Usuń</button>
   <!-- <div *ngFor="let productUser of productUsers">
     <div>{{productUser.id}}</div>
   </div> -->
+  <app-product-comments></app-product-comments>
+  
 </div>
 
+<app-messages></app-messages>

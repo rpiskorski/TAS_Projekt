@@ -18,7 +18,11 @@ export class CategoryComponent implements OnInit {
 
   products: Product[];
 
+  productCount: number;
+
   services: Service[];
+
+  serviceCount: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,10 +42,23 @@ export class CategoryComponent implements OnInit {
   }
 
   getProducts(id: number) {
-    this.productService.getProductsByCategory(id).subscribe(products => this.products = products);
+    this.productService.getProductsByCategory(id).subscribe(products => {
+      this.productCount = products['sumOfProducts'];
+      this.products = products['listOfProducts'];
+    });
   }
 
   getServices(id: number) {
     this.serviceService.getServicesByCategory(id).subscribe(services => this.services = services);
+  }
+
+  changePage(page: number) {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.productService.getProductsByCategory(id, page).subscribe(products => {
+      this.productCount = products['sumOfProducts'];
+      this.products = products['listOfProducts'];
+    });
+
+    return page;
   }
 }

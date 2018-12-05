@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { User } from '../user';
-import { AppServiceService } from '../app-service.service';
+// import { AppServiceService } from '../app-service.service';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -24,18 +24,18 @@ export class LoginFormComponent implements OnInit {
   }
 
   constructor(
-    private app: AppServiceService,
-    private http: HttpClient,
-    private router: Router
+    // private route: ActivatedRoute,
+    // private http: HttpClient,
+    // private router: Router
     ) { }
 
   ngOnInit() {
   }
 
-  login() {
-    this.app.authenticate(this.model, () => {
-      this.router.navigateByUrl('/profile');
-    });
-    return false;
-  }
+  // login() {
+  //   this.app.authenticate(this.model, () => {
+  //     this.router.navigateByUrl('/profile');
+  //   });
+  //   return false;
+  // }
 }

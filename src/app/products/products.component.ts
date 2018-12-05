@@ -11,6 +11,7 @@ import { Product } from '../product';
 export class ProductsComponent implements OnInit {
 
   products: Product[];
+  productCount: number;
 
   constructor(private productService: ProductService) { }
 
@@ -19,11 +20,17 @@ export class ProductsComponent implements OnInit {
   }
 
   changePage(page: number) {
-    this.productService.getProducts(page).subscribe(products => this.products = products);
+    this.productService.getProducts(page).subscribe(products => {
+      this.productCount = products['sumOfProducts'];
+      this.products = products['listOfProducts'];
+    });
     return page;
   }
 
   getProducts() {
-    this.productService.getProducts(1).subscribe(products => this.products = products);
+    this.productService.getProducts(1).subscribe(products => {
+      this.productCount = products['sumOfProducts'];
+      this.products = products['listOfProducts'];
+    });
   }
 }

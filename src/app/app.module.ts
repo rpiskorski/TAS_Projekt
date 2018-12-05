@@ -23,6 +23,7 @@ import { ProductSearchComponent } from './product-search/product-search.componen
 import { ServiceSearchComponent } from './service-search/service-search.component';
 import { ItemSearchComponent } from './item-search/item-search.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProductCommentsComponent } from './product-comments/product-comments.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ProfileComponent } from './profile/profile.component';
     ProductSearchComponent,
     ServiceSearchComponent,
     ItemSearchComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProductCommentsComponent
   ],
   imports: [
     BrowserModule,

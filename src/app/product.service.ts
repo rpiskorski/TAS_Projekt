@@ -31,32 +31,48 @@ export class ProductService {
 
   getProduct(id: number): Observable<Product> {
     const url = `${this.productsUrl}/${id}`;
-    return this.httpClient.get<Product>(url);
+    return this.httpClient.get<Product>(url).pipe(
+      catchError(err => {
+        this.log(err.error.text);
+        return of(null as Product);
+      })
+    );
   }
 
-  getProductsByCategory(id: number): Observable<Product[]> {
-    const url = `${this.productsUrl}/cat/${id}`;
+  getProductsByCategory(id: number, page = 1): Observable<Product[]> {
+    const url = `${this.productsUrl}/cat/${id}?page=${page}`;
     return this.httpClient.get<Product[]>(url);
   }
 
-  getProductUsers(id: number): Observable<ProductUser[]> {
-    // FIXME (Backend ma zwracać wiele komentarzy)
-    const url = `${this.productsUrl}/${id}/1`;
-    const x = this.httpClient.get<ProductUser[]>(url);
-    // const com = [1, 2, 3];
-    // console.log(x);
-    return x;
+  getProductComments(id: number): Observable<Comment[]> {
+    const url = `${this.productsUrl}/${id}/comments`;
+    return this.httpClient.get<Comment[]>(url).pipe(
+      catchError(err => {
+        this.log(err.error.text);
+        return of([] as Comment[]);
+      })
+    );
   }
 
   add(product: Product): Observable<Product> {
-    return this.httpClient.post<Product>(this.productsUrl, product, httpOptions);
+    return this.httpClient.post<Product>(this.productsUrl, product, httpOptions).pipe(
+      // tap(_ => this.messageService.add('Sukces')),
+      catchError(err => {
+        this.log(err.error.text);
+        return of(null as Product);
+      }));
   }
 
   delete(product: Product): Observable<Product> {
     const id = product.id;
     const url = `${this.productsUrl}/${id}`;
 
-    return this.httpClient.delete<Product>(url);
+    return this.httpClient.delete<Product>(url).pipe(
+      catchError(err => {
+        this.log(err.error.text);
+        return of(null as Product);
+      })
+    );
   }
 
   search(term: String): Observable<Product[]> {
@@ -73,5 +89,15 @@ export class ProductService {
     }
 
     return this.httpClient.get<Product[]>(`${this.productsUrl}/sort/${category}?type=name&order=asc`);
+  }
+
+  private handleError<T>(result?: T) {
+    return (error: any) => {
+      return of(result as T);
+    };
+  }
+
+  private log(message: string) {
+    this.messageService.add(message);
   }
 }
