@@ -18,23 +18,31 @@ public interface ProductService {
     public List<Product> getAllProducts(Pageable pageable);
 
     public int getNumberOfProducts();
-    public int getNumberOfPages();
+    public int getNumberOfPages(int numberOfProducts);
 
 
     public int getNumberOfProductsInCategory(int cat_id);
-    public int getNumberOfPagesInCategory(int cat_id);
+
+    public int getNumberOfProductsByManufacturer(String manufacturer_name);
 
     public List<Product> getProductsByName(String name, Pageable pageable);
     public List<Product> getProductsByNameInCategory(int cat_id,String name, Pageable pageable);
 
 
     public int getNumberOfProductsWithName(String name);
-    public int getNumberOfPagesWithName(String name);
+
 
     public int getNumberOfProductsWithNameInCategory(int cat_id,String name);
-    public int getNumberOfPagesWithNameInCategory(int cat_id,String name);
+
 
     public List<Product> getAllProductsInCategory(int cat_id,Pageable pageable);
+
+    public List<Product> getAllProductsByManufacturer(String manufacturer_name,Pageable pageable);
+
+    public List<Product> getProductsOrderByNameByManufacturerAsc(String manufacturer_name,Pageable pageable);
+    public List<Product> getProductsOrderByNameByManufacturerDesc(String manufacturer_name,Pageable pageable);
+    public List<Product> getProductsOrderByRaitingByManufacturerAsc(String manufacturer_name,Pageable pageable);
+    public List<Product> getProductsOrderByRaitingByManufacturerDesc(String manufacturer_name,Pageable pageable);
 
     public Product getProductsById(int id);
 
@@ -49,8 +57,7 @@ public interface ProductService {
     public List<Product> getProductsOrderByNameAsc(Pageable pageable);
     public List<Product> getProductsOrderByNameDesc(Pageable pageable);
 //
-//    public List<Product> getProductsOrderByName(String asc);
-//    public List<Product> getProductsOrderByRaiting(String asc);
+
     public Product addProduct(Product product);
 
     public void deleteProduct(int productID);

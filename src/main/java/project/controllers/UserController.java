@@ -17,9 +17,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.security.Principal;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
 
@@ -36,29 +34,35 @@ public class UserController {
 
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
-    //ResponseEntity zamiast RedirectView
-    public ResponseEntity<String> addUser(@RequestBody @Valid @NotNull User user){
+    public ResponseEntity<Map<String,Object>> addUser(@RequestBody @Valid @NotNull User user){
 
+        Map<String,Object> map = new HashMap<>();
 
        Optional<User> users = this.userService.getUsersByName(user.getName());
         if(!users.isPresent()){
+            User registerUser = new User();
 
-            System.out.println(user.getName()+" ; "+user.getPassword());
+            //Set name
+            registerUser.setName(user.getName());
+
+            //set enabled
+            registerUser.setEnabled(true);
 
             //Set Role
             Role role = this.roleService.getRoleByName("USER");
-            user.setRole(role);
+            registerUser.setRole(role);
 
             //Set Password
             String pass= this.bCryptPasswordEncoder.encode(user.getPassword());
-            user.setPassword(pass);
+            registerUser.setPassword(pass);
 
-            this.userService.addUser(user);
-            return new ResponseEntity<String>("Account created successfully",HttpStatus.CREATED);
+            this.userService.addUser(registerUser);
+            map.put("message","Account created successfully");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.CREATED);
         }
         else{
-
-            return new ResponseEntity<String>("Your login has already been taken",HttpStatus.BAD_REQUEST);
+            map.put("message","Your login has already been taken");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
 
         }
 
@@ -66,48 +70,41 @@ public class UserController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @RequestMapping(value = "/users/{id}",method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteUser(@PathVariable int id){
+    public ResponseEntity<Map<String,Object>> deleteUser(@PathVariable int id,HttpServletRequest request){
         User user = this.userService.getUserById(id);
+        Map<String,Object> map = new HashMap<>();
+        Object token = request.getAttribute("token");
+
+        map.put("token",token);
+
+
         if(user==null){
-            return new ResponseEntity<String>("This user does not exist",HttpStatus.BAD_REQUEST);
+            map.put("message","This user does not exist");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
         else {
             this.userService.deleteUser(id);
-            return new ResponseEntity<String>("User deleted successfully",HttpStatus.ACCEPTED);
+            map.put("message","User deleted successfully");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.ACCEPTED);
         }
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @RequestMapping(value="/users",method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<Map<String,Object>> getAllUsers(HttpServletRequest request){
+        Map<String,Object> map = new HashMap<>();
         List<User> users = userService.getAllUsers();
+        Object token = request.getAttribute("token");
+
+        map.put("token",token);
+        map.put("users",users);
         if(users.isEmpty()){
-            return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.NO_CONTENT);
         }
         else{
-            return new ResponseEntity<List<User>>(users,HttpStatus.OK);
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
         }
     }
-
-
-    @RequestMapping(value="/login",method = RequestMethod.POST)
-    public boolean login(@Valid @RequestBody User user,HttpServletRequest request){
-        Optional<User> users = this.userService.getUsersByName(user.getName());
-        String password = bCryptPasswordEncoder.encode(user.getPassword());
-
-        if(users.isPresent() && password.contentEquals(users.get().getPassword())) {
-
-            this.userService.authenticateUser(request,user.getName(),password);
-
-            return true;
-        }
-        else{
-
-            return false;
-        }
-    }
-
-
 
 
 }

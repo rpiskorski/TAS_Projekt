@@ -30,14 +30,14 @@ public class ServServiceImpl implements ServService {
     }
 
     @Override
-    public int getNumberOfPages(){
-        int numberOfServices = getNumberOfServices();
+    public int getNumberOfPages(int numberOfServices){
+
         int numberOfPages = 0;
-        if(numberOfServices%10==0){
-            numberOfPages = numberOfServices/10;
+        if(numberOfServices%9==0){
+            numberOfPages = numberOfServices/9;
         }
         else{
-            numberOfPages = (int)(numberOfServices/10)+1;
+            numberOfPages = (int)(numberOfServices/9)+1;
         }
         return numberOfPages;
     }
@@ -47,19 +47,7 @@ public class ServServiceImpl implements ServService {
         return this.serviceRepository.getNumberOfSerivcesInCategory(cat_id);
     }
 
-    @Override
-    public int getNumberOfPagesInCategory(int cat_id){
-        int numberOfProducts = getNumberOfServicesInCategory(cat_id);
-        int numberOfPages = 0;
-        if(numberOfProducts%10==0){
-            numberOfPages = numberOfProducts/10;
-        }
-        else{
-            numberOfPages= (int)(numberOfProducts/10)+1;
-        }
-        return numberOfPages;
 
-    }
 
     @Override
     public List<Serv> getAllServices(Pageable pageable) {
@@ -80,18 +68,7 @@ public class ServServiceImpl implements ServService {
     public int getNumberOfServicesWithName(String name){
         return this.serviceRepository.getNumberOfServicesWithName(name);
     }
-    @Override
-    public int getNumberOfPagesWithName(String name){
-        int numberOfProducts = getNumberOfServicesWithName(name);
-        int numberOfPages = 0;
-        if(numberOfProducts%10==0){
-            numberOfPages = numberOfProducts/10;
-        }
-        else{
-            numberOfPages = (int)(numberOfProducts/10)+1;
-        }
-        return numberOfPages;
-    }
+
 
     @Override
     public List<Serv> getAllServicesInCategory(int cat_id,Pageable pageable){

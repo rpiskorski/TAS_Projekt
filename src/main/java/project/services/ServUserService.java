@@ -1,6 +1,9 @@
 package project.services;
 
+import org.springframework.data.domain.Pageable;
 import project.model.ServUser;
+
+import java.util.List;
 
 public interface ServUserService {
 
@@ -17,4 +20,10 @@ public interface ServUserService {
     public boolean editComment(String comment,Integer rating,int id);
 
     public boolean isOwner(int id);
+
+    public List<ServUser> getAllServiceUsers(int serviceID, Pageable pageable);
+
+    public int getNumberOfServiceUsersForService(int id);
+
+    public int getNumberOfPagesForService(int id);
 }

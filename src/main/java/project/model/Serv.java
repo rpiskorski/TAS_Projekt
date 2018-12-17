@@ -36,7 +36,7 @@ public class Serv implements Serializable {
     private Category cat;
 
     @OneToMany(mappedBy = "service")
-//    @JsonIgnore
+    @JsonIgnore
     private List<ServUser> servUsers;
 
 

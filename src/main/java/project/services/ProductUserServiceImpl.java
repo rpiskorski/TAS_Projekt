@@ -110,17 +110,7 @@ public class ProductUserServiceImpl implements ProductUserService{
             if(newComment != null){
                 newComment = comment;
             }
-//            if(rating==null) {
-//                newRating=getProductUser(id).getRating();
-//
-//            }else{
-//                newRating = rating.intValue();
-//            }
-//            if(comment == null){
-//                newComment = getProductUser(id).getComment();
-//            }else{
-//                newComment=comment;
-//            }
+
             long date = Calendar.getInstance(TimeZone.getTimeZone("Europe/Warsaw")).getTimeInMillis();
 
             this.productUserRespository.updateComment(newComment, newRating, date, id);

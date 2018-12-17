@@ -13,15 +13,15 @@ public interface ServService {
     public List<Serv> getAllServices(Pageable pageable);
 
     public int getNumberOfServices();
-    public int getNumberOfPages();
+    public int getNumberOfPages(int numberOfServices);
 
     public int getNumberOfServicesInCategory(int cat_id);
-    public int getNumberOfPagesInCategory(int cat_id);
+
 
     public List<Serv> getServicesByName(String name,Pageable pageable);
 
     public int getNumberOfServicesWithName(String name);
-    public int getNumberOfPagesWithName(String name);
+
 
     public Serv getServicesById(int id);
 

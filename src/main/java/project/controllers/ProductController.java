@@ -2,23 +2,17 @@ package project.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import project.model.Category;
 import project.model.Product;
-import project.model.ProductUser;
-import project.services.CategoryService;
 import project.services.ProductService;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.xml.ws.Response;
 import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -33,39 +27,48 @@ public class ProductController {
     //Add Product
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value="/products",method= RequestMethod.POST)
-    public ResponseEntity<String> create(@RequestBody @Valid @NotNull Product product)
+    public ResponseEntity<Map<String,Object>> create(@RequestBody @Valid @NotNull Product product,
+                                                     HttpServletRequest httpServletRequest)
     {
+        Map<String,Object> map = new HashMap<>();
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
+
         Product product1 = productService.addProduct(product);
         if(product1 == null){
-            return new ResponseEntity<String>("Failed to add product!",HttpStatus.BAD_REQUEST);
+            map.put("message","Failed to add product!");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
         else {
-            return new ResponseEntity<String>("Product added successfully!", HttpStatus.CREATED);
+            map.put("message","Product added successfully!");
+            return new ResponseEntity<Map<String,Object>>(map, HttpStatus.CREATED);
         }
     }
 
     //Get All Products
-
     @RequestMapping(value="/products",method=RequestMethod.GET)
-    public ResponseEntity<Map<String,Object>> getAllProducts(@RequestParam(value = "page",required = false) Integer pageNumber){
+    public ResponseEntity<Map<String,Object>> getAllProducts(@RequestParam(value = "page",required = false) Integer pageNumber,
+                                                             HttpServletRequest httpServletRequest){
 
-        int numberOfPages = this.productService.getNumberOfPages();
         int numberOfProducts = this.productService.getNumberOfProducts();
+        int numberOfPages = this.productService.getNumberOfPages(numberOfProducts);
+
         Map<String,Object> map = new HashMap<String,Object>();
         List<Product> productList;
-
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
         map.put("sumOfProducts",numberOfProducts);
         map.put("sumOfPages",numberOfPages);
 
         if(numberOfPages!=0) {
             if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPages) {
-                productList = productService.getAllProducts(PageRequest.of(pageNumber.intValue() - 1, 10));
+                productList = productService.getAllProducts(PageRequest.of(pageNumber.intValue() - 1, 9));
 
                 map.put("listOfProducts",productList);
 
                 return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
             } else {
-                productList = productService.getAllProducts(PageRequest.of(0, 10));
+                productList = productService.getAllProducts(PageRequest.of(0, 9));
                 map.put("listOfProducts",productList);
 
                 return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
@@ -82,23 +85,40 @@ public class ProductController {
     //Delete Product
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @RequestMapping(value = "/products/{id}",method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteProduct(@PathVariable int id){
+    public ResponseEntity<Map<String,Object>> deleteProduct(@PathVariable int id,
+                                                            HttpServletRequest httpServletRequest){
+        Map<String,Object> map = new HashMap<String,Object>();
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
 
-        this.productService.deleteProduct(id);
-        return new ResponseEntity<String>("Product has been deleted",HttpStatus.OK);
 
+        if(this.productService.getProductsById(id)!=null) {
+            this.productService.deleteProduct(id);
+
+            map.put("message","Product has been deleted");
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        }
+        else{
+            map.put("message","Product does not exist!");
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        }
     }
 
     //Get All Products in Category
     @RequestMapping(value="/products/cat/{categoryid}",method=RequestMethod.GET)
-    public ResponseEntity<Map<String,Object>> getProductsInCategory(@PathVariable int categoryid,@RequestParam(value = "page",required = false) Integer pageNumber)
+    public ResponseEntity<Map<String,Object>> getProductsInCategory(@PathVariable int categoryid,
+                                                                    @RequestParam(value = "page",required = false) Integer pageNumber,
+                                                                    HttpServletRequest httpServletRequest)
     {
-
-        int numberOfPagesInCategory=this.productService.getNumberOfPagesInCategory(categoryid);
         int numberOfProductsInCategory=this.productService.getNumberOfProductsInCategory(categoryid);
+        int numberOfPagesInCategory=this.productService.getNumberOfPages(numberOfProductsInCategory);
+
 
         Map<String,Object> map = new HashMap<String,Object>();
         List<Product> productList;
+
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
 
         map.put("sumOfProducts",numberOfProductsInCategory);
         map.put("sumOfPages",numberOfPagesInCategory);
@@ -106,13 +126,13 @@ public class ProductController {
         if(numberOfPagesInCategory!=0) {
             if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPagesInCategory) {
 
-                productList = this.productService.getAllProductsInCategory(categoryid, PageRequest.of(pageNumber.intValue() - 1, 10));
+                productList = this.productService.getAllProductsInCategory(categoryid, PageRequest.of(pageNumber.intValue() - 1, 9));
                 map.put("listOfProducts",productList);
 
                 return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
             } else {
 
-                productList = this.productService.getAllProductsInCategory(categoryid, PageRequest.of(0, 10));
+                productList = this.productService.getAllProductsInCategory(categoryid, PageRequest.of(0, 9));
 
                 map.put("listOfProducts",productList);
                 return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
@@ -128,14 +148,20 @@ public class ProductController {
 
     //Get Products Ordered By Name Or Raiting In Category
     @RequestMapping(value="/products/sort/{categoryid}",method=RequestMethod.GET)
-    public ResponseEntity<Map<String,Object>> getAllSortedProductsInCategory(@PathVariable int categoryid,@RequestParam(value = "page",required = false) Integer pageNumber,@RequestParam(value="type",required = true) String type,
-                                              @RequestParam(value="order",required=true) String order){
+    public ResponseEntity<Map<String,Object>> getAllSortedProductsInCategory(@PathVariable int categoryid,
+                                                                             @RequestParam(value = "page",required = false) Integer pageNumber,
+                                                                             @RequestParam(value="type",required = true) String type,
+                                                                             @RequestParam(value="order",required=true) String order,
+                                                                             HttpServletRequest httpServletRequest){
 
-        int numberOfPagesInCategory=this.productService.getNumberOfPagesInCategory(categoryid);
         int numberOfProductsInCategory=this.productService.getNumberOfProductsInCategory(categoryid);
+        int numberOfPagesInCategory=this.productService.getNumberOfPages(numberOfProductsInCategory);
 
         Map<String,Object> map = new HashMap<String,Object>();
         List<Product> productList;
+
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
 
         map.put("sumOfProducts",numberOfProductsInCategory);
         map.put("sumOfPages",numberOfPagesInCategory);
@@ -146,13 +172,13 @@ public class ProductController {
                 if (order.contentEquals("asc")) {
                     if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPagesInCategory) {
 
-                        productList = this.productService.getProductsOrderByNameInCategoryAsc(categoryid, PageRequest.of(pageNumber.intValue() - 1, 10));
+                        productList = this.productService.getProductsOrderByNameInCategoryAsc(categoryid, PageRequest.of(pageNumber.intValue() - 1, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     } else {
 
-                        productList = this.productService.getProductsOrderByNameInCategoryAsc(categoryid, PageRequest.of(0, 10));
+                        productList = this.productService.getProductsOrderByNameInCategoryAsc(categoryid, PageRequest.of(0, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
@@ -160,31 +186,31 @@ public class ProductController {
                 } else if (order.contentEquals("desc")) {
                     if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPagesInCategory) {
 
-                        productList = this.productService.getProductsOrderByNameInCategoryDesc(categoryid, PageRequest.of(pageNumber.intValue() - 1, 10));
+                        productList = this.productService.getProductsOrderByNameInCategoryDesc(categoryid, PageRequest.of(pageNumber.intValue() - 1, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     } else {
 
-                        productList = this.productService.getProductsOrderByNameInCategoryDesc(categoryid, PageRequest.of(0, 10));
+                        productList = this.productService.getProductsOrderByNameInCategoryDesc(categoryid, PageRequest.of(0, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     }
                 }
 
-            } else if (type.contentEquals("raiting")) {
+            } else if (type.contentEquals("rating")) {
 
                 if (order.contentEquals("asc")) {
                     if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPagesInCategory) {
 
-                        productList = this.productService.getProductsOrderByRaitingInCategoryAsc(categoryid, PageRequest.of(pageNumber.intValue() - 1, 10));
+                        productList = this.productService.getProductsOrderByRaitingInCategoryAsc(categoryid, PageRequest.of(pageNumber.intValue() - 1, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     } else {
 
-                        productList = this.productService.getProductsOrderByRaitingInCategoryAsc(categoryid, PageRequest.of(0, 10));
+                        productList = this.productService.getProductsOrderByRaitingInCategoryAsc(categoryid, PageRequest.of(0, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
@@ -192,13 +218,13 @@ public class ProductController {
                 } else if (order.contentEquals("desc")) {
                     if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPagesInCategory) {
 
-                        productList = this.productService.getProductsOrderByRaitingInCategoryDesc(categoryid, PageRequest.of(pageNumber.intValue() - 1, 10));
+                        productList = this.productService.getProductsOrderByRaitingInCategoryDesc(categoryid, PageRequest.of(pageNumber.intValue() - 1, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     } else {
 
-                        productList = this.productService.getProductsOrderByRaitingInCategoryDesc(categoryid, PageRequest.of(0, 10));
+                        productList = this.productService.getProductsOrderByRaitingInCategoryDesc(categoryid, PageRequest.of(0, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
@@ -215,15 +241,24 @@ public class ProductController {
 
     }
 
+
+
     //Get Products By Name In Category
     @RequestMapping(value="/products/cat/{categoryid}/name/{name}",method=RequestMethod.GET)
-    public ResponseEntity<Map<String,Object>> getProductsByNameInCategory(@PathVariable String name,@PathVariable Integer categoryid,@RequestParam(value = "page",required = false) Integer pageNumber)
+    public ResponseEntity<Map<String,Object>> getProductsByNameInCategory(@PathVariable String name,
+                                                                          @PathVariable Integer categoryid,
+                                                                          @RequestParam(value = "page",required = false) Integer pageNumber,
+                                                                          HttpServletRequest httpServletRequest)
         {
-            int numberOfPages = this.productService.getNumberOfPagesWithNameInCategory(categoryid.intValue(),name);
+
             int numberOfProducts = this.productService.getNumberOfProductsWithNameInCategory(categoryid.intValue(),name);
+            int numberOfPages = this.productService.getNumberOfPages(numberOfProducts);
 
             Map<String,Object> map = new HashMap<String,Object>();
             List<Product> productList;
+
+            Object token = httpServletRequest.getAttribute("token");
+            map.put("token",token);
 
             map.put("sumOfProducts",numberOfProducts);
             map.put("sumOfPages",numberOfPages);
@@ -231,13 +266,13 @@ public class ProductController {
             if(numberOfPages!=0) {
                 if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPages) {
 
-                    productList = this.productService.getProductsByNameInCategory(categoryid.intValue(),name, PageRequest.of(pageNumber.intValue() - 1, 10));
+                    productList = this.productService.getProductsByNameInCategory(categoryid.intValue(),name, PageRequest.of(pageNumber.intValue() - 1, 9));
                     map.put("listOfProducts",productList);
 
                     return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                 } else {
 
-                    productList = this.productService.getProductsByNameInCategory(categoryid.intValue(),name, PageRequest.of(0, 10));
+                    productList = this.productService.getProductsByNameInCategory(categoryid.intValue(),name, PageRequest.of(0, 9));
                     map.put("listOfProducts",productList);
 
                     return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
@@ -248,19 +283,160 @@ public class ProductController {
                 return new ResponseEntity<Map<String,Object>>(map,HttpStatus.NOT_FOUND);
             }
         }
+//************************************
+    //Get All Products by manufacturer
+    @RequestMapping(value="/products/manufacturer/{manu}",method=RequestMethod.GET)
+    public ResponseEntity<Map<String,Object>> getProductsByManufacturer(@PathVariable String manu,
+                                                                    @RequestParam(value = "page",required = false) Integer pageNumber,
+                                                                    HttpServletRequest httpServletRequest)
+    {
+        int numberOfProductsByManufacturer=this.productService.getNumberOfProductsByManufacturer(manu);
+        int numberOfPagesByManufacturer=this.productService.getNumberOfPages(numberOfProductsByManufacturer);
 
 
+        Map<String,Object> map = new HashMap<String,Object>();
+        List<Product> productList;
+
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
+
+        map.put("sumOfProducts",numberOfProductsByManufacturer);
+        map.put("sumOfPages",numberOfPagesByManufacturer);
+
+        if(numberOfPagesByManufacturer!=0) {
+            if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPagesByManufacturer) {
+
+                productList = this.productService.getAllProductsByManufacturer(manu, PageRequest.of(pageNumber.intValue() - 1, 9));
+                map.put("listOfProducts",productList);
+
+                return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+            } else {
+
+                productList = this.productService.getAllProductsByManufacturer(manu, PageRequest.of(0, 9));
+
+                map.put("listOfProducts",productList);
+                return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+            }
+        }
+        else{
+
+            map.put("listOfProducts","empty");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    //Get Products Ordered By Name Or Raiting By manufacturer
+    @RequestMapping(value="/products/manufacturer/{manu}/sort",method=RequestMethod.GET)
+    public ResponseEntity<Map<String,Object>> getAllSortedProductsByManufacturer(@PathVariable String manu,
+                                                                             @RequestParam(value = "page",required = false) Integer pageNumber,
+                                                                             @RequestParam(value="type",required = true) String type,
+                                                                             @RequestParam(value="order",required=true) String order,
+                                                                             HttpServletRequest httpServletRequest){
+
+        int numberOfProductsByManufacturer=this.productService.getNumberOfProductsByManufacturer(manu);
+        int numberOfPagesByManufacturer=this.productService.getNumberOfPages(numberOfProductsByManufacturer);
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        List<Product> productList;
+
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
+
+        map.put("sumOfProducts",numberOfProductsByManufacturer);
+        map.put("sumOfPages",numberOfPagesByManufacturer);
+
+        if(numberOfPagesByManufacturer!=0) {
+            if (type.contentEquals("name")) {
+
+                if (order.contentEquals("asc")) {
+                    if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPagesByManufacturer) {
+
+                        productList = this.productService.getProductsOrderByNameByManufacturerAsc(manu, PageRequest.of(pageNumber.intValue() - 1, 9));
+                        map.put("listOfProducts",productList);
+
+                        return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+                    } else {
+
+                        productList = this.productService.getProductsOrderByNameByManufacturerAsc(manu, PageRequest.of(0, 9));
+                        map.put("listOfProducts",productList);
+
+                        return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+                    }
+                } else if (order.contentEquals("desc")) {
+                    if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPagesByManufacturer) {
+
+                        productList = this.productService.getProductsOrderByNameByManufacturerDesc(manu, PageRequest.of(pageNumber.intValue() - 1, 9));
+                        map.put("listOfProducts",productList);
+
+                        return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+                    } else {
+
+                        productList = this.productService.getProductsOrderByNameByManufacturerDesc(manu, PageRequest.of(0, 9));
+                        map.put("listOfProducts",productList);
+
+                        return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+                    }
+                }
+
+            } else if (type.contentEquals("rating")) {
+
+                if (order.contentEquals("asc")) {
+                    if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPagesByManufacturer) {
+
+                        productList = this.productService.getProductsOrderByRaitingByManufacturerAsc(manu, PageRequest.of(pageNumber.intValue() - 1, 9));
+                        map.put("listOfProducts",productList);
+
+                        return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+                    } else {
+
+                        productList = this.productService.getProductsOrderByRaitingByManufacturerAsc(manu, PageRequest.of(0, 9));
+                        map.put("listOfProducts",productList);
+
+                        return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+                    }
+                } else if (order.contentEquals("desc")) {
+                    if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPagesByManufacturer) {
+
+                        productList = this.productService.getProductsOrderByRaitingByManufacturerDesc(manu, PageRequest.of(pageNumber.intValue() - 1, 9));
+                        map.put("listOfProducts",productList);
+
+                        return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+                    } else {
+
+                        productList = this.productService.getProductsOrderByRaitingByManufacturerDesc(manu, PageRequest.of(0, 9));
+                        map.put("listOfProducts",productList);
+
+                        return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+                    }
+                }
+
+            }
+
+        }
+
+        map.put("listOfProducts","empty");
+        return new ResponseEntity<Map<String,Object>>(map,HttpStatus.NOT_FOUND);
+
+
+    }
+    //**********************************
 
 
         //Get Products By Name
     @RequestMapping(value="/products/name/{name}",method=RequestMethod.GET)
-    public ResponseEntity<Map<String,Object>> getProductsByName(@PathVariable String name,@RequestParam(value = "page",required = false) Integer pageNumber) {
+    public ResponseEntity<Map<String,Object>> getProductsByName(@PathVariable String name,
+                                                                @RequestParam(value = "page",required = false) Integer pageNumber,
+                                                                HttpServletRequest httpServletRequest) {
 
-        int numberOfPages = this.productService.getNumberOfPagesWithName(name);
         int numberOfProducts = this.productService.getNumberOfProductsWithName(name);
+        int numberOfPages = this.productService.getNumberOfPages(numberOfProducts);
+
 
         Map<String,Object> map = new HashMap<String,Object>();
         List<Product> productList;
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
 
         map.put("sumOfProducts",numberOfProducts);
         map.put("sumOfPages",numberOfPages);
@@ -268,13 +444,13 @@ public class ProductController {
         if(numberOfPages!=0) {
             if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPages) {
 
-                productList = this.productService.getProductsByName(name, PageRequest.of(pageNumber.intValue() - 1, 10));
+                productList = this.productService.getProductsByName(name, PageRequest.of(pageNumber.intValue() - 1, 9));
                 map.put("listOfProducts",productList);
 
                 return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
             } else {
 
-                productList = this.productService.getProductsByName(name, PageRequest.of(0, 10));
+                productList = this.productService.getProductsByName(name, PageRequest.of(0, 9));
                 map.put("listOfProducts",productList);
 
                 return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
@@ -289,26 +465,39 @@ public class ProductController {
     //Get Products By Id
 
     @RequestMapping(value="/products/{id}",method=RequestMethod.GET)
-    public ResponseEntity<Object> getProductsById(@PathVariable int id){
+    public ResponseEntity<Map<String,Object>> getProductsById(@PathVariable int id,
+                                                              HttpServletRequest httpServletRequest){
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
+
         Product product = this.productService.getProductsById(id);
         if(product!=null){
-            return new ResponseEntity<Object>(product,HttpStatus.OK);
+            map.put("product",product);
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<Object>("Product does not exist!",HttpStatus.BAD_REQUEST);
+            map.put("product","empty");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
     }
 
     //Get Products Ordered By Name
     @RequestMapping(value="/products/sort",method=RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllSortedProducts(@RequestParam(value = "page",required = false) Integer pageNumber,
-            @RequestParam(value="type",required = true) String type,
-                                              @RequestParam(value="order",required=true) String order){
+                                                                   @RequestParam(value="type",required = true) String type,
+                                                                   @RequestParam(value="order",required=true) String order,
+                                                                   HttpServletRequest httpServletRequest){
 
-        int numberOfPages = this.productService.getNumberOfPages();
         int numberOfProducts = this.productService.getNumberOfProducts();
+        int numberOfPages = this.productService.getNumberOfPages(numberOfProducts);
+
         Map<String,Object> map = new HashMap<String,Object>();
         List<Product> productList;
+
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
 
         map.put("sumOfProducts",numberOfProducts);
         map.put("sumOfPages",numberOfPages);
@@ -319,13 +508,13 @@ public class ProductController {
                 if (order.contentEquals("asc")) {
                     if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPages) {
 
-                        productList = this.productService.getProductsOrderByNameAsc(PageRequest.of(pageNumber.intValue() - 1, 10));
+                        productList = this.productService.getProductsOrderByNameAsc(PageRequest.of(pageNumber.intValue() - 1, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     } else {
 
-                        productList = this.productService.getProductsOrderByNameAsc(PageRequest.of(0, 10));
+                        productList = this.productService.getProductsOrderByNameAsc(PageRequest.of(0, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
@@ -333,31 +522,31 @@ public class ProductController {
                 } else if (order.contentEquals("desc")) {
                     if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPages) {
 
-                        productList = this.productService.getProductsOrderByNameDesc(PageRequest.of(pageNumber.intValue() - 1, 10));
+                        productList = this.productService.getProductsOrderByNameDesc(PageRequest.of(pageNumber.intValue() - 1, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     } else {
 
-                        productList = this.productService.getProductsOrderByNameDesc(PageRequest.of(0, 10));
+                        productList = this.productService.getProductsOrderByNameDesc(PageRequest.of(0, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     }
                 }
 
-            } else if (type.contentEquals("raiting")) {
+            } else if (type.contentEquals("rating")) {
 
                 if (order.contentEquals("asc")) {
                     if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPages) {
 
-                        productList = this.productService.getProductsOrderByRaitingAsc(PageRequest.of(pageNumber.intValue() - 1, 10));
+                        productList = this.productService.getProductsOrderByRaitingAsc(PageRequest.of(pageNumber.intValue() - 1, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     } else {
 
-                        productList = this.productService.getProductsOrderByRaitingAsc(PageRequest.of(0, 10));
+                        productList = this.productService.getProductsOrderByRaitingAsc(PageRequest.of(0, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
@@ -365,13 +554,13 @@ public class ProductController {
                 } else if (order.contentEquals("desc")) {
                     if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPages) {
 
-                        productList = this.productService.getProductsOrderByRaitingDesc(PageRequest.of(pageNumber.intValue() - 1, 10));
+                        productList = this.productService.getProductsOrderByRaitingDesc(PageRequest.of(pageNumber.intValue() - 1, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     } else {
 
-                        productList = this.productService.getProductsOrderByRaitingDesc(PageRequest.of(0, 10));
+                        productList = this.productService.getProductsOrderByRaitingDesc(PageRequest.of(0, 9));
                         map.put("listOfProducts",productList);
 
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);

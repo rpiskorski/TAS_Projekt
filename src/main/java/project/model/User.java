@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Entity
 @Table(name="Users")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class User implements Serializable {
 
 
@@ -54,6 +53,8 @@ public class User implements Serializable {
         this.name = user.getName();
         this.password = user.getPassword();
         this.role = user.getRole();
+        this.usersP = user.getUsersP();
+        this.usersS = user.getUsersS();
 
     }
 
@@ -112,4 +113,6 @@ public class User implements Serializable {
     public void setUsersS(List<ServUser> usersS) {
         this.usersS = usersS;
     }
+
+
 }

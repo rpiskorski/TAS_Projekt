@@ -1,6 +1,7 @@
 package project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import project.repositories.UserRepository;
 
 import javax.print.attribute.standard.Severity;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 import java.util.TimeZone;
 
@@ -76,16 +78,7 @@ public class ServUserServiceImpl implements ServUserService {
             if(newComment != null){
                 newComment = comment;
             }
-//            if(rating==null) {
-//                newRating=getServUser(id).getRating();
-//            }else{
-//                newRating = rating.intValue();
-//            }
-//            if(comment == null){
-//                newComment = getServUser(id).getComment();
-//            }else{
-//                newComment=comment;
-//            }
+
             long date = Calendar.getInstance(TimeZone.getTimeZone("Europe/Warsaw")).getTimeInMillis();
 
             this.servUserRepository.updateComment(newComment, newRating, date, id);
@@ -106,6 +99,26 @@ public class ServUserServiceImpl implements ServUserService {
         }else{
             return false;
         }
+    }
+
+    public int getNumberOfServiceUsersForService(int id){
+        return this.servUserRepository.getNumberOfServiceUsersForService(id);
+    }
+
+    public int getNumberOfPagesForService(int id){
+        int numberOfProductUsers = getNumberOfServiceUsersForService(id);
+        int numberOfPages = 0;
+        if(numberOfProductUsers%10==0){
+            numberOfPages = numberOfProductUsers/10;
+        }
+        else{
+            numberOfPages = (int)(numberOfProductUsers/10)+1;
+        }
+        return numberOfPages;
+    }
+
+    public List<ServUser> getAllServiceUsers(int serviceID, Pageable pageable){
+        return this.servUserRepository.findAllServiceUsers(serviceID,pageable);
     }
 
 }

@@ -39,37 +39,29 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public int getNumberOfPages(){
-        int numberOfProducts = getNumberOfProducts();
+    public int getNumberOfPages(int numberOfProducts){
+
         int numberOfPages = 0;
-        if(numberOfProducts%10==0){
-            numberOfPages = numberOfProducts/10;
+        if(numberOfProducts%9==0){
+            numberOfPages = numberOfProducts/9;
         }
         else{
-            numberOfPages = (int)(numberOfProducts/10)+1;
+            numberOfPages = (int)(numberOfProducts/9)+1;
         }
         return numberOfPages;
     }
 
-    @Override
-    public int getNumberOfPagesInCategory(int cat_id){
 
-        int numberOfProducts = getNumberOfProductsInCategory(cat_id);
-        int numberOfPages = 0;
-        if(numberOfProducts%10==0){
-            numberOfPages = numberOfProducts/10;
-        }
-        else{
-            numberOfPages= (int)(numberOfProducts/10)+1;
-        }
-        return numberOfPages;
-    }
 
     @Override
     public int getNumberOfProductsInCategory(int cat_id){
         return this.productRepository.getNumberOfProductsInCategory(cat_id);
     }
 
+    @Override
+    public int getNumberOfProductsByManufacturer(String manufacturer_name){
+        return this.productRepository.getNumberOfProductsByManufacturer(manufacturer_name);
+    }
 
     @Override
     public Product getProductsById(int id){
@@ -91,36 +83,39 @@ public class ProductServiceImpl implements ProductService {
         return this.productRepository.getNumberOfProductsWithName(name);
     }
 
-    @Override
-    public int getNumberOfPagesWithName(String name){
 
-        int numberOfProducts = getNumberOfProductsWithName(name);
-        int numberOfPages = 0;
-        if(numberOfProducts%10==0){
-            numberOfPages = numberOfProducts/10;
-        }
-        else{
-            numberOfPages = (int)(numberOfProducts/10)+1;
-        }
-        return numberOfPages;
-
-    }
 
     public int getNumberOfProductsWithNameInCategory(int cat_id,String name){
         return this.productRepository.getNumberOfProductsWithNameInCategory(cat_id,name);
     }
-    public int getNumberOfPagesWithNameInCategory(int cat_id,String name){
 
-        int numberOfProducts = getNumberOfProductsWithNameInCategory(cat_id,name);
-        int numberOfPages = 0;
-        if(numberOfProducts%10==0){
-            numberOfPages = numberOfProducts/10;
-        }
-        else{
-            numberOfPages = (int)(numberOfProducts/10)+1;
-        }
-        return numberOfPages;
+
+    @Override
+    public List<Product> getAllProductsByManufacturer(String manufacturer_name,Pageable pageable){
+        return this.productRepository.findByManufacturer(manufacturer_name,pageable);
     }
+
+    @Override
+    public List<Product> getProductsOrderByNameByManufacturerAsc(String manufacturer_name,Pageable pageable){
+        return this.productRepository.findByManufacturerOrderedByNameAsc(manufacturer_name,pageable);
+    }
+
+    @Override
+    public List<Product> getProductsOrderByNameByManufacturerDesc(String manufacturer_name,Pageable pageable){
+        return this.productRepository.findByManufacturerOrderedByNameDesc(manufacturer_name,pageable);
+    }
+
+    @Override
+    public List<Product> getProductsOrderByRaitingByManufacturerAsc(String manufacturer_name,Pageable pageable){
+        return this.productRepository.findByManufacturerOrderedByRaitingAsc(manufacturer_name,pageable);
+    }
+
+    @Override
+    public List<Product> getProductsOrderByRaitingByManufacturerDesc(String manufacturer_name,Pageable pageable){
+        return this.productRepository.findByManufacturerOrderedByRaitingDesc(manufacturer_name,pageable);
+    }
+
+
 
     @Override
     public List<Product> getAllProductsInCategory(int cat_id,Pageable pageable){
@@ -168,15 +163,7 @@ public class ProductServiceImpl implements ProductService {
         return this.productRepository.findProductOrderByNameDesc(pageable);
     }
 
-//    @Override
-//    public List<Product> getProductsOrderByName(String asc){
-//        return this.productRepository.findProductOrderByName(asc);
-//    }
-//
-//    @Override
-//    public List<Product> getProductsOrderByRaiting(String asc){
-//        return this.productRepository.findProductOrderByRaiting(asc);
-//    }
+
 
     @Override
     public Product addProduct(Product product) {

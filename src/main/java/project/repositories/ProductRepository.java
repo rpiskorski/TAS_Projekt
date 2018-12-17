@@ -88,6 +88,31 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     @Query(value="SELECT * FROM products p ORDER BY p.avg_rating DESC",nativeQuery = true)
     List<Product> findProductOrderByRaitingDesc(Pageable pageable);
 
+    //***************************************
+
+    //Count number of products by manufacturer
+    @Query(value = "SELECT COUNT(p.id) FROM products p WHERE p.manufacturer_name=:manufacturer_name",nativeQuery = true)
+    int getNumberOfProductsByManufacturer(@Param("manufacturer_name") String manufacturer_name);
+
+    //Find All Products By Manufacturer
+    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name=:manufacturer_name", nativeQuery = true)
+    List<Product> findByManufacturer(@Param("manufacturer_name") String manufacturer_name,Pageable pageable);
+
+    //Find All Products By Manufacturer Order BY Name Ascending
+    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name=:manufacturer_name ORDER BY p.name ASC", nativeQuery = true)
+    List<Product> findByManufacturerOrderedByNameAsc(@Param("manufacturer_name") String manufacturer_name,Pageable pageable);
+
+    //Find All Products By Manufacturer Order BY Name Descending
+    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name=:manufacturer_name ORDER BY p.name DESC", nativeQuery = true)
+    List<Product> findByManufacturerOrderedByNameDesc(@Param("manufacturer_name") String manufacturer_name,Pageable pageable);
+
+    //Find All Products By Manufacturer Order BY Raiting Ascending
+    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name=:manufacturer_name ORDER BY p.avg_raiting ASC", nativeQuery = true)
+    List<Product> findByManufacturerOrderedByRaitingAsc(@Param("manufacturer_name") String manufacturer_name,Pageable pageable);
+
+    //Find All Products By Manufacturer Order By Raiting Descending
+    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name=:manufacturer_name ORDER BY p.avg_raiting DESC", nativeQuery = true)
+    List<Product> findByManufacturerOrderedByRaitingDesc(@Param("manufacturer_name") String manufacturer_name,Pageable pageable);
 
 }
 

@@ -1,46 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2f11f4d5-1593-4266-846c-71ac633cf58a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.Rhistory" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAS_Project.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/TASProjectApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/TASProjectApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/config/CsrfHeaderFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/config/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/controllers/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/controllers/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/controllers/ProductUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/controllers/ProductUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/controllers/ServController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/controllers/ServController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/controllers/ServUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/controllers/ServUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/model/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/repositories/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/repositories/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/repositories/ProductUserRespository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/repositories/ProductUserRespository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/services/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/services/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/services/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/services/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/services/ProductUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/services/ProductUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/services/ProductUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/services/ProductUserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/services/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/config/CsrfHeaderFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/config/SecurityConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/config/SecurityConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/controllers/ProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/controllers/ProductController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/controllers/ProductUserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/controllers/ProductUserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/controllers/ServController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/controllers/ServController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/controllers/ServUserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/controllers/ServUserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/controllers/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/controllers/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/model/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/model/Product.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/repositories/ProductRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/repositories/ProductRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/repositories/ProductUserRespository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/repositories/ProductUserRespository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/services/ProductService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/services/ProductService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/services/ProductServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/services/ProductServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/services/ProductUserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/services/ProductUserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/services/ProductUserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/services/ProductUserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/services/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/services/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/project/services/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/project/services/UserServiceImpl.class" afterDir="false" />
-    </list>
+    <list default="true" id="2f11f4d5-1593-4266-846c-71ac633cf58a" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -401,7 +362,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="50" y="-4" width="1231" height="1029" extended-state="6" />
+    <frame x="50" y="-11" width="1231" height="1036" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="10" weight="0.32925472" />
@@ -410,18 +371,18 @@
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.042265426" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.16276477" />
       <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.16276477" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32925472" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.284869" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28994083" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Messages" order="6" weight="0.32925472" />

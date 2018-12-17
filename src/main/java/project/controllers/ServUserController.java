@@ -2,6 +2,7 @@ package project.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -15,6 +16,11 @@ import project.model.User;
 import project.repositories.UserRepository;
 import project.services.ServService;
 import project.services.ServUserService;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -34,7 +40,15 @@ public class ServUserController {
     //Add Comment etc.
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value="/services/{id}/comments",method=RequestMethod.POST)
-    public ResponseEntity<String> createComment(@RequestBody @Nullable String comment, @RequestParam(value="rating",required = false) Integer rating, @PathVariable int id ){
+    public ResponseEntity<Map<String,Object>> createComment(@RequestBody @Nullable String comment,
+                                                            @RequestParam(value="rating",required = false) Integer rating,
+                                                            @PathVariable int id ,
+                                                            HttpServletRequest httpServletRequest){
+
+        Map<String,Object> map = new HashMap<>();
+
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
 
         //Get current logged user
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -42,19 +56,16 @@ public class ServUserController {
 
         Serv s = this.servService.getServicesById(id);
 
-        if(currentUser==null){
-
-            return new ResponseEntity<String>("Log in first to add a comment!", HttpStatus.BAD_REQUEST);
-        }
-        else{
-
             if(s==null){
-                return new ResponseEntity<String>("Service does not exist!", HttpStatus.BAD_REQUEST);
+                map.put("message","Service does not exist!");
+
+                return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
             }else {
 
                 if (this.servUserService.checkIfExists(id, currentUser.getId())) {
 
-                    return new ResponseEntity<String>("Your comment already exists!", HttpStatus.BAD_REQUEST);
+                    map.put("message","Your comment already exists!");
+                    return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
 
                 } else {
 
@@ -64,14 +75,16 @@ public class ServUserController {
                     if(rating==null){
                         if(comment==null){
 
-                            return new ResponseEntity<String>("Add a comment or rating first!", HttpStatus.BAD_REQUEST);
+                            map.put("message","Add a comment or rating first!");
+                            return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
                         }
                     }
                     else{
                         if (rating.intValue() >= 0 && rating.intValue()<=6) {
                             servUser.setRating(rating.intValue());
                         }else{
-                            return new ResponseEntity<String>("Rating has to be equal or greater than 0 and equal or greater than 6!", HttpStatus.BAD_REQUEST);
+                            map.put("message","Rating has to be equal or greater than 0 and equal or greater than 6!");
+                            return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
                         }
                        }
 
@@ -79,28 +92,34 @@ public class ServUserController {
                     servUser.setService(s);
                     servUser.setUserS(currentUser);
                     this.servUserService.add(servUser);
-                    return new ResponseEntity<String>("Comment added successfully!", HttpStatus.CREATED);
+
+                    map.put("message","Comment added successfully!");
+                    return new ResponseEntity<Map<String,Object>>(map, HttpStatus.CREATED);
                 }
             }
-        }
+
     }
 
     //Delete Comment
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value = "/services/{id}/comments/{commentId}",method=RequestMethod.DELETE)
-    public ResponseEntity<String> deleteComment(@PathVariable int commentId,@PathVariable int id)
+    public ResponseEntity<Map<String,Object>> deleteComment(@PathVariable int commentId,
+                                                            @PathVariable int id,
+                                                            HttpServletRequest httpServletRequest)
     {
+        Map<String,Object> map = new HashMap<>();
+
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
+
+
         //Get current logged user
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser=userRepository.findOneByName(userDetails.getUsername());
 
-        if(currentUser==null){
-
-            return new ResponseEntity<String>("Log in first to delete a comment!", HttpStatus.BAD_REQUEST);
-        }
-        else {
             if (this.servService.getServicesById(id) == null) {
-                return new ResponseEntity<String>("Service does not exist!", HttpStatus.BAD_REQUEST);
+                map.put("message","Service does not exist!");
+                return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
             } else {
                 if (this.servUserService.checkIfExists(commentId)) {
 
@@ -109,40 +128,109 @@ public class ServUserController {
 
                     if (currentUser.getId() == OwnerId || currentUser.getRole().getName().contentEquals("ADMIN")) {
                         this.servUserService.delete(commentId);
-                        return new ResponseEntity<String>("Comment deleted successfully!", HttpStatus.OK);
+
+                        map.put("message","Comment deleted successfully!");
+                        return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     } else {
-                        return new ResponseEntity<String>("You don't have permission to delete this comment!", HttpStatus.OK);
+                        map.put("message","You don't have permission to delete this comment!");
+                        return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     }
                 } else {
-                    return new ResponseEntity<String>("Comment does not exist!", HttpStatus.NOT_FOUND);
+                    map.put("message","Comment does not exist!");
+                    return new ResponseEntity<Map<String,Object>>(map, HttpStatus.NOT_FOUND);
                 }
             }
-        }
+//        }
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value="/services/{id}/comments/{commentId}",method=RequestMethod.PUT)
-    public ResponseEntity<String> editComment(@RequestBody @Nullable String comment, @RequestParam(value="rating",required = false) Integer rating, @PathVariable int commentId,@PathVariable int id) {
+    public ResponseEntity<Map<String,Object>> editComment(@RequestBody @Nullable String comment,
+                                              @RequestParam(value="rating",required = false) Integer rating,
+                                              @PathVariable int commentId,@PathVariable int id,
+                                              HttpServletRequest httpServletRequest)
+    {
+        Map<String,Object> map = new HashMap<>();
+
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
 
         if(this.servService.getServicesById(id)!=null && this.servUserService.editComment(comment,rating,commentId)){
-            return new ResponseEntity<String>("Edited successfully!",HttpStatus.OK);
+
+            map.put("message","Edited successfully!");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<String>("Comment does not exist or you don't have permission!",HttpStatus.BAD_REQUEST);
+            map.put("message","Comment does not exist or you don't have permission!");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
 
     }
 
+
+
+    //Get Comment by id
     @RequestMapping(value="services/{id}/comments/{commentId}",method = RequestMethod.GET)
-    public ResponseEntity<ServUser> getCommentsById(@PathVariable int id,@PathVariable int commentId){
+    public ResponseEntity<Map<String,Object>> getCommentsById(@PathVariable int id,
+                                                              @PathVariable int commentId,
+                                                              HttpServletRequest httpServletRequest){
+        Map<String,Object> map = new HashMap<>();
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
+
         Serv service = this.servService.getServicesById(id);
         ServUser su = this.servUserService.getServUser(commentId);
+
         if(service!=null && su!=null){
-            return new ResponseEntity<ServUser>(su,HttpStatus.OK);
+            map.put("comment",su);
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<ServUser>(su,HttpStatus.BAD_REQUEST);
+            map.put("comment","empty");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
+    }
+
+    //Get all comments
+    @RequestMapping(value="services/{id}/comments",method = RequestMethod.GET)
+    public ResponseEntity<Map<String,Object>> getComments(@RequestParam(value = "page",required = false) Integer pageNumber,
+                                                          @PathVariable int id,
+                                                          HttpServletRequest httpServletRequest){
+        Serv service = this.servService.getServicesById(id);
+
+        int numberOfPages = this.servUserService.getNumberOfPagesForService(id);
+        int numberOfServUsers = this.servUserService.getNumberOfServiceUsersForService(id);
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        List<ServUser> serviceUsersList;
+
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
+
+        map.put("sumOfComments",numberOfServUsers);
+        map.put("sumOfPages",numberOfPages);
+
+
+        if(numberOfPages!=0) {
+            if (pageNumber != null && pageNumber.intValue() >= 1 && pageNumber.intValue() <= numberOfPages) {
+
+                serviceUsersList = this.servUserService.getAllServiceUsers(id, PageRequest.of(pageNumber.intValue() - 1, 10));
+                map.put("listOfComments",serviceUsersList);
+
+                return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+            } else {
+
+                serviceUsersList = this.servUserService.getAllServiceUsers(id, PageRequest.of(0, 10));
+                map.put("listOfComments",serviceUsersList);
+
+                return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+            }
+        }else{
+
+            map.put("listOfComments","empty");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.NOT_FOUND);
+        }
+
     }
 
 

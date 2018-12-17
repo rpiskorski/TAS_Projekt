@@ -14,10 +14,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableJpaRepositories("project.repositories")
 
 public class TASProjectApp {
-
     public static void main(String[] args){
         SpringApplication.run(TASProjectApp.class,args);
 
-        }
+
+
+    }
+
+
 
 }

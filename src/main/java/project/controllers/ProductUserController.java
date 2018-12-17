@@ -16,6 +16,7 @@ import project.repositories.UserRepository;
 import project.services.ProductService;
 import project.services.ProductUserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
@@ -40,7 +41,16 @@ public class ProductUserController {
     //Add Comment etc.
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value="/products/{id}/comments",method=RequestMethod.POST)
-    public ResponseEntity<String> createComment(@RequestBody @Nullable String comment,@RequestParam(value="rating",required = false) Integer rating,@PathVariable int id ){
+    public ResponseEntity<Map<String,Object>> createComment(@RequestBody @Nullable String comment,
+                                                @RequestParam(value="rating",required = false) Integer rating,
+                                                @PathVariable int id,
+                                                HttpServletRequest httpServletRequest){
+
+
+        Map<String,Object> map = new HashMap<>();
+
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
 
         //Get current logged user
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -48,59 +58,66 @@ public class ProductUserController {
 
         Product p = this.productService.getProductsById(id);
 
-        if(currentUser==null){
 
-            return new ResponseEntity<String>("Log in first to add a comment!", HttpStatus.BAD_REQUEST);
-        }
-        else{
 
             if(p==null){
-                return new ResponseEntity<String>("Product does not exist!", HttpStatus.BAD_REQUEST);
+                map.put("message","Product does not exist!");
+                return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
             }else {
 
                 if (this.productUserService.checkIfExists(id, currentUser.getId())) {
-                    return new ResponseEntity<String>("Your comment already exists!", HttpStatus.BAD_REQUEST);
+                    map.put("message","Your comment already exists!");
+                    return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
                 } else {
 
                     ProductUser productUser = new ProductUser();
                     if(rating==null){
                         if(comment == null){
-                            return new ResponseEntity<String>("Add a comment or rating first!", HttpStatus.BAD_REQUEST);
+                            map.put("message","Add a comment or rating first!");
+                            return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
                         }
                         }
                     else {
                         if (rating.intValue() >= 0 && rating.intValue()<=6) {
                             productUser.setRating(rating.intValue());
                         }else{
-                            return new ResponseEntity<String>("Rating has to be equal or greater than 0 and equal or greater than 6!", HttpStatus.BAD_REQUEST);
+                            map.put("message","Rating has to be equal or greater than 0 and equal or greater than 6!");
+                            return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
                         }
                     }
                     productUser.setComment(comment);
                     productUser.setProduct(p);
                     productUser.setUserP(currentUser);
                     this.productUserService.add(productUser);
-                    return new ResponseEntity<String>("Comment added successfully!", HttpStatus.CREATED);
+                    map.put("message","Comment added successfully!");
+                    return new ResponseEntity<Map<String,Object>>(map, HttpStatus.CREATED);
                 }
             }
-        }
+//        }
     }
 
     //Delete Comment
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value = "/products/{id}/comments/{commentId}",method=RequestMethod.DELETE)
-    public ResponseEntity<String> deleteComment(@PathVariable int commentId,@PathVariable int id)
+    public ResponseEntity<Map<String,Object>> deleteComment(@PathVariable int commentId,
+                                                            @PathVariable int id,
+                                                            HttpServletRequest httpServletRequest)
     {
+
+
+        Map<String,Object> map = new HashMap<>();
+
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
+
         //Get current logged user
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser=userRepository.findOneByName(userDetails.getUsername());
 
-        if(currentUser==null){
 
-            return new ResponseEntity<String>("Log in first to delete a comment!", HttpStatus.BAD_REQUEST);
-        }
-        else {
             if (this.productService.getProductsById(id) == null) {
-                return new ResponseEntity<String>("Product does not exist!", HttpStatus.BAD_REQUEST);
+                map.put("message","Product does not exist!");
+                return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
             } else {
                 if (this.productUserService.checkIfExists(commentId)) {
 
@@ -109,57 +126,87 @@ public class ProductUserController {
 
                     if (currentUser.getId() == OwnerId || currentUser.getRole().getName().contentEquals("ADMIN")) {
                         this.productUserService.delete(commentId);
-                        return new ResponseEntity<String>("Comment deleted successfully!", HttpStatus.OK);
+                        map.put("message","Comment deleted successfully!");
+                        return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     } else {
-                        return new ResponseEntity<String>("You don't have permission to delete this comment!", HttpStatus.OK);
+                        map.put("message","You don't have permission to delete this comment!");
+                        return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     }
                 } else {
-                    return new ResponseEntity<String>("Comment does not exist!", HttpStatus.NOT_FOUND);
+                    map.put("message","Comment does not exist!");
+                    return new ResponseEntity<Map<String,Object>>(map, HttpStatus.NOT_FOUND);
                 }
             }
         }
-    }
+
+
+
+
     //Edit
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value="/products/{id}/comments/{commentId}",method=RequestMethod.PUT)
-    public ResponseEntity<String> editComment(@RequestBody @Nullable String comment, @RequestParam(value="rating",required = false) Integer rating, @PathVariable int commentId,@PathVariable int id) {
+    public ResponseEntity<Map<String,Object>> editComment(@RequestBody @Nullable String comment,
+                                                          @RequestParam(value="rating",required = false) Integer rating,
+                                                          @PathVariable int commentId,
+                                                          @PathVariable int id,
+                                                          HttpServletRequest httpServletRequest) {
+
+        Map<String,Object> map = new HashMap<>();
+
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
 
         if(this.productService.getProductsById(id)!=null && this.productUserService.editComment(comment,rating,commentId)){
-            return new ResponseEntity<String>("Edited successfully!",HttpStatus.OK);
+            map.put("message","Edited successfully!");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<String>("Comment does not exist or you don't have permission!",HttpStatus.BAD_REQUEST);
+            map.put("message","Comment does not exist or you don't have permission!");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
-
-    }
+   }
 
     //Get comment by id
     @RequestMapping(value="products/{id}/comments/{commentId}",method = RequestMethod.GET)
-    public ResponseEntity<Object> getCommentsById(@PathVariable int id,@PathVariable int commentId){
+    public ResponseEntity<Map<String,Object>> getCommentsById(@PathVariable int id,
+                                                              @PathVariable int commentId,
+                                                              HttpServletRequest httpServletRequest){
+        Map<String,Object> map = new HashMap<>();
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
+
         Product product = this.productService.getProductsById(id);
         ProductUser pu = this.productUserService.getProductUser(commentId);
         if(product!=null && pu!=null){
-            return new ResponseEntity<Object>(pu,HttpStatus.OK);
+            map.put("comment",pu);
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<Object>("Comment does not exist!",HttpStatus.BAD_REQUEST);
+            map.put("comment","empty");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
     }
 
     //Get all comments
     @RequestMapping(value="products/{id}/comments",method = RequestMethod.GET)
-    public ResponseEntity<Map<String,Object>> getComments(@RequestParam(value = "page",required = false) Integer pageNumber,@PathVariable int id){
+    public ResponseEntity<Map<String,Object>> getComments(@RequestParam(value = "page",required = false) Integer pageNumber,
+                                                          @PathVariable int id,
+                                                          HttpServletRequest httpServletRequest){
         Product product = this.productService.getProductsById(id);
-//        List<ProductUser> pu = this.productUserService.getAllProductUsers(id,PageRequest.of(pageNumber.intValue()-1,10));
+
 
         int numberOfPages = this.productUserService.getNumberOfPagesForProduct(id);
         int numberOfProductUsers = this.productUserService.getNumberOfProductUsersForProduct(id);
+
 
         Map<String,Object> map = new HashMap<String,Object>();
         List<ProductUser> productUsersList;
 
         map.put("sumOfComments",numberOfProductUsers);
         map.put("sumOfPages",numberOfPages);
+
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
 
 
         if(numberOfPages!=0) {

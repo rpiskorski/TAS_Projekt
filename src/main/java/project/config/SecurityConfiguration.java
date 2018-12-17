@@ -1,13 +1,9 @@
 package project.config;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpMethod;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -16,17 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.security.web.session.SessionManagementFilter;
-import org.springframework.stereotype.Component;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
-
-
-import javax.sql.DataSource;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import project.services.UserServiceImpl;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
@@ -34,30 +21,21 @@ import javax.sql.DataSource;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
-    private DataSource dataSource;
-
+    private UserServiceImpl userDetailsService;
 
     @Override
     public void configure(AuthenticationManagerBuilder authManBuild) throws Exception{
 
-        authManBuild.jdbcAuthentication()
-                .dataSource(this.dataSource)
-                .passwordEncoder(this.bCryptPasswordEncoder)
-                .usersByUsernameQuery("select name,password,enabled from users where name=?")
-                .authoritiesByUsernameQuery("select name,role from users where name=?");
-
-
+        authManBuild
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.cors().and()
-                .httpBasic()
-                .and()
+
+        http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/products").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers(HttpMethod.POST,"/services").hasAnyAuthority("ADMIN","USER")
@@ -68,26 +46,45 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,"/products/**").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers(HttpMethod.DELETE,"/products/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/products/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers(HttpMethod.POST,"/services/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers(HttpMethod.DELETE,"/services/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/services/**").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/register**").anonymous()
-                 .antMatchers("/services**").permitAll()
+                .antMatchers("/services**").permitAll()
                 .antMatchers("/products**").permitAll()
                 .antMatchers("/categories**").permitAll()
+                .antMatchers("/login**").permitAll()
                 .antMatchers(HttpMethod.GET,"/users").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/users/*").hasAuthority("ADMIN")
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("name")
-                .passwordParameter("password")
+                .exceptionHandling().authenticationEntryPoint(unauthHandler)
                 .and()
-                .logout()
-                .and()
-                .exceptionHandling().accessDeniedPage("/403")
-                .and()
-                .csrf().disable();
-
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(jwtAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class);
 
     }
+
+
+    public static final String TOKEN_HEADER = "Authorization";
+    public static final String TOKEN_SCHEME = "Bearer ";
+    public static final String TOKEN_KEY = "TAS_Projekt";
+    public static final long TOKEN_VALIDITY = 5*60;
+
+
+
+
+    @Autowired
+    private JwtAuthenticationEntryPoint unauthHandler;
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter(){
+
+        return new JwtAuthenticationFilter();
+    }
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
 
 
     @Bean
@@ -95,6 +92,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder;
     }
+
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+
+
 
 
 
