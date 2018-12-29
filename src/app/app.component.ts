@@ -1,28 +1,28 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-// import { AppServiceService } from './app-service.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'tas';
+export class AppComponent implements OnInit {
 
-  // constructor(
-  //   private app: AppServiceService,
-  //   private http: HttpClient,
-  //   private router: Router ) {
-  //     this.app.authenticate(undefined, undefined);
-  //   }
+  private authenticated = false;
 
-  // logout() {
-  //   // finally() ?
-  //   this.http.post('logout', {}).lift(() => {
-  //     this.app.authenticated = false;
-  //     this.router.navigateByUrl('/login');
-  //   }).subscribe();
-  // }
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authenticated = this.authService.isAuthenticated();
+  }
+
+  logout() {
+    this.authenticated = false;
+    this.authService.logout();
+  }
+
+  onLoggedIn(czo: boolean) {
+    console.log("hi");
+    this.authenticated = czo;
+  }
 }

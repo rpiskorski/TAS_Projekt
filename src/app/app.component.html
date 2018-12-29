@@ -17,17 +17,23 @@
 	  </li>
 	  <li class="nav-item active">
         <a class="nav-link" routerLink="/login">Logowanie</a>
-	  </li>
-	  <li class="nav-item active">
-        <a class="nav-link" routerLink="/product-form">Dodaj produkt</a>
-	  </li>
-	  <li class="nav-item active">
-        <a class="nav-link" routerLink="/service-form">Dodaj usługę</a>
+    </li>
+    <div  (loggedIn)="onLoggedIn($event)">
+      aaa
+    </div>
+    <div *ngIf="authenticated">
+      <li class="nav-item active">
+          <a class="nav-link" routerLink="/product-form">Dodaj produkt</a>
       </li>
+      <li class="nav-item active">
+          <a class="nav-link" routerLink="/service-form">Dodaj usługę</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/login" (click)="logout()">Wyloguj</a>
+      </li>
+    </div>
     </ul>
   </div>
 </nav>
 
 <router-outlet></router-outlet>
-<!-- <app-messages></app-messages> -->
-<!-- <app-services></app-services> -->

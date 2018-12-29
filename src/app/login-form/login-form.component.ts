@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 import { User } from '../user';
-// import { AppServiceService } from '../app-service.service';
-import { HttpClient } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-form',
@@ -16,26 +16,21 @@ export class LoginFormComponent implements OnInit {
 
   model = new User('', '');
 
+  @Output() loggedIn = new EventEmitter<boolean>();
+
   onSubmit() {
     this.submitted = true;
-    // console.log(this.model.username);
-    // console.log(this.model.password);
-
+    this.authSerivce.login(this.model).subscribe(data => {
+      if (!(data instanceof HttpErrorResponse)) {
+        this.loggedIn.emit(true);
+        this.router.navigate(['profile']);
+      }
+    });
   }
 
   constructor(
-    // private route: ActivatedRoute,
-    // private http: HttpClient,
-    // private router: Router
-    ) { }
+    private authSerivce: AuthService,
+    private router: Router) { }
 
-  ngOnInit() {
-  }
-
-  // login() {
-  //   this.app.authenticate(this.model, () => {
-  //     this.router.navigateByUrl('/profile');
-  //   });
-  //   return false;
-  // }
+  ngOnInit() {}
 }

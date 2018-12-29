@@ -21,7 +21,7 @@ export class UserService {
 
   constructor(
     private httpClient: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService) {}
 
   register(user: User) {
     const url = 'http://localhost:8080/api/register';

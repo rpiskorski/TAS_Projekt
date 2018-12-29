@@ -15,8 +15,6 @@ export class ProductDetailComponent implements OnInit {
 
   product: Product;
 
-  // public productUsers: ProductUser[];
-
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService) { }
@@ -27,8 +25,9 @@ export class ProductDetailComponent implements OnInit {
 
   getProduct() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.productService.getProduct(id).subscribe(product => this.product = { ...product });
-    // this.productService.getProductUsers(id).subscribe(productUsers => this.productUsers = productUsers);
+    this.productService.getProduct(id).subscribe(data => {
+      this.product = data['product'];
+    });
   }
 
   // getProductUsers() {

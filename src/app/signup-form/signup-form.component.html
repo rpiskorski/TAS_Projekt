@@ -1,30 +1,33 @@
 <!-- TODO Walidacja, stany formularza dirty/touched/etc -->
-<h1>Zarejestruj się</h1>
 
-<div class="container">
-	<div class="row">
-		<div class="col-sm-4 offset-sm-4">
-			<form (ngSubmit)="onSubmit()" #signupForm="ngForm">
-			<div class="form-group">
+<div>
+	<h1>Zarejestruj się</h1>
 
-			  <div>
-				<label for="name">Login</label>
-				<input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel" class="form-control">
-			  </div>
+	<div  class="container">
+		<div class="row">
+			<div class="col-sm-4 offset-sm-4">
+				<form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+				<div class="form-group">
 
-			  <div>
-				<label for="password">Hasło</label>
-				<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
-			  </div>
-			  
-			  <div>
-				<label for="password">Powtórz hasło</label>
-				<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
-			  </div>
-			  <br>
-			  <button type="submit" [disabled]="!signupForm.form.valid" class="btn btn-primary">Zarejestruj</button>
-			  </div>
-			</form>
+					<div>
+					<label for="name">Login</label>
+					<input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel" class="form-control">
+					</div>
+
+					<div>
+					<label for="password">Hasło</label>
+					<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
+					</div>
+					
+					<div>
+					<label for="password">Powtórz hasło</label>
+					<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
+					</div>
+					<br>
+					<button type="submit" [disabled]="!signupForm.form.valid" class="btn btn-primary">Zarejestruj</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>

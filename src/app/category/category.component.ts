@@ -38,7 +38,9 @@ export class CategoryComponent implements OnInit {
   }
 
   getCategory(id: number) {
-    this.categoryService.getCategory(id).subscribe(category => this.category = category);
+    this.categoryService.getCategory(id).subscribe(data => {
+      this.category = data['category'];
+    });
   }
 
   getProducts(id: number) {

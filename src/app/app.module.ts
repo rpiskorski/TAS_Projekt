@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -24,6 +24,7 @@ import { ServiceSearchComponent } from './service-search/service-search.componen
 import { ItemSearchComponent } from './item-search/item-search.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProductCommentsComponent } from './product-comments/product-comments.component';
+import { TokenInterceptor } from './token-interceptor';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,11 @@ import { ProductCommentsComponent } from './product-comments/product-comments.co
     AppRoutingModule,
     NgxPaginationModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
