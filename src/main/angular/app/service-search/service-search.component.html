@@ -1,0 +1,11 @@
+<div class="col-sm-4 offset-sm-4">
+<h2>Wyszukaj usługę</h2>
+<input #searchBox (keyup)="search(searchBox.value)" class="form-control">
+</div>
+<ul>
+  <li *ngFor="let service of services$ | async">
+    <a routerLink="./{{service.id}}">
+      {{service.name}}
+    </a>
+  </li>
+</ul>

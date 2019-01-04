@@ -1,0 +1,20 @@
+<div *ngIf="product">
+  <!-- <div>{{product.name}}</div> -->
+  <!-- <div>{{product.manufacturer_name}}</div> -->
+  <!-- <div>{{product.cat.name}}</div> -->
+  <!-- <div>{{product.raiting}}</div> -->
+  
+  <div class="text-center"><p><a routerLink="/categories/{{ product.cat.id }}">{{product.cat.name}}</a> >> {{product.manufacturer_name}} >> {{product.name}}</p></div>
+  <p class="text-center"><img src="http://sklepmati.pl/img/cms/2017.03/Produkt%20polski.jpg" /></p>
+  <p class="text-center">Średnia ocen:{{ product.raiting }} <button (click)="delete(product)">Usuń</button></p>
+  
+  
+  <!-- <button (click)="delete(product)">Usuń</button> -->
+  <!-- <div *ngFor="let productUser of productUsers">
+    <div>{{productUser.id}}</div>
+  </div> -->
+  <app-product-comments></app-product-comments>
+  
+</div>
+
+<app-messages></app-messages>

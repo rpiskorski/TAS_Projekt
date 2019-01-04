@@ -1,0 +1,66 @@
+<h1 align="center"> Produkty </h1>
+
+<div class="container">
+
+	<app-product-search></app-product-search>
+
+	<pagination-controls (pageChange)="p = changePage($event)"></pagination-controls>
+
+	<div *ngFor="let product of products | paginate: { itemsPerPage: 9, currentPage: p, totalItems: productCount }; let i = index">
+
+	<!-- <div *ngIf="product.id % 3 == 1; then rowBlock"></div> -->
+	<div *ngIf="i % 3 == 0; then rowBlock"></div>
+		<ng-template #rowBlock>
+		<div  class="row">
+			<div class="col-sm-4">
+				<div *ngIf="i < productsOnPage">
+				<h2 class="text-center"><a routerLink="/products/{{products[i].id}}">{{ products[i].name }}</a></h2>
+				<p align="justify">Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker
+					<a routerLink="/products/{{product.id}}" rel="nofollow">Więcej...</a>
+				</p>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div *ngIf="i+1 < productsOnPage">
+				<h2 class="text-center"><a routerLink="/products/{{products[i+1].id}}">{{ products[i+1].name }}</a></h2>
+				<p align="justify">Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker
+					<a routerLink="/products/{{product.id}}" rel="nofollow">Więcej...</a>
+				</p>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div *ngIf="i+2 < productsOnPage">
+
+				<h2 class="text-center"><a routerLink="/products/{{products[i+2].id}}">{{ products[i+2].name }}</a></h2>
+				<p align="justify">Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker
+					<a routerLink="/products/{{product.id}}" rel="nofollow">Więcej...</a>
+				</p>
+
+		</div>
+		</div>
+		</div>
+		</ng-template>
+		<!-- <div *ngIf="product.id % 3 == 1; then rowBlock else colBlock"></div> -->
+		<!-- Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker
+Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker
+Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker -->
+		<!-- <ng-template #rowBlock> -->
+		<!-- <div  class="row"> -->
+			<!-- <div class="col-sm-4"> -->
+				<!-- <h2 class="text-center"><a routerLink="/products/{{product.id}}">{{ product.name }}</a></h2> -->
+				<!-- <p align="justify">Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker -->
+					<!-- <a routerLink="/products/{{product.id}}" rel="nofollow">Więcej...</a> -->
+				<!-- </p> -->
+			<!-- </div> -->
+		<!-- </div> -->
+		<!-- </ng-template> -->
+		<!-- <ng-template #colBlock> -->
+			<!-- <div class="col-sm-4"> -->
+				<!-- <h2 class="text-center"><a routerLink="/products/{{product.id}}">{{ product.name }}</a></h2> -->
+				<!-- <p align="justify">Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker -->
+					<!-- <a routerLink="/products/{{product.id}}" rel="nofollow">Więcej...</a> -->
+				<!-- </p> -->
+			<!-- </div></ng-template> -->
+
+</div>
+</div>

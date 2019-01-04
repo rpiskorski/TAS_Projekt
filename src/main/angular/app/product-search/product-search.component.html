@@ -1,0 +1,11 @@
+<div class="col-sm-4 offset-sm-4">
+<h2>Wyszukaj produkt</h2>
+<input #searchBox (keyup)="search(searchBox.value)" class="form-control">
+</div>
+<ul>
+  <li *ngFor="let product of products$ | async">
+    <a routerLink="./{{product.id}}">
+      {{product.name }}
+    </a>
+  </li>
+</ul>

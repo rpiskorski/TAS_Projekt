@@ -1,0 +1,30 @@
+<!-- <div *ngIf="productComments"> -->
+  <!-- <div *ngFor="let comment of productComments"> -->
+    <!-- <div>{{ comment.userP.name }}</div> -->
+    <!-- <div> {{ new Date(comment.timestamp) }} </div> -->
+    <!-- <div>{{ comment.rating }}</div> -->
+    <!-- <div>{{ comment.comment }} </div> -->
+  <!-- </div> -->
+<!-- </div> -->
+
+<div *ngIf="productComments" class="container">
+<table class="table">
+<tr>
+	<th>Nazwa uzytkownika</th>
+	<th>Komentarz</th>
+	<th>Ocena</th>
+</tr>
+  <tr *ngFor="let comment of productComments">
+    <!-- <div>{{ comment.userP.name }}</div> -->
+    <!-- <div> {{ new Date(comment.timestamp) }} </div> -->
+    <!-- <div>{{ comment.rating }}</div> -->
+    <!-- <div>{{ comment.comment }} </div> -->
+			<td>{{ comment.userP.name }}</td>
+			<td>{{ comment.comment }}</td>
+			<td>{{ comment.rating }}</td>
+	
+  </tr>
+</table>
+</div>
+
+<!-- <app-messages></app-messages> -->

@@ -23,9 +23,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserServiceImpl userDetailsService;
 
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
     @Override
     public void configure(AuthenticationManagerBuilder authManBuild) throws Exception{
-
         authManBuild
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
@@ -49,11 +60,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,"/services/**").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers(HttpMethod.DELETE,"/services/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/services/**").hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/register**").anonymous()
+                .antMatchers(HttpMethod.POST,"/login").anonymous()
+                .antMatchers("/register").anonymous()
                 .antMatchers("/services**").permitAll()
                 .antMatchers("/products**").permitAll()
                 .antMatchers("/categories**").permitAll()
-                .antMatchers("/login**").permitAll()
                 .antMatchers(HttpMethod.GET,"/users").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/users/*").hasAuthority("ADMIN")
                 .and()
@@ -68,7 +79,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_SCHEME = "Bearer ";
     public static final String TOKEN_KEY = "TAS_Projekt";
-    public static final long TOKEN_VALIDITY = 5*60;
+    public static final long TOKEN_VALIDITY = 1*60;
 
 
 
@@ -87,18 +98,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
-    }
 
-
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
 
 
 

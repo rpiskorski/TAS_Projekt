@@ -3,6 +3,7 @@ package project.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,7 +41,7 @@ public class ProductUserController {
 
     //Add Comment etc.
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    @RequestMapping(value="/products/{id}/comments",method=RequestMethod.POST)
+    @RequestMapping(value="/products/{id}/comments",method=RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> createComment(@RequestBody @Nullable String comment,
                                                 @RequestParam(value="rating",required = false) Integer rating,
                                                 @PathVariable int id,
@@ -98,7 +99,7 @@ public class ProductUserController {
 
     //Delete Comment
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    @RequestMapping(value = "/products/{id}/comments/{commentId}",method=RequestMethod.DELETE)
+    @RequestMapping(value = "/products/{id}/comments/{commentId}",method=RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> deleteComment(@PathVariable int commentId,
                                                             @PathVariable int id,
                                                             HttpServletRequest httpServletRequest)
@@ -144,7 +145,7 @@ public class ProductUserController {
 
     //Edit
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    @RequestMapping(value="/products/{id}/comments/{commentId}",method=RequestMethod.PUT)
+    @RequestMapping(value="/products/{id}/comments/{commentId}",method=RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> editComment(@RequestBody @Nullable String comment,
                                                           @RequestParam(value="rating",required = false) Integer rating,
                                                           @PathVariable int commentId,
@@ -167,7 +168,7 @@ public class ProductUserController {
    }
 
     //Get comment by id
-    @RequestMapping(value="products/{id}/comments/{commentId}",method = RequestMethod.GET)
+    @RequestMapping(value="products/{id}/comments/{commentId}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getCommentsById(@PathVariable int id,
                                                               @PathVariable int commentId,
                                                               HttpServletRequest httpServletRequest){
@@ -188,7 +189,7 @@ public class ProductUserController {
     }
 
     //Get all comments
-    @RequestMapping(value="products/{id}/comments",method = RequestMethod.GET)
+    @RequestMapping(value="products/{id}/comments",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getComments(@RequestParam(value = "page",required = false) Integer pageNumber,
                                                           @PathVariable int id,
                                                           HttpServletRequest httpServletRequest){

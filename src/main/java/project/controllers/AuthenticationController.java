@@ -2,7 +2,9 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,6 +16,7 @@ import project.model.LoginForm;
 import project.model.User;
 import project.services.UserService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -32,26 +35,38 @@ public class AuthenticationController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public ResponseEntity generateToken(@RequestBody LoginForm loginForm){
-        System.out.println(loginForm.getName());
-        final Authentication authentication = this.authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginForm.getName(),loginForm.getPassword()));
+    @PreAuthorize("isAnonymous()")
+    @RequestMapping(value = "/login",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String,Object> generateToken(@RequestBody LoginForm loginForm,
+                                            HttpServletResponse httpServletResponse){
 
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        Optional<User> userFromDatabase = this.userService.getUsersByName(loginForm.getName());
         String token="";
         Map<String,Object> map = new HashMap<>();
+
+        Optional<User> userFromDatabase = this.userService.getUsersByName(loginForm.getName());
+
+         Authentication authentication =null;
+
         if(userFromDatabase.isPresent()){
+
+            authentication = this.authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(loginForm.getName(),loginForm.getPassword()));
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
             token = this.tokenHelper.generateToken(userFromDatabase.get());
             map.put("token",token);
-            return ResponseEntity.ok(map);
-        }else{
 
-            map.put("message","Wrong login or password!");
-            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
+            httpServletResponse.setStatus(200);
+            return map;
+        }
+            else{
+            map.put("message","Niepoprawne login lub hasło");
+
+            httpServletResponse.setStatus(460);
+            return map;
         }
 
     }

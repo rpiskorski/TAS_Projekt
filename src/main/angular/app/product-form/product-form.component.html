@@ -1,0 +1,35 @@
+<div>
+  <h2 class="text-center">Dodaj nowy produkt</h2>
+  <!-- {{ diagnostic }} -->
+  <div class="container">
+  <div class="row">
+  <div class="col-sm-4 offset-sm-4">
+  <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+	<div class="form-group">
+    <div>
+      <label for="name">Nazwa</label>
+      <input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel" class="form-control">
+    </div>
+
+    <div>
+      <label for="manufacturer">Producent</label>
+      <input type="text" required [(ngModel)]="model.manufacturer_name" name="manufacturer" #manufacturer="ngModel" class="form-control">
+    </div>
+
+    <div>
+      <label for="category">Kategoria</label>
+      <select id="cat" required [(ngModel)]="model.cat.id" name="category" #category="ngModel" class="form-control">
+        <option *ngFor="let category of categories" value="{{ category.id }}">
+          {{ category.name }}
+        </option>
+      </select>
+    </div>
+	<br />
+    <button type="submit" [disabled]="!productForm.form.valid" class="btn btn-primary">Dodaj</button>
+	</div>
+  </form>
+</div>
+</div>
+</div>
+
+<app-messages></app-messages>

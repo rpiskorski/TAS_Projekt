@@ -31,21 +31,40 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws IOException, ServletException {
 
+        HttpServletRequest request = httpServletRequest;
+        HttpServletResponse response = httpServletResponse;
+
         String header = httpServletRequest.getHeader(TOKEN_HEADER);
         String name = null;
         String tokenAuth = null;
 
-        if(header != null && header.startsWith(TOKEN_SCHEME)){
+        if(header!=null && header.startsWith(TOKEN_SCHEME)){
             tokenAuth = header.replace(TOKEN_SCHEME,"");
             try{
                 name = tokenHelper.getUsernameFromToken(tokenAuth);
             } catch (IllegalArgumentException e) {
+                request.setAttribute("token","token is invalid");
                 logger.error("an error occured during getting username from token", e);
             } catch (ExpiredJwtException e) {
+                request.setAttribute("token","token is expired");
+                //filterChain.doFilter(request,response);
                 logger.warn("the token is expired and not valid anymore", e);
             } catch(SignatureException e){
+                request.setAttribute("token","token is invalid");
                 logger.error("Authentication Failed. Username or Password not valid.");
             }
+
+//            if(this.tokenHelper.isTokenExpired(tokenAuth)){
+//                httpServletRequest.setAttribute("token","token is expired");
+//                filterChain.doFilter(httpServletRequest,httpServletResponse);
+//            }else{
+//                try {
+//                    name = tokenHelper.getUsernameFromToken(tokenAuth);
+//                }catch (IllegalArgumentException e) {
+//                logger.error("an error occured during getting username from token", e);
+//                }catch(SignatureException e){
+//                logger.error("Authentication Failed. Username or Password not valid.");
+//            }}
         }else{
             logger.warn("Couldn't find Bearer String");
         }
@@ -57,7 +76,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails,SecurityContextHolder.getContext().getAuthentication(),userDetails.getAuthorities());
                 String token = this.tokenHelper.refreshToken(tokenAuth);
 
-                httpServletRequest.setAttribute("token",token);
+//                httpServletRequest.setAttribute("token",token);
+                request.setAttribute("token",token);
 
                 SecurityContextHolder.getContext().setAuthentication(auth);
                 logger.info("Authenticated user "+name);
@@ -65,6 +85,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
 
-        filterChain.doFilter(httpServletRequest,httpServletResponse);
+//        filterChain.doFilter(httpServletRequest,httpServletResponse);
+        filterChain.doFilter(request,response);
+
     }
 }

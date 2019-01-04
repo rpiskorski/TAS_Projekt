@@ -1,12 +1,16 @@
 package project.controllers;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.model.Category;
+import project.model.Product;
 import project.services.CategoryService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +31,7 @@ public class CategoryController {
 
     //ADD Category
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    @RequestMapping(value="/categories",method= RequestMethod.POST)
+    @RequestMapping(value="/categories",method= RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> create(@RequestBody @Valid @NotNull Category category,
                                                      HttpServletRequest httpServletRequest){
 
@@ -45,7 +49,7 @@ public class CategoryController {
     }
     //Delete Category
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    @RequestMapping(value="/categories/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value="/categories/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> delete(@PathVariable int id,
                        HttpServletRequest httpServletRequest){
 
@@ -65,7 +69,7 @@ public class CategoryController {
 
     }
     //GET Category by id
-    @RequestMapping(value="/categories/{id}",method = RequestMethod.GET)
+    @RequestMapping(value="/categories/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> get(@PathVariable int id,
                         HttpServletRequest httpServletRequest) {
 
@@ -84,17 +88,20 @@ public class CategoryController {
     }
 
     //GET ALL Categories
-    @RequestMapping(value="/categories",method = RequestMethod.GET)
+    @RequestMapping(value="/categories",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getCategories(HttpServletRequest httpServletRequest){
 
         Map<String, Object> map = new HashMap<>();
         Object token = httpServletRequest.getAttribute("token");
         map.put("token", token);
 
+
         List<Category> categoryList;
         categoryList = this.categoryService.getCategories();
 
         map.put("listOfCategories",categoryList);
+
+
         return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
 
         }

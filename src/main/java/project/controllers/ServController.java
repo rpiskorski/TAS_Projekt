@@ -3,6 +3,7 @@ package project.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class ServController {
 
     //Add Service
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    @RequestMapping(value="/services",method= RequestMethod.POST)
+    @RequestMapping(value="/services",method= RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> create(@RequestBody @Valid @NotNull Serv service,
                                                      HttpServletRequest httpServletRequest)
     {
@@ -49,7 +50,7 @@ public class ServController {
 
     //Get All Services
 
-    @RequestMapping(value="/services",method=RequestMethod.GET)
+    @RequestMapping(value="/services",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getAllServices(@RequestParam(value = "page",required = false) Integer pageNumber,
                                                              HttpServletRequest httpServletRequest){
 
@@ -85,7 +86,7 @@ public class ServController {
 
     //Delete Service
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    @RequestMapping(value = "/services/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/services/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> deleteService(@PathVariable int id,
                                                             HttpServletRequest httpServletRequest){
 
@@ -109,7 +110,7 @@ public class ServController {
 
 
     //Get All Services in Category
-    @RequestMapping(value="/services/cat/{categoryid}",method=RequestMethod.GET)
+    @RequestMapping(value="/services/cat/{categoryid}",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getServicesInCategory(@PathVariable int categoryid,
                                                             @RequestParam(value = "page",required = false) Integer pageNumber,
                                                             HttpServletRequest httpServletRequest)
@@ -149,7 +150,7 @@ public class ServController {
 
 
     //Get Services Ordered By Name Or Raiting In Category
-    @RequestMapping(value="/services/sort/{categoryid}",method=RequestMethod.GET)
+    @RequestMapping(value="/services/sort/{categoryid}",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getAllSortedServicesInCategory(@PathVariable int categoryid,
                                                                      @RequestParam(value = "page",required = false) Integer pageNumber,
                                                                      @RequestParam(value="type",required = true) String type,
@@ -231,7 +232,7 @@ public class ServController {
 
 
     //Get Service By Name
-    @RequestMapping(value="/services/name/{name}",method=RequestMethod.GET)
+    @RequestMapping(value="/services/name/{name}",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getServicesByName(@PathVariable String name,
                                                                 @RequestParam(value = "page",required = false) Integer pageNumber,
                                                                 HttpServletRequest httpServletRequest){
@@ -266,7 +267,7 @@ public class ServController {
 
 
     //Get Service By Id
-    @RequestMapping(value="/services/{id}",method=RequestMethod.GET)
+    @RequestMapping(value="/services/{id}",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getServicesById(@PathVariable int id,
                                                 HttpServletRequest httpServletRequest){
 
@@ -288,7 +289,7 @@ public class ServController {
 
 
     //Get Services Ordered By Name
-    @RequestMapping(value="/services/sort",method=RequestMethod.GET)
+    @RequestMapping(value="/services/sort",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getAllSortedServices(@RequestParam(value = "page",required = false) Integer pageNumber,
                                                            @RequestParam(value="type",required = true) String type,
                                                            @RequestParam(value="order",required=true) String order,

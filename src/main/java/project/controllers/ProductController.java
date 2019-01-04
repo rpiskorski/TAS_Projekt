@@ -26,7 +26,7 @@ public class ProductController {
 
     //Add Product
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    @RequestMapping(value="/products",method= RequestMethod.POST)
+    @RequestMapping(value="/products",method= RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> create(@RequestBody @Valid @NotNull Product product,
                                                      HttpServletRequest httpServletRequest)
     {
@@ -46,7 +46,7 @@ public class ProductController {
     }
 
     //Get All Products
-    @RequestMapping(value="/products",method=RequestMethod.GET)
+    @RequestMapping(value="/products",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getAllProducts(@RequestParam(value = "page",required = false) Integer pageNumber,
                                                              HttpServletRequest httpServletRequest){
 
@@ -84,7 +84,7 @@ public class ProductController {
 
     //Delete Product
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    @RequestMapping(value = "/products/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/products/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> deleteProduct(@PathVariable int id,
                                                             HttpServletRequest httpServletRequest){
         Map<String,Object> map = new HashMap<String,Object>();
@@ -105,7 +105,7 @@ public class ProductController {
     }
 
     //Get All Products in Category
-    @RequestMapping(value="/products/cat/{categoryid}",method=RequestMethod.GET)
+    @RequestMapping(value="/products/cat/{categoryid}",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getProductsInCategory(@PathVariable int categoryid,
                                                                     @RequestParam(value = "page",required = false) Integer pageNumber,
                                                                     HttpServletRequest httpServletRequest)
@@ -147,7 +147,7 @@ public class ProductController {
 
 
     //Get Products Ordered By Name Or Raiting In Category
-    @RequestMapping(value="/products/sort/{categoryid}",method=RequestMethod.GET)
+    @RequestMapping(value="/products/sort/{categoryid}",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getAllSortedProductsInCategory(@PathVariable int categoryid,
                                                                              @RequestParam(value = "page",required = false) Integer pageNumber,
                                                                              @RequestParam(value="type",required = true) String type,
@@ -244,7 +244,7 @@ public class ProductController {
 
 
     //Get Products By Name In Category
-    @RequestMapping(value="/products/cat/{categoryid}/name/{name}",method=RequestMethod.GET)
+    @RequestMapping(value="/products/cat/{categoryid}/name/{name}",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getProductsByNameInCategory(@PathVariable String name,
                                                                           @PathVariable Integer categoryid,
                                                                           @RequestParam(value = "page",required = false) Integer pageNumber,
@@ -285,7 +285,7 @@ public class ProductController {
         }
 //************************************
     //Get All Products by manufacturer
-    @RequestMapping(value="/products/manufacturer/{manu}",method=RequestMethod.GET)
+    @RequestMapping(value="/products/manufacturer/{manu}",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getProductsByManufacturer(@PathVariable String manu,
                                                                     @RequestParam(value = "page",required = false) Integer pageNumber,
                                                                     HttpServletRequest httpServletRequest)
@@ -327,7 +327,7 @@ public class ProductController {
 
 
     //Get Products Ordered By Name Or Raiting By manufacturer
-    @RequestMapping(value="/products/manufacturer/{manu}/sort",method=RequestMethod.GET)
+    @RequestMapping(value="/products/manufacturer/{manu}/sort",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getAllSortedProductsByManufacturer(@PathVariable String manu,
                                                                              @RequestParam(value = "page",required = false) Integer pageNumber,
                                                                              @RequestParam(value="type",required = true) String type,
@@ -424,7 +424,7 @@ public class ProductController {
 
 
         //Get Products By Name
-    @RequestMapping(value="/products/name/{name}",method=RequestMethod.GET)
+    @RequestMapping(value="/products/name/{name}",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getProductsByName(@PathVariable String name,
                                                                 @RequestParam(value = "page",required = false) Integer pageNumber,
                                                                 HttpServletRequest httpServletRequest) {
@@ -464,7 +464,7 @@ public class ProductController {
 
     //Get Products By Id
 
-    @RequestMapping(value="/products/{id}",method=RequestMethod.GET)
+    @RequestMapping(value="/products/{id}",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getProductsById(@PathVariable int id,
                                                               HttpServletRequest httpServletRequest){
 
@@ -484,7 +484,7 @@ public class ProductController {
     }
 
     //Get Products Ordered By Name
-    @RequestMapping(value="/products/sort",method=RequestMethod.GET)
+    @RequestMapping(value="/products/sort",method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> getAllSortedProducts(@RequestParam(value = "page",required = false) Integer pageNumber,
                                                                    @RequestParam(value="type",required = true) String type,
                                                                    @RequestParam(value="order",required=true) String order,
