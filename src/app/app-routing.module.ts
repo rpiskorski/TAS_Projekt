@@ -12,6 +12,7 @@ import { CategoryComponent } from './category/category.component';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ServiceFormComponent } from './service-form/service-form.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthGuardService } from './auth-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full'},
@@ -24,9 +25,21 @@ const routes: Routes = [
   { path: 'services/:id', component: ServiceDetailComponent },
   { path: 'login', component: LoginFormComponent },
   { path: 'signup', component: SignupFormComponent },
-  { path: 'product-form', component: ProductFormComponent },
-  { path: 'service-form', component: ServiceFormComponent },
-  { path: 'profile', component: ProfileComponent }
+  {
+    path: 'product-form',
+    component: ProductFormComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'service-form',
+    component: ServiceFormComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuardService]
+  }
 ];
 
 @NgModule({

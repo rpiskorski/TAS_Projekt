@@ -5,6 +5,7 @@ import { MessageService } from './message.service';
 import { Product } from './product';
 import { catchError, tap } from 'rxjs/operators';
 import { ProductUser } from './product-user';
+import { Comment } from './comment';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -63,6 +64,15 @@ export class ProductService {
       }));
   }
 
+  addComment(comment: Comment, id: number) {
+    const url = `${this.productsUrl}/${id}/comments`;
+    return this.httpClient.post<Comment>(url,
+      { 'comment': comment.comment,
+        'rating': comment.rating
+      },
+      httpOptions);
+  }
+
   delete(product: Product): Observable<Product> {
     const id = product.id;
     const url = `${this.productsUrl}/${id}`;
@@ -73,6 +83,18 @@ export class ProductService {
         return of(null as Product);
       })
     );
+  }
+
+  deleteComment(comment: Comment, productId: number) {
+    const url = `${this.productsUrl}/${productId}/comments/${comment.id}`;
+
+    return this.httpClient.delete<Comment>(url, httpOptions).pipe(
+      catchError(err => {
+        console.log(err);
+        return of(null);
+      })
+    );
+
   }
 
   search(term: String): Observable<Product[]> {

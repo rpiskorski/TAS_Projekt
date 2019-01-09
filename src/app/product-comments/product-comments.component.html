@@ -1,28 +1,20 @@
-<!-- <div *ngIf="productComments"> -->
-  <!-- <div *ngFor="let comment of productComments"> -->
-    <!-- <div>{{ comment.userP.name }}</div> -->
-    <!-- <div> {{ new Date(comment.timestamp) }} </div> -->
-    <!-- <div>{{ comment.rating }}</div> -->
-    <!-- <div>{{ comment.comment }} </div> -->
-  <!-- </div> -->
-<!-- </div> -->
-
 <div *ngIf="productComments" class="container">
 <table class="table">
 <tr>
-	<th>Nazwa uzytkownika</th>
+  <th>Nazwa uzytkownika</th>
+  <th>Data</th> 
 	<th>Komentarz</th>
-	<th>Ocena</th>
+  <th>Ocena</th>
+  <th *ngIf="isLoggedIn">Usuń</th>
 </tr>
   <tr *ngFor="let comment of productComments">
-    <!-- <div>{{ comment.userP.name }}</div> -->
-    <!-- <div> {{ new Date(comment.timestamp) }} </div> -->
-    <!-- <div>{{ comment.rating }}</div> -->
-    <!-- <div>{{ comment.comment }} </div> -->
-			<td>{{ comment.userP.name }}</td>
+      <td>{{ comment.userP.name }}</td>
+      <td> {{ comment.timestamp }} </td>
 			<td>{{ comment.comment }}</td>
-			<td>{{ comment.rating }}</td>
-	
+      <td>{{ comment.rating }}</td>
+      <td *ngIf="isLoggedIn">
+        <button (click)="delete(comment)">Usuń</button>
+      </td>
   </tr>
 </table>
 </div>

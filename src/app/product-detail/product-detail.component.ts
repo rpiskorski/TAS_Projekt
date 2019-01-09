@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
-import { Input } from '@angular/core';
 import { ProductService } from '../product.service';
 import { ActivatedRoute } from '@angular/router';
-import { Category } from '../category';
-import { ProductUser } from '../product-user';
+import { AuthService } from '../auth.service';
+import { Comment } from '../comment';
+import { User } from '../user';
 
 @Component({
   selector: 'app-product-detail',
@@ -15,12 +15,21 @@ export class ProductDetailComponent implements OnInit {
 
   product: Product;
 
+  submitted = false;
+
+  loggedIn = false;
+
+  // model = new Comment(null, null, null, null, null);
+  model = new Comment(0, 0, '', 0, new User('', ''));
+
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.getProduct();
+    this.loggedIn = this.authService.isAuthenticated();
   }
 
   getProduct() {
@@ -30,14 +39,13 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  // getProductUsers() {
-  //   const id = +this.route.snapshot.paramMap.get('id');
-  //   this.productService.getProductUsers(id).subscribe(product )
-  // }
-
   delete() {
     this.productService.delete(this.product).subscribe();
   }
 
-  // @Input() product: Product;
+  onSubmit() {
+    this.submitted = true;
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.productService.addComment(this.model, id).subscribe();
+  }
 }

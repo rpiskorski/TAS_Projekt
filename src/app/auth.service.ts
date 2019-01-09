@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './user';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { MessageService } from './message.service';
 
@@ -22,15 +22,14 @@ export class AuthService {
     private httpClient: HttpClient,
     private messageService: MessageService) { }
 
-  login(user: User): Observable<User> {
-    return this.httpClient.post<User>(this.loginUrl, user, httpOptions).pipe(
+  login(user: User) {
+    return this.httpClient.post(this.loginUrl, user, httpOptions).pipe(
       tap(data => {
+        sessionStorage.setItem('name', user.name);
         sessionStorage.setItem('token', data['token']);
-        this.log('Zalogowano pomyślnie');
-        // this.router.navigate(['profile']);
       }),
       catchError(err => {
-        this.log(err.statusText);
+        this.log(err);
         return of(err as User);
       })
     );
@@ -44,9 +43,16 @@ export class AuthService {
     return this.getToken() !== null;
   }
 
-  logout() {
+  public getUsername(): string {
+    return sessionStorage.getItem('name');
+  }
+
+  public setToken(token: string) {
+    sessionStorage.setItem('token', token);
+  }
+
+  public logout() {
     sessionStorage.clear();
-    // this.router.navigate(['login']);
   }
 
   private log(message: string) {

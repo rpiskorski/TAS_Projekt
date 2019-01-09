@@ -16,21 +16,21 @@ export class LoginFormComponent implements OnInit {
 
   model = new User('', '');
 
-  @Output() loggedIn = new EventEmitter<boolean>();
+  constructor(private authSerivce: AuthService, private router: Router) { }
 
   onSubmit() {
     this.submitted = true;
+
     this.authSerivce.login(this.model).subscribe(data => {
+
       if (!(data instanceof HttpErrorResponse)) {
-        this.loggedIn.emit(true);
         this.router.navigate(['profile']);
       }
+
     });
   }
 
-  constructor(
-    private authSerivce: AuthService,
-    private router: Router) { }
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.authSerivce.logout();
+  }
 }
