@@ -12,6 +12,7 @@ import { Service } from '../service';
 export class ServicesComponent implements OnInit {
 
   services: Service[];
+  servicesCount: number;
 
   constructor(private serviceService: ServiceService) { }
 
@@ -20,11 +21,24 @@ export class ServicesComponent implements OnInit {
   }
 
   changePage(page: number) {
-    this.serviceService.getServices(page).subscribe(services => this.services = services);
+    this.serviceService.getServices(page).subscribe(data => {
+      this.services = data['listOfServices']
+    });
     return page;
   }
 
   getServices() {
-    this.serviceService.getServices(1).subscribe(services => this.services = services);
+    this.serviceService.getServices(1).subscribe(data => {
+      this.services = data['listOfServices'];
+      this.servicesCount = data['sumOfServices'];
+    });
+  }
+
+  onFilterChange(event) {
+    this.serviceService.getServicesSortedByName(event.target.value)
+        .subscribe(data => {
+      this.servicesCount = data['sumOfServices'];
+      this.services = data['listOfServices'];
+    });
   }
 }

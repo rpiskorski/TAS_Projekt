@@ -23,7 +23,9 @@ export class ServiceDetailComponent implements OnInit {
 
   getService() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.serviceService.getService(id).subscribe(service => this.service = { ...service });
+    this.serviceService.getService(id).subscribe(data => {
+      this.service = data['service'];
+    });
   }
 
   delete() {

@@ -1,4 +1,3 @@
-
 <div *ngIf="isLoggedIn">
     <form [hidden]="submitted" (ngSubmit)="onSubmit()" #ratingForm="ngForm">
   
@@ -14,27 +13,25 @@
       <input type="submit" [disabled]="!ratingForm.form.valid">
     </form>
   </div>
-<div class="container">
+<div *ngIf="serviceComments" class="container">
   
-<table class="table">
-<tr>
-  <th>Nazwa uzytkownika</th>
-  <th>Data</th> 
-	<th>Komentarz</th>
-  <th>Ocena</th>
-  <th *ngIf="isLoggedIn">Usuń</th>
-</tr>
-  <tr *ngFor="let comment of productComments">
-      <td>{{ comment.userP.name }}</td>
-      <td> {{ comment.timestamp }} </td>
-      <td>{{ comment.comment }}</td>
-      <td>{{ comment.rating }}</td>
-      <td *ngIf="isLoggedIn">
-        <button *ngIf="comment.userP.id === 1">Edytuj</button>
-        <button (click)="delete(comment)">Usuń</button>
-      </td>
+  <table class="table">
+  <tr>
+    <th>Nazwa uzytkownika</th>
+    <th>Data</th> 
+    <th>Komentarz</th>
+    <th>Ocena</th>
+    <th *ngIf="isLoggedIn">Usuń</th>
   </tr>
-</table>
+    <tr *ngFor="let comment of serviceComments">
+        <td>{{ comment.userP.name }}</td>
+        <td> {{ comment.timestamp }} </td>
+        <td>{{ comment.comment }}</td>
+        <td>{{ comment.rating }}</td>
+        <td *ngIf="isLoggedIn">
+          <button *ngIf="comment.userP.id === 1">Edytuj</button>
+          <button (click)="delete(comment)">Usuń</button>
+        </td>
+    </tr>
+  </table>
 </div>
-
-<!-- <app-messages></app-messages> -->

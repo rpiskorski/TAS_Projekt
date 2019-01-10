@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { Service } from './service';
 import { tap, catchError } from 'rxjs/operators';
 import { MessageService } from './message.service';
+import { Comment } from './comment';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -33,8 +34,8 @@ export class ServiceService {
     return this.httpClient.get<Service>(url);
   }
 
-  getServicesByCategory(id: number): Observable<Service[]> {
-    const url = `${this.servicesUrl}/cat/${id}`;
+  getServicesByCategory(id: number, page = 1): Observable<Service[]> {
+    const url = `${this.servicesUrl}/cat/${id}?page=${page}`;
     return this.httpClient.get<Service[]>(url);
   }
 
@@ -63,6 +64,58 @@ export class ServiceService {
     }
 
     return this.httpClient.get<Service[]>(`${this.servicesUrl}/name/${term}`);
+  }
+
+  addComment(comment: Comment, id: number) {
+    const url = `${this.servicesUrl}/${id}/comments`;
+    return this.httpClient.post<Comment>(url,
+      { 'comment': comment.comment,
+        'rating': comment.rating
+      },
+      httpOptions);
+  }
+
+  getServiceComments(id: number): Observable<Comment[]> {
+    const url = `${this.servicesUrl}/${id}/comments`;
+    return this.httpClient.get<Comment[]>(url).pipe(
+      catchError(err => {
+        this.log(err.error.text);
+        return of([] as Comment[]);
+      })
+    );
+  }
+
+  deleteComment(comment: Comment, serviceId: number) {
+    const url = `${this.servicesUrl}/${serviceId}/comments/${comment.id}`;
+
+    return this.httpClient.delete<Comment>(url, httpOptions).pipe(
+      catchError(err => {
+        console.log(err);
+        return of(null);
+      })
+    );
+
+  }
+
+  getServicesSortedByName(params: string): Observable<Service[]> {
+    let url = '';
+
+    switch (params) {
+      case 'nameAsc': url = 'type=name&order=asc'; break;
+      case 'nameDesc': url = 'type=name&order=desc'; break;
+      case 'ratingAsc': url = 'type=rating&order=asc'; break;
+      default: url = 'type=rating&order=desc'; break;
+    }
+
+    return this.httpClient.get<Service[]>(`${this.servicesUrl}/sort?${url}`);
+  }
+
+  searchServices(term: string, mode: string): Observable<Service[]> {
+    if (mode === 'manufacturerName') {
+      return this.httpClient.get<Service[]>(`${this.servicesUrl}/manufacturer/${term}`, httpOptions);
+    } else {
+      return this.httpClient.get<Service[]>(`${this.servicesUrl}/name/${term}`, httpOptions);
+    }
   }
 
   searchInCategory(term: String, category: number): Observable<Service[]> {

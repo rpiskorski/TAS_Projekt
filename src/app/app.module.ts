@@ -25,6 +25,12 @@ import { ItemSearchComponent } from './item-search/item-search.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProductCommentsComponent } from './product-comments/product-comments.component';
 import { TokenInterceptor } from './token-interceptor';
+import { UsersComponent } from './users/users.component';
+import { UserFormComponent } from './user-form/user-form.component';
+import { CommentEditFormComponent } from './comment-edit-form/comment-edit-form.component';
+import { ServiceCommentsComponent } from './service-comments/service-comments.component';
+import { TheBestComponent } from './the-best/the-best.component';
+import { TheWorstComponent } from './the-worst/the-worst.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +51,13 @@ import { TokenInterceptor } from './token-interceptor';
     ServiceSearchComponent,
     ItemSearchComponent,
     ProfileComponent,
-    ProductCommentsComponent
+    ProductCommentsComponent,
+    UsersComponent,
+    UserFormComponent,
+    CommentEditFormComponent,
+    ServiceCommentsComponent,
+    TheBestComponent,
+    TheWorstComponent
   ],
   imports: [
     BrowserModule,

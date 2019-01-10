@@ -3,6 +3,7 @@ import { ProductService } from '../product.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Comment } from '../comment';
+import { User } from '../user';
 
 @Component({
   selector: 'app-product-comments',
@@ -13,7 +14,17 @@ export class ProductCommentsComponent implements OnInit {
 
   productComments: Comment[];
 
+  submitted = false;
+
   isLoggedIn = false;
+
+  model = new Comment(0, 0, '', 0, new User(0, '', ''));
+
+  onSubmit() {
+    this.submitted = true;
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.productService.addComment(this.model, id).subscribe();
+  }
 
   constructor(
     private productService: ProductService,
@@ -28,6 +39,11 @@ export class ProductCommentsComponent implements OnInit {
 
   getComments(id: number) {
     this.productService.getProductComments(id).subscribe(productComments => {
+
+      if (productComments.length === 0) {
+        this.productComments = [];
+        return;
+      }
 
       for (const comment of productComments['listOfComments']) {
         comment['timestamp'] = new Date(comment['timestamp']).toLocaleString();

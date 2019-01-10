@@ -14,7 +14,7 @@ export class LoginFormComponent implements OnInit {
 
   submitted = false;
 
-  model = new User('', '');
+  model = new User(0, '', '');
 
   constructor(private authSerivce: AuthService, private router: Router) { }
 

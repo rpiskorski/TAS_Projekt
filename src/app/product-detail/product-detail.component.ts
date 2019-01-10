@@ -15,12 +15,7 @@ export class ProductDetailComponent implements OnInit {
 
   product: Product;
 
-  submitted = false;
-
   loggedIn = false;
-
-  // model = new Comment(null, null, null, null, null);
-  model = new Comment(0, 0, '', 0, new User('', ''));
 
   constructor(
     private route: ActivatedRoute,
@@ -40,12 +35,9 @@ export class ProductDetailComponent implements OnInit {
   }
 
   delete() {
-    this.productService.delete(this.product).subscribe();
+    this.productService.delete(this.product).subscribe(data => {
+      console.log(data);
+    });
   }
 
-  onSubmit() {
-    this.submitted = true;
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.productService.addComment(this.model, id).subscribe();
-  }
 }

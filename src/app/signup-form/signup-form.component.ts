@@ -12,7 +12,7 @@ export class SignupFormComponent implements OnInit {
 
   submitted = false;
 
-  model = new User('', '');
+  model = new User(0, '', '');
 
   onSubmit() {
     this.submitted = true;

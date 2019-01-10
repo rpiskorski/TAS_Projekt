@@ -1,31 +1,12 @@
-<div *ngIf="product; else elseBlock">
+<div *ngIf="product">
   
   <div class="text-center"><p><a routerLink="/categories/{{ product.cat.id }}">{{product.cat.name}}</a> >> {{product.manufacturer_name}} >> {{product.name}}</p></div>
   <!-- <p class="text-center"><img src="http://sklepmati.pl/img/cms/2017.03/Produkt%20polski.jpg" /></p> -->
   <p class="text-center">Średnia ocen:{{ product.raiting }}</p>
   <section *ngIf="loggedIn">
     <button  (click)="delete(product)">Usuń</button>
-
-    <form [hidden]="submitted" (ngSubmit)="onSubmit()" #ratingForm="ngForm">
-
-      <p>Ocena:</p>
-      <input type="radio" name="rating" value="1" [(ngModel)]="model.rating" #rating="ngModel">
-      <input type="radio" name="rating" value="2" [(ngModel)]="model.rating" #rating="ngModel">
-      <input type="radio" name="rating" value="3" [(ngModel)]="model.rating" #rating="ngModel">
-      <input type="radio" name="rating" value="4" [(ngModel)]="model.rating" #rating="ngModel">
-      <input type="radio" name="rating" value="5" [(ngModel)]="model.rating" #rating="ngModel">
-
-      <p>Komentarz:</p>
-      <input type="text" name="comment" required [(ngModel)]="model.comment">
-      <input type="submit" [disabled]="!ratingForm.form.valid">
-    </form>
-
   </section>
-
+  
   <app-product-comments></app-product-comments>
   
 </div>
-
-<ng-template #elseBlock>
-  <app-messages></app-messages>
-</ng-template>

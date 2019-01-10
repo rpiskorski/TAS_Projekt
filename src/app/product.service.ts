@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { Product } from './product';
 import { catchError, tap } from 'rxjs/operators';
-import { ProductUser } from './product-user';
 import { Comment } from './comment';
 
 const httpOptions = {
@@ -32,12 +31,30 @@ export class ProductService {
 
   getProduct(id: number): Observable<Product> {
     const url = `${this.productsUrl}/${id}`;
+    
     return this.httpClient.get<Product>(url).pipe(
       catchError(err => {
         this.log(err.error.text);
         return of(null as Product);
       })
     );
+  }
+
+  getProductsSortedbyName(params: string) {
+    let url = '';
+
+    switch (params) {
+      case 'nameAsc': url = 'type=name&order=asc'; break;
+      case 'nameDesc': url = 'type=name&order=desc'; break;
+      case 'ratingAsc': url = 'type=rating&order=asc'; break;
+      default: url = 'type=rating&order=desc'; break;
+    }
+
+    return this.httpClient.get<Product[]>(`${this.productsUrl}/sort?${url}`);
+  }
+
+  getProductsByName(term: string) {
+    return this.httpClient.get<Product[]>(`${this.productsUrl}/name/${term}`);
   }
 
   getProductsByCategory(id: number, page = 1): Observable<Product[]> {
@@ -78,6 +95,9 @@ export class ProductService {
     const url = `${this.productsUrl}/${id}`;
 
     return this.httpClient.delete<Product>(url).pipe(
+      tap(x => {
+        console.log(x);
+      }),
       catchError(err => {
         this.log(err.error.text);
         return of(null as Product);
@@ -97,13 +117,32 @@ export class ProductService {
 
   }
 
+  searchProductsByName(term: string): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(`${this.productsUrl}/name/${term}`, httpOptions).pipe(
+      catchError(err => {
+        return of([] as Product[]);
+      })
+    );
+  }
+
+  searchProductsByManufacturer(term: string): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(`${this.productsUrl}/manufacturer/${term}`, httpOptions).pipe(
+      catchError(err => {
+        return of([] as Product[]);
+      })
+    );
+  }
+
   search(term: String): Observable<Product[]> {
     if (!term.trim()) {
       return of([]);
     }
 
-    return this.httpClient.get<Product[]>(`${this.productsUrl}/name/${term}`);
+    // const data = this.httpClient.get<Product[]>(`${this.productsUrl}/name/${term}`, httpOptions);
+    // console.log(data);
+    return this.httpClient.get<Product[]>(`${this.productsUrl}/name/${term}`, httpOptions);
   }
+
 
   searchInCategory(term: String, category: number): Observable<Product[]> {
     if (!term.trim()) {
@@ -113,11 +152,6 @@ export class ProductService {
     return this.httpClient.get<Product[]>(`${this.productsUrl}/sort/${category}?type=name&order=asc`);
   }
 
-  private handleError<T>(result?: T) {
-    return (error: any) => {
-      return of(result as T);
-    };
-  }
 
   private log(message: string) {
     this.messageService.add(message);

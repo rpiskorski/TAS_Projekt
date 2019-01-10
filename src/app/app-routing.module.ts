@@ -13,6 +13,8 @@ import { ProductFormComponent } from './product-form/product-form.component';
 import { ServiceFormComponent } from './service-form/service-form.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuardService } from './auth-guard.service';
+import { UsersComponent } from './users/users.component';
+import { UserFormComponent } from './user-form/user-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full'},
@@ -39,7 +41,13 @@ const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuardService]
-  }
+  },
+  {
+    path: 'users',
+    component: UsersComponent,
+    canActivate: [AuthGuardService]
+  },
+  { path: 'users/:id', component: UserFormComponent }
 ];
 
 @NgModule({

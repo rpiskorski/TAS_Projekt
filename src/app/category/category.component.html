@@ -2,7 +2,16 @@
 
   <h1 align="center">{{category.name}}</h1>
 
-  <app-item-search></app-item-search>
+  <!-- <app-item-search></app-item-search> -->
+  
+  <h1>Wyszukaj</h1>
+	<form #searchForm="ngForm" (ngSubmit)="onSearchSubmit()">
+		<input name="term" [(ngModel)]="searchModel.term">
+		<select name="mode" [(ngModel)]="searchModel.mode">
+			<option selected value="itemName">Nazwa produktu/usługi</option>
+			<option value="manufacturerName">Nazwa producenta</option>
+		</select>
+  </form>
   
   <div class="container">
 
