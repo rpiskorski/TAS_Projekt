@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 import { User } from '../user';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-form',
@@ -11,15 +14,23 @@ export class LoginFormComponent implements OnInit {
 
   submitted = false;
 
-  model = new User('', '');
+  model = new User(0, '', '');
+
+  constructor(private authSerivce: AuthService, private router: Router) { }
 
   onSubmit() {
     this.submitted = true;
-  }
 
-  constructor() { }
+    this.authSerivce.login(this.model).subscribe(data => {
+
+      if (!(data instanceof HttpErrorResponse)) {
+        this.router.navigate(['profile']);
+      }
+
+    });
+  }
 
   ngOnInit() {
+    this.authSerivce.logout();
   }
-
 }

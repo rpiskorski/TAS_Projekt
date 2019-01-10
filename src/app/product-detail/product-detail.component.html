@@ -1,7 +1,12 @@
 <div *ngIf="product">
-  <div>{{product.name}}</div>
-  <div>{{product.manufacturer_name}}</div>
-  <div>{{product.cat.name}}</div>
-  <button (click)="delete(product)">Usuń produkt</button>
+  
+  <div class="text-center"><p><a routerLink="/categories/{{ product.cat.id }}">{{product.cat.name}}</a> >> {{product.manufacturer_name}} >> {{product.name}}</p></div>
+  <!-- <p class="text-center"><img src="http://sklepmati.pl/img/cms/2017.03/Produkt%20polski.jpg" /></p> -->
+  <p class="text-center">Średnia ocen:{{ product.raiting }}</p>
+  <section *ngIf="loggedIn">
+    <button  (click)="delete(product)">Usuń</button>
+  </section>
+  
+  <app-product-comments></app-product-comments>
+  
 </div>
-

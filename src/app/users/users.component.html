@@ -1,0 +1,7 @@
+<div *ngFor="let user of users">
+  <p>{{user.name}}</p>
+  <p>{{user.role.name}}</p>
+  <!-- <p>{{user.id}}</p> -->
+  <a routerLink="/users/{{user.id}}">Edytuj</a>
+  <button (click)="delete(user)">Usuń</button>
+</div>

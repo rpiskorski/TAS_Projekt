@@ -1,56 +1,35 @@
 <!-- TODO Walidacja, stany formularza dirty/touched/etc -->
-<h1>Zarejestruj się</h1>
 
-<div class="container">
-	<div class="row">
-		<div class="col-sm-4"></div>
-		<div class="col-sm-4">
-			<form (ngSubmit)="onSubmit()" #signupForm="ngForm">
-			<div class="form-group">
-			  <div>
-				<label for="name">Nazwa</label>
-				<input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel" class="form-control">
-			  </div>
-			  
-			  <div>
-				<label for="name">Login</label>
-				<input type="text" required [(ngModel)]="model.login" name="login" #name="ngModel" class="form-control">
-			  </div>
+<div>
+	<h1>Zarejestruj się</h1>
 
-			  <div>
-				<label for="password">Hasło</label>
-				<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
-			  </div>
-			  
-			  <div>
-				<label for="password">Powtórz hasło</label>
-				<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
-			  </div>
-			  
-			  <div>
-				<label for="email">Adres email</label>
-				<input type="email" required [(ngModel)]="model.email" name="email" #password="ngModel" class="form-control">
-			  </div>
-			  
-				<br>
-			  <button type="submit" [disabled]="!signupForm.form.valid" class="btn btn-primary">Zarejestruj</button>
-			  </div>
-			</form>
+	<div  class="container">
+		<div class="row">
+			<div class="col-sm-4 offset-sm-4">
+				<form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+				<div class="form-group">
+
+					<div>
+					<label for="name">Login</label>
+					<input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel" class="form-control">
+					</div>
+
+					<div>
+					<label for="password">Hasło</label>
+					<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
+					</div>
+					
+					<!-- <div>
+					<label for="password">Powtórz hasło</label>
+					<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
+					</div> -->
+					<br>
+					<button type="submit" [disabled]="!signupForm.form.valid" class="btn btn-primary">Zarejestruj</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>
-<style>
-label, h1{
-	text-align:center;
-}
 
-input, button{
-	width:100%;
-}
-
-input:focus{
-	border-color: blue;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
-  outline: 0 none;
-}
-</style>
+<app-messages></app-messages>

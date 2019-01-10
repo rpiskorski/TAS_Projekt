@@ -3,6 +3,7 @@ import { ProductService } from '../product.service';
 import { Product } from '../product';
 import { CategoryService } from '../category.service';
 import { Category } from '../category';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-product-form',
@@ -31,6 +32,8 @@ export class ProductFormComponent implements OnInit {
   }
 
   getCategories() {
-    this.categoryService.getCategories().subscribe(categories => this.categories = categories);
+    this.categoryService.getCategories().subscribe(data => {
+      this.categories = data['listOfCategories'];
+    });
   }
 }

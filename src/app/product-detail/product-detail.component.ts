@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
-import { Input } from '@angular/core';
 import { ProductService } from '../product.service';
 import { ActivatedRoute } from '@angular/router';
-import { Category } from '../category';
+import { AuthService } from '../auth.service';
+import { Comment } from '../comment';
+import { User } from '../user';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,21 +15,29 @@ export class ProductDetailComponent implements OnInit {
 
   product: Product;
 
+  loggedIn = false;
+
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.getProduct();
+    this.loggedIn = this.authService.isAuthenticated();
   }
 
   getProduct() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.productService.getProduct(id).subscribe(product => this.product = { ...product });
+    this.productService.getProduct(id).subscribe(data => {
+      this.product = data['product'];
+    });
   }
 
   delete() {
-    this.productService.delete(this.product).subscribe();
+    this.productService.delete(this.product).subscribe(data => {
+      console.log(data);
+    });
   }
-  // @Input() product: Product;
+
 }

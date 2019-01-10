@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppComponent } from './app.component';
 import { ProductsComponent } from './products/products.component';
@@ -19,6 +21,16 @@ import { ProductFormComponent } from './product-form/product-form.component';
 import { ServiceFormComponent } from './service-form/service-form.component';
 import { ProductSearchComponent } from './product-search/product-search.component';
 import { ServiceSearchComponent } from './service-search/service-search.component';
+import { ItemSearchComponent } from './item-search/item-search.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProductCommentsComponent } from './product-comments/product-comments.component';
+import { TokenInterceptor } from './token-interceptor';
+import { UsersComponent } from './users/users.component';
+import { UserFormComponent } from './user-form/user-form.component';
+import { CommentEditFormComponent } from './comment-edit-form/comment-edit-form.component';
+import { ServiceCommentsComponent } from './service-comments/service-comments.component';
+import { TheBestComponent } from './the-best/the-best.component';
+import { TheWorstComponent } from './the-worst/the-worst.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +48,16 @@ import { ServiceSearchComponent } from './service-search/service-search.componen
     ProductFormComponent,
     ServiceFormComponent,
     ProductSearchComponent,
-    ServiceSearchComponent
+    ServiceSearchComponent,
+    ItemSearchComponent,
+    ProfileComponent,
+    ProductCommentsComponent,
+    UsersComponent,
+    UserFormComponent,
+    CommentEditFormComponent,
+    ServiceCommentsComponent,
+    TheBestComponent,
+    TheWorstComponent
   ],
   imports: [
     BrowserModule,
@@ -45,9 +66,14 @@ import { ServiceSearchComponent } from './service-search/service-search.componen
     // HttpClientInMemoryWebApiModule.forRoot(
     //   InMemoryDataService, { dataEncapsulation: false }
     // ),
-    AppRoutingModule
+    AppRoutingModule,
+    NgxPaginationModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

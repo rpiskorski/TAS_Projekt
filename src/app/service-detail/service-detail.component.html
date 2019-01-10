@@ -1,4 +1,20 @@
-<div *ngIf="service">
+<!-- <div *ngIf="service">
+    <h1>{{service.name}}</h1>
     <div>{{service.owner_name}}</div>
     <div>{{service.cat.name}}</div>
-  </div>
+    <div>{{service.localization}}</div>
+    <div>{{service.raiting}}</div>
+    <div>Opinie:</div>
+</div> -->
+<div *ngIf="service">
+  
+    <div class="text-center"><p><a routerLink="/categories/{{ service.cat.id }}">{{service.cat.name}}</a> >> {{service.manufacturer_name}} >> {{service.name}}</p></div>
+    <!-- <p class="text-center"><img src="http://sklepmati.pl/img/cms/2017.03/Produkt%20polski.jpg" /></p> -->
+    <p class="text-center">Średnia ocen:{{ service.raiting }}</p>
+    <section *ngIf="loggedIn">
+        <button  (click)="delete(service)">Usuń</button>
+    </section>
+    
+    <app-service-comments></app-service-comments>
+        
+</div>

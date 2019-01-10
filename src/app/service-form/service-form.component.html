@@ -1,8 +1,8 @@
-<div [hidden]="submitted">
+<div>
   <h2 class="text-center">Dodaj nową usługę</h2>
 <div class="container">
 <div class="row">
-<div class="col-sm-4 col-sm-offset-4">
+<div class="col-sm-4 offset-sm-4">
   <form (ngSubmit)="onSubmit()" #serviceForm="ngForm">
 	<div class="form-group">
     <div>
@@ -37,22 +37,4 @@
 </div>
 </div>
 
-<div [hidden]="!submitted">
-  <p>Sukces</p>
-</div>
-
-<style>
-label, h1{
-	text-align:center;
-}
-
-input, button{
-	width:100%;
-}
-
-input:focus, select:focus{
-	border-color: blue;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
-  outline: 0 none;
-}
-</style>
+<app-messages></app-messages>

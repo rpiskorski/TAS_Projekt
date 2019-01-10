@@ -31,6 +31,8 @@ export class ServiceFormComponent implements OnInit {
   }
 
   getCategories() {
-    this.categoryService.getCategories().subscribe(categories => this.categories = categories);
+    this.categoryService.getCategories().subscribe(data => {
+      this.categories = data['listOfCategories'];
+    });
   }
 }

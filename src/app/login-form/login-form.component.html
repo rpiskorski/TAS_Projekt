@@ -4,12 +4,11 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-sm-4"></div>
-		<div class="col-sm-4">
+		<div class="col-sm-4 offset-sm-4">
 			<form (ngSubmit)="onSubmit()" #loginForm="ngForm" style="margin:0px auto;">
 			<div class="form-group">
 			  <div>
-				<label for="name">Nazwa</label>
+				<label for="username">Nazwa</label>
 				<input type="text" required [(ngModel)]="model.name" name="name" #name="ngModel" class="form-control" >
 			  </div>
 
@@ -24,18 +23,6 @@
 		</div>
 	</div>
 </div>
-<style>
-label, h1{
-	text-align:center;
-}
 
-input, button{
-	width:100%;
-}
 
-input:focus{
-	border-color: rgba(126, 239, 104, 0.8);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
-  outline: 0 none;
-}
-</style>
+<app-messages></app-messages>

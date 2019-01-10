@@ -21,13 +21,12 @@ export class ProductSearchComponent implements OnInit {
     this.products$ = this.searchTerm.pipe(
       debounceTime(150),
       distinctUntilChanged(),
-      switchMap((term: String) => this.productService.search(term))
+      switchMap((term => this.productService.search(term)))
     );
   }
 
   search(term: String) {
     this.searchTerm.next(term);
   }
-
 
 }
