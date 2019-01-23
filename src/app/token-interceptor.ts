@@ -3,12 +3,13 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpUserEvent, Ht
 import { AuthService } from './auth.service';
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { MessageService } from './message.service';
 
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-    constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService,private messageService: MessageService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler)
             : Observable<HttpEvent<any>> {
@@ -31,10 +32,20 @@ export class TokenInterceptor implements HttpInterceptor {
                     } else if (data.body.token !== null) {
                         this.authService.setToken(data.body.token);
                     }
+                    if(data.body.message!=null){
+                      this.messageService.add(data.body.message,data.status);
+
+                    }
                 }
+            }),catchError(err => {
+                if(err.error.message!=null){
+                this.messageService.add(err.error.message,err.status);
+                // console.log(err.error.message);
+              }else if(err.status==403){
+              this.messageService.add("Brak uprawnień do wyświetlenia strony",err.status);
+            }
+              return throwError(err.error);
             }));
-            // catchError(err => {
-            //     return throwError(err);
-            // }));
+
     }
 }

@@ -1,4 +1,5 @@
 <!-- TODO Walidacja, stany formularza dirty/touched/etc -->
+<div *ngIf="!authService.isAuthenticated();else loggedIn">
 <h1>Zaloguj się</h1>
 
 
@@ -16,13 +17,27 @@
 				<label for="password">Hasło</label>
 				<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
 			  </div>
+
+				<!-- <div *ngIf="messageService.status && messageService.status>=400"> -->
+					<div class="blad"><app-messages></app-messages></div>
+					<!-- <div class="blad"><app-messages></app-messages></div> -->
+
+				<!-- </div> -->
 				<br>
+
+
 			  <button type="submit" [disabled]="!loginForm.form.valid" class="btn btn-primary">Zaloguj</button>
 			  </div>
 			</form>
 		</div>
 	</div>
 </div>
+</div>
 
 
-<app-messages></app-messages>
+<ng-template #loggedIn>
+	<!-- <h1>{{messageService.message}}</h1> -->
+		{{redirect('profile')}}
+		<!-- <app-messages></app-messages> -->
+<!-- <h1>Jesteś zalogowany jako {{authService.getUsername()}}</h1> -->
+</ng-template>

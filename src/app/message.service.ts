@@ -6,13 +6,16 @@ import { Injectable } from '@angular/core';
 export class MessageService {
 
   message: string;
+  status: number;
 
-  add(message: string) {
+  add(message: string,status: number) {
     this.message = message;
+    this.status = status;
   }
 
   clear() {
     this.message = '';
+    this.status = 0;
   }
 
 }

@@ -41,12 +41,12 @@ export class ServiceService {
 
   add(service: Service): Observable<Service> {
     return this.httpClient.post<Service>(this.servicesUrl, service, httpOptions).pipe(
-      tap(_ => this.log('Usługa dodana!'),
+      //tap(_ => this.log('Usługa dodana!'),
       catchError(err => {
-        this.log(err.error);
+        // this.log(err.error);
         return of(null as Service);
       })
-    ));
+    );
   }
 
   delete(service: Service): Observable<Service> {
@@ -79,7 +79,7 @@ export class ServiceService {
     const url = `${this.servicesUrl}/${id}/comments`;
     return this.httpClient.get<Comment[]>(url).pipe(
       catchError(err => {
-        this.log(err.error.text);
+        // this.log(err.error.text);
         return of([] as Comment[]);
       })
     );
@@ -126,7 +126,7 @@ export class ServiceService {
     return this.httpClient.get<Service[]>(`${this.servicesUrl}/sort/${category}?type=name&order=asc`);
   }
 
-  private log(message: string) {
-    this.messageService.add(message);
-  }
+  // private log(message: string,status: number) {
+  //   this.messageService.add(message,status);
+  // }
 }

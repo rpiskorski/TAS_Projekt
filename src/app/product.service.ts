@@ -31,10 +31,10 @@ export class ProductService {
 
   getProduct(id: number): Observable<Product> {
     const url = `${this.productsUrl}/${id}`;
-    
+
     return this.httpClient.get<Product>(url).pipe(
       catchError(err => {
-        this.log(err.error.text);
+        // this.log(err.error.text);
         return of(null as Product);
       })
     );
@@ -66,7 +66,7 @@ export class ProductService {
     const url = `${this.productsUrl}/${id}/comments`;
     return this.httpClient.get<Comment[]>(url).pipe(
       catchError(err => {
-        this.log(err.error.text);
+        // this.log(err.error.text);
         return of([] as Comment[]);
       })
     );
@@ -76,7 +76,7 @@ export class ProductService {
     return this.httpClient.post<Product>(this.productsUrl, product, httpOptions).pipe(
       // tap(_ => this.messageService.add('Sukces')),
       catchError(err => {
-        this.log(err.error.text);
+        //this.log(err.error.text);
         return of(null as Product);
       }));
   }
@@ -99,7 +99,7 @@ export class ProductService {
         console.log(x);
       }),
       catchError(err => {
-        this.log(err.error.text);
+        // this.log(err.error.text);
         return of(null as Product);
       })
     );
@@ -153,7 +153,7 @@ export class ProductService {
   }
 
 
-  private log(message: string) {
-    this.messageService.add(message);
-  }
+  // private log(message: string) {
+  //   this.messageService.add(message);
+  // }
 }

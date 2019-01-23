@@ -16,6 +16,8 @@
       <li class="nav-item active">
           <a class="nav-link" routerLink="/signup">Rejestracja</a>
       </li>
+    </div>
+    <div *ngIf="!isLoggedIn()">
       <li class="nav-item active">
           <a class="nav-link" routerLink="/login">Logowanie</a>
       </li>
@@ -24,14 +26,20 @@
       <li class="nav-item active">
           <a class="nav-link" routerLink="/product-form">Dodaj produkt</a>
       </li>
+    </div>
+    <div *ngIf="isLoggedIn()">
       <li class="nav-item active">
           <a class="nav-link" routerLink="/service-form">Dodaj usługę</a>
       </li>
+    </div>
+      <div *ngIf="isLoggedIn()">
       <li class="nav-item active">
           <a class="nav-link" routerLink="/users">Użytkownicy</a>
       </li>
+      </div>
+      <div *ngIf="isLoggedIn()">
       <li class="nav-item active">
-        <a class="nav-link" routerLink="/login" (click)="logout()">Wyloguj</a>
+        <a class="btn btn-primary"><span (click)="logout()" class="la la-trash">Wyloguj</span></a>
       </li>
     </div>
     </ul>

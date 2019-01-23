@@ -4,6 +4,7 @@ import { User } from './user';
 import { of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { MessageService } from './message.service';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,19 +21,11 @@ export class AuthService {
 
   constructor(
     private httpClient: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private router: Router) { }
 
   login(user: User) {
-    return this.httpClient.post(this.loginUrl, user, httpOptions).pipe(
-      tap(data => {
-        sessionStorage.setItem('name', user.name);
-        sessionStorage.setItem('token', data['token']);
-      }),
-      catchError(err => {
-        this.log(err);
-        return of(err as User);
-      })
-    );
+    return this.httpClient.post<any>(this.loginUrl, user, httpOptions);
   }
 
   public getToken(): string {
@@ -47,15 +40,22 @@ export class AuthService {
     return sessionStorage.getItem('name');
   }
 
+  public setUsername(name: string){
+    sessionStorage.setItem('name',name);
+}
+
   public setToken(token: string) {
     sessionStorage.setItem('token', token);
   }
 
   public logout() {
     sessionStorage.clear();
+    this.messageService.clear();
+    this.router.navigate(['login']);
+
   }
 
-  private log(message: string) {
-    this.messageService.add(message);
+  private log(message: string,status: number) {
+    this.messageService.add(message,status);
   }
 }

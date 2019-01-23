@@ -1,6 +1,14 @@
 <!-- TODO Walidacja, stany formularza dirty/touched/etc -->
+<div *ngIf="!authService.isAuthenticated();else loggedIn">
 
-<div>
+<!-- <app-messages *ngIf="messageService.status && messageService.status>=200 && messageService.status<300;else notRegistered">
+{{redirect('main')}}
+</app-messages> -->
+<div *ngIf="!messageService.status || messageService.status==0 || messageService.status>=400;else register">
+
+
+<!-- <ng-template #notRegistered> -->
+
 	<h1>Zarejestruj się</h1>
 
 	<div  class="container">
@@ -18,11 +26,16 @@
 					<label for="password">Hasło</label>
 					<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
 					</div>
-					
-					<!-- <div>
+
+					<div>
 					<label for="password">Powtórz hasło</label>
-					<input type="password" required [(ngModel)]="model.password" name="password" #password="ngModel" class="form-control">
-					</div> -->
+					<input type="password" required [(ngModel)]="secondPassword" name="password" #password="ngModel" class="form-control">
+					</div>
+					<!-- <p class="blad"><div app-messages></div></p> -->
+					<div class="blad"><app-messages></app-messages></div>
+					<div *ngIf="!passwordCheck()">
+					<div class="blad">Hasła nie są sobie równe</div>
+					</div>
 					<br>
 					<button type="submit" [disabled]="!signupForm.form.valid" class="btn btn-primary">Zarejestruj</button>
 					</div>
@@ -30,6 +43,23 @@
 			</div>
 		</div>
 	</div>
+
+<!-- </ng-template> -->
+
+</div>
+<ng-template #register>
+<!-- <app-messages #registered>
+</app-messages> -->
+<!-- <h1>{{messageService.message}}</h1> -->
+	<!-- {{redirect('main')}} -->
+	{{router.navigate(['main'])}};
+<!-- <h1>Jesteś zalogowany jako {{authService.getUsername()}}</h1> -->
+</ng-template>
 </div>
 
-<app-messages></app-messages>
+<ng-template #loggedIn>
+	<!-- <h1>{{messageService.message}}</h1> -->
+		<!-- {{redirect('main')}} -->
+			{{router.navigate(['main'])}};
+<!-- <h1>Jesteś zalogowany jako {{authService.getUsername()}}</h1> -->
+</ng-template>

@@ -4,6 +4,7 @@ import { User } from '../user';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-login-form',
@@ -16,21 +17,47 @@ export class LoginFormComponent implements OnInit {
 
   model = new User(0, '', '');
 
-  constructor(private authSerivce: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private messageService: MessageService) { }
 
   onSubmit() {
     this.submitted = true;
 
-    this.authSerivce.login(this.model).subscribe(data => {
-
-      if (!(data instanceof HttpErrorResponse)) {
-        this.router.navigate(['profile']);
+    this.authService.login(this.model).subscribe(data =>
+      {
+        if(data.token!=null){
+            this.authService.setUsername(this.model.name);
+            this.router.navigate(['profile']);
+        }
+        //return data;
       }
+      //,error => {}
+        // console.log(this.messageService.message);
 
-    });
-  }
+      );
+
+
+    //   if (!(data instanceof HttpErrorResponse)) {
+     //    this.router.navigate(['profile']);
+    //   }
+
+
+
+    }
+
 
   ngOnInit() {
-    this.authSerivce.logout();
+    // this.authService.logout();
   }
+
+  redirect(url: string): void{
+    setTimeout(() => {
+      this.router.navigate([url]);
+    },5000);
+  }
+
+  logout(){
+  this.authService.logout();
+  this.router.navigate(['login-form']);
+}
+
 }
