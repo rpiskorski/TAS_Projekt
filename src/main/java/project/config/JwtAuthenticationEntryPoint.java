@@ -16,6 +16,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException{
-        new DefaultRedirectStrategy().sendRedirect(httpServletRequest,httpServletResponse,"http://localhost:4200/login");
+        httpServletResponse.setContentType("application/json");
+        new DefaultRedirectStrategy().sendRedirect(httpServletRequest,httpServletResponse,"/api/login");
     }
 }

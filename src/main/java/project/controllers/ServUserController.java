@@ -19,6 +19,8 @@ import project.services.ServService;
 import project.services.ServUserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,10 +43,13 @@ public class ServUserController {
     //Add Comment etc.
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value="/services/{id}/comments",method=RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String,Object>> createComment(@RequestBody @Nullable String comment,
-                                                            @RequestParam(value="rating",required = false) Integer rating,
+    public ResponseEntity<Map<String,Object>> createComment(@RequestBody @Valid @NotNull ServUser serviceUser,
+                                                            //@RequestParam(value="rating",required = false) Integer rating,
                                                             @PathVariable int id ,
                                                             HttpServletRequest httpServletRequest){
+
+        String comment = serviceUser.getComment();
+        int rating = serviceUser.getRating();
 
         Map<String,Object> map = new HashMap<>();
 
@@ -73,7 +78,7 @@ public class ServUserController {
 
                     ServUser servUser = new ServUser();
 
-                    if(rating==null){
+                    if(rating==0){
                         if(comment==null){
 
                             map.put("message","Add a comment or rating first!");
@@ -81,8 +86,8 @@ public class ServUserController {
                         }
                     }
                     else{
-                        if (rating.intValue() >= 0 && rating.intValue()<=6) {
-                            servUser.setRating(rating.intValue());
+                        if (rating > 0 && rating<=6) {
+                            servUser.setRating(rating);
                         }else{
                             map.put("message","Rating has to be equal or greater than 0 and equal or greater than 6!");
                             return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
@@ -146,11 +151,15 @@ public class ServUserController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value="/services/{id}/comments/{commentId}",method=RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String,Object>> editComment(@RequestBody @Nullable String comment,
-                                              @RequestParam(value="rating",required = false) Integer rating,
+    public ResponseEntity<Map<String,Object>> editComment(@RequestBody @Valid @NotNull ServUser serviceUser,
+                                              //@RequestParam(value="rating",required = false) Integer rating,
                                               @PathVariable int commentId,@PathVariable int id,
                                               HttpServletRequest httpServletRequest)
     {
+
+        String comment = serviceUser.getComment();
+        int rating = serviceUser.getRating();
+
         Map<String,Object> map = new HashMap<>();
 
         Object token = httpServletRequest.getAttribute("token");

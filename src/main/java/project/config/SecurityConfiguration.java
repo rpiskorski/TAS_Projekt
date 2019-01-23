@@ -13,7 +13,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import project.services.UserServiceImpl;
+
+import java.util.Arrays;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
@@ -68,8 +73,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/users").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/users/*").hasAuthority("ADMIN")
                 .and()
-                .exceptionHandling().authenticationEntryPoint(unauthHandler)
+                .formLogin()
+                .loginPage("/login")
                 .and()
+//                .exceptionHandling().authenticationEntryPoint(unauthHandler)
+//                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class);
 
@@ -79,7 +87,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_SCHEME = "Bearer ";
     public static final String TOKEN_KEY = "TAS_Projekt";
-    public static final long TOKEN_VALIDITY = 1*60;
+    public static final long TOKEN_VALIDITY = 5*60;
 
 
 
@@ -92,6 +100,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         return new JwtAuthenticationFilter();
     }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
+        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/api/**", configuration);
+        return source;
+    }
+
 
     @Autowired
     private AuthenticationManager authenticationManager;

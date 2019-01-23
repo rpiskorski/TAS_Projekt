@@ -27,4 +27,10 @@ public interface ProductUserService {
 
     public int getNumberOfPagesForProduct(int id);
 
+    public List<ProductUser> getAllProductUsersForUser(int userID,Pageable pageable);
+
+    public int getNumberOfProductUsersForUsers(int id);
+
+    public int getNumberOfPagesForUsers(int id);
+
 }

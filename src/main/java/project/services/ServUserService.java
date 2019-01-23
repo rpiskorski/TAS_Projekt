@@ -26,4 +26,10 @@ public interface ServUserService {
     public int getNumberOfServiceUsersForService(int id);
 
     public int getNumberOfPagesForService(int id);
+
+    public List<ServUser> getAllServiceUsersForUser(int userID,Pageable pageable);
+
+    public int getNumberOfServiceUsersForUsers(int id);
+
+    public int getNumberOfPagesForUsers(int id);
 }

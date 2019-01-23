@@ -50,10 +50,10 @@ public interface ServiceRepository extends JpaRepository<Serv,Integer> {
     @Query(value="SELECT * FROM services s WHERE s.category_id=:cat_id ORDER BY s.name DESC", nativeQuery = true)
     List<Serv> findByCatOrderedByNameDesc(@Param("cat_id") int cat_id,Pageable pageable);
 
-    @Query(value="SELECT * FROM services s WHERE s.category_id=:cat_id ORDER BY s.avg_raiting ", nativeQuery = true)
+    @Query(value="SELECT * FROM services s WHERE s.category_id=:cat_id ORDER BY s.avg_rating ", nativeQuery = true)
     List<Serv> findByCatOrderedByRaitingAsc(@Param("cat_id") int cat_id,Pageable pageable);
 
-    @Query(value="SELECT * FROM services s WHERE s.category_id=:cat_id ORDER BY s.avg_raiting ", nativeQuery = true)
+    @Query(value="SELECT * FROM services s WHERE s.category_id=:cat_id ORDER BY s.avg_rating ", nativeQuery = true)
     List<Serv> findByCatOrderedByRaitingDesc(@Param("cat_id") int cat_id,Pageable pageable);
 
 

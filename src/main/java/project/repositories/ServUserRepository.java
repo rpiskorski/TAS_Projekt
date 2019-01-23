@@ -24,10 +24,16 @@ public interface ServUserRepository extends JpaRepository<ServUser,Integer> {
     @Query(value="SELECT * FROM serv_user su WHERE su.service_id=:serviceID ORDER BY su.date DESC",nativeQuery = true)
     public List<ServUser> findAllServiceUsers(@Param("serviceID")int serviceID, Pageable pageable);
 
+    @Query(value="SELECT * FROM serv_user su WHERE su.user_id=:userID ORDER BY su.date DESC",nativeQuery = true)
+    public List<ServUser> findAllServiceUsersByUser(@Param("userID")int userID, Pageable pageable);
+
     //Count number of serviceUsers for service
     @Query(value = "SELECT COUNT(su.id) FROM serv_user su WHERE su.service_id=:serviceID",nativeQuery = true)
     int getNumberOfServiceUsersForService(@Param("serviceID")int serviceID);
 
+    //Count number of serviceUsers for service
+    @Query(value = "SELECT COUNT(su.id) FROM serv_user su WHERE su.user_id=:userID",nativeQuery = true)
+    int getNumberOfServiceUsersForUser(@Param("userID")int userID);
 
 
 }

@@ -32,17 +32,24 @@ public class ProductUser implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="product_id" ,nullable = false)
-    @JsonIgnore
+//    @JsonIgnore
+    @JsonIgnoreProperties({"name","manufacturer_name","raiting","num","cat"})
     private Product product;
 
     @ManyToOne
     @JoinColumn(name="user_id" ,nullable = false)
  //   @JsonIgnore
-    @JsonIgnoreProperties({"id","password","enabled","role","usersP","usersS",""})
+    @JsonIgnoreProperties({"id","password","enabled","role","usersP","usersS"})
     private User userP;
 
     public ProductUser(){
         this.timestamp = Calendar.getInstance(TimeZone.getTimeZone("Europe/Warsaw")).getTimeInMillis();
+    }
+
+    public ProductUser(ProductUser pu){
+        this.timestamp = Calendar.getInstance(TimeZone.getTimeZone("Europe/Warsaw")).getTimeInMillis();
+        this.rating = pu.getRating();
+        this.comment = pu.getComment();
     }
 
 

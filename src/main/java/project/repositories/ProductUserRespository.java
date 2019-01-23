@@ -28,8 +28,16 @@ public interface ProductUserRespository extends JpaRepository<ProductUser,Intege
     @Query(value="SELECT * FROM product_user pu WHERE pu.product_id=:productID ORDER BY pu.date DESC",nativeQuery = true)
     public List<ProductUser> findAllProductUsers(@Param("productID")int productID,Pageable pageable);
 
+    @Query(value="SELECT * FROM product_user pu WHERE pu.user_id=:userID ORDER BY pu.date DESC",nativeQuery = true)
+    public List<ProductUser> findAllProductUsersByUser(@Param("userID")int userID,Pageable pageable);
+
     //Count number of productUsers for product
     @Query(value = "SELECT COUNT(pu.id) FROM product_user pu WHERE pu.product_id=:productID",nativeQuery = true)
     int getNumberOfProductUsersForProduct(@Param("productID")int productID);
+
+    //Count number of productUsers for user
+    @Query(value = "SELECT COUNT(pu.id) FROM product_user pu WHERE pu.user_id=:userID",nativeQuery = true)
+    int getNumberOfProductUsersForUser(@Param("userID")int productID);
+
 
 }

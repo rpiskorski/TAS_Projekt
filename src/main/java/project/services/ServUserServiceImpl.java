@@ -106,19 +106,40 @@ public class ServUserServiceImpl implements ServUserService {
     }
 
     public int getNumberOfPagesForService(int id){
-        int numberOfProductUsers = getNumberOfServiceUsersForService(id);
+        int numberOfServiceUsers = getNumberOfServiceUsersForService(id);
         int numberOfPages = 0;
-        if(numberOfProductUsers%10==0){
-            numberOfPages = numberOfProductUsers/10;
+        if(numberOfServiceUsers%10==0){
+            numberOfPages = numberOfServiceUsers/10;
         }
         else{
-            numberOfPages = (int)(numberOfProductUsers/10)+1;
+            numberOfPages = (int)(numberOfServiceUsers/10)+1;
         }
         return numberOfPages;
     }
 
     public List<ServUser> getAllServiceUsers(int serviceID, Pageable pageable){
         return this.servUserRepository.findAllServiceUsers(serviceID,pageable);
+    }
+
+    public List<ServUser> getAllServiceUsersForUser(int userID,Pageable pageable){
+        return this.servUserRepository.findAllServiceUsersByUser(userID,pageable);
+    }
+
+    public int getNumberOfServiceUsersForUsers(int id){
+        return this.servUserRepository.getNumberOfServiceUsersForUser(id);
+    }
+
+    public int getNumberOfPagesForUsers(int id){
+        int numberOfServiceUsers = getNumberOfServiceUsersForUsers(id);
+        int numberOfPages = 0;
+        if(numberOfServiceUsers%10==0){
+            numberOfPages = numberOfServiceUsers/10;
+        }
+        else{
+            numberOfPages = (int)(numberOfServiceUsers/10)+1;
+        }
+        return numberOfPages;
+
     }
 
 }

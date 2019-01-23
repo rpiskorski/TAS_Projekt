@@ -44,6 +44,23 @@ public class ProductUserServiceImpl implements ProductUserService{
         return this.productUserRespository.getNumberOfProductUsersForProduct(id);
     }
 
+    public int getNumberOfProductUsersForUsers(int id){
+        return this.productUserRespository.getNumberOfProductUsersForUser(id);
+    }
+
+    public int getNumberOfPagesForUsers(int id){
+        int numberOfProductUsers = getNumberOfProductUsersForUsers(id);
+        int numberOfPages = 0;
+        if(numberOfProductUsers%10==0){
+            numberOfPages = numberOfProductUsers/10;
+        }
+        else{
+            numberOfPages = (int)(numberOfProductUsers/10)+1;
+        }
+        return numberOfPages;
+    }
+
+
     public int getNumberOfPagesForProduct(int id){
         int numberOfProductUsers = getNumberOfProductUsersForProduct(id);
         int numberOfPages = 0;
@@ -55,7 +72,6 @@ public class ProductUserServiceImpl implements ProductUserService{
         }
         return numberOfPages;
     }
-
 
 
     public ProductUser add(ProductUser productUser){
@@ -122,6 +138,11 @@ public class ProductUserServiceImpl implements ProductUserService{
 
     public List<ProductUser> getAllProductUsers(int productID,Pageable pageable){
         return this.productUserRespository.findAllProductUsers(productID,pageable);
+    }
+
+
+    public List<ProductUser> getAllProductUsersForUser(int userID,Pageable pageable){
+        return this.productUserRespository.findAllProductUsersByUser(userID,pageable);
     }
 
 

@@ -50,7 +50,7 @@ CREATE TABLE `products` (
   `manufacturer_name` varchar(255) COLLATE utf8_bin NOT NULL,
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
   `num_of_votes` int(11) DEFAULT '0',
-  `avg_rating` double DEFAULT '0',
+  `avg_rating` double(2,1) DEFAULT '0.0',
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -126,7 +126,7 @@ CREATE TABLE `services` (
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
   `num_of_votes` int(11) DEFAULT '0',
   `owner_name` varchar(255) COLLATE utf8_bin NOT NULL,
-  `avg_rating` double DEFAULT '0',
+  `avg_rating` double(2,1) DEFAULT '0.0',
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 

@@ -16,6 +16,7 @@ import project.model.LoginForm;
 import project.model.User;
 import project.services.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,15 +40,17 @@ public class AuthenticationController {
     @RequestMapping(value = "/login",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Map<String,Object> generateToken(@RequestBody LoginForm loginForm,
+                                            HttpServletRequest request,
                                             HttpServletResponse httpServletResponse){
 
 
-        String token="";
+        String token=null;
         Map<String,Object> map = new HashMap<>();
 
         Optional<User> userFromDatabase = this.userService.getUsersByName(loginForm.getName());
 
          Authentication authentication =null;
+
 
         if(userFromDatabase.isPresent()){
 
@@ -58,16 +61,18 @@ public class AuthenticationController {
 
             token = this.tokenHelper.generateToken(userFromDatabase.get());
             map.put("token",token);
-
+            //map.put("message","Jesteś zalogowany jako "+loginForm.getName());
             httpServletResponse.setStatus(200);
             return map;
         }
             else{
             map.put("message","Niepoprawne login lub hasło");
-
+            map.put("token",token);
             httpServletResponse.setStatus(460);
             return map;
         }
+
+
 
     }
 

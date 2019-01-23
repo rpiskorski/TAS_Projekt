@@ -64,11 +64,11 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     List<Product> findByCatOrderedByNameDesc(@Param("cat_id") int cat_id,Pageable pageable);
 
     //Find All Products In Category Order BY Raiting Ascending
-    @Query(value="SELECT * FROM products p WHERE p.category_id=:cat_id ORDER BY p.avg_raiting ASC", nativeQuery = true)
+    @Query(value="SELECT * FROM products p WHERE p.category_id=:cat_id ORDER BY p.avg_rating ASC", nativeQuery = true)
     List<Product> findByCatOrderedByRaitingAsc(@Param("cat_id") int cat_id,Pageable pageable);
 
     //Find All Products In Category Order By Raiting Descending
-    @Query(value="SELECT * FROM products p WHERE p.category_id=:cat_id ORDER BY p.avg_raiting DESC", nativeQuery = true)
+    @Query(value="SELECT * FROM products p WHERE p.category_id=:cat_id ORDER BY p.avg_rating DESC", nativeQuery = true)
     List<Product> findByCatOrderedByRaitingDesc(@Param("cat_id") int cat_id,Pageable pageable);
 
 

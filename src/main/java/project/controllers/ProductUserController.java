@@ -42,11 +42,12 @@ public class ProductUserController {
     //Add Comment etc.
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value="/products/{id}/comments",method=RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String,Object>> createComment(@RequestBody @Nullable String comment,
-                                                @RequestParam(value="rating",required = false) Integer rating,
+    public ResponseEntity<Map<String,Object>> createComment(@RequestBody @Valid @NotNull ProductUser prodUser,
+                                                //@RequestParam(value="rating",required = false) Integer rating,
                                                 @PathVariable int id,
                                                 HttpServletRequest httpServletRequest){
-
+        String comment = prodUser.getComment();
+        int rating = prodUser.getRating();
 
         Map<String,Object> map = new HashMap<>();
 
@@ -72,17 +73,21 @@ public class ProductUserController {
                 } else {
 
                     ProductUser productUser = new ProductUser();
-                    if(rating==null){
+                    if(rating==0){
                         if(comment == null){
                             map.put("message","Add a comment or rating first!");
                             return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
                         }
+                        else{
+                            map.put("message","Rating has to be greater than 0 and equal or less than 6!");
+                            return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
+                        }
                         }
                     else {
-                        if (rating.intValue() >= 0 && rating.intValue()<=6) {
-                            productUser.setRating(rating.intValue());
+                        if (rating > 0 && rating <=6) {
+                            productUser.setRating(rating);
                         }else{
-                            map.put("message","Rating has to be equal or greater than 0 and equal or greater than 6!");
+                            map.put("message","Rating has to be greater than 0 and equal or less than 6!");
                             return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
                         }
                     }
@@ -146,8 +151,8 @@ public class ProductUserController {
     //Edit
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value="/products/{id}/comments/{commentId}",method=RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String,Object>> editComment(@RequestBody @Nullable String comment,
-                                                          @RequestParam(value="rating",required = false) Integer rating,
+    public ResponseEntity<Map<String,Object>> editComment(@RequestBody @Valid @NotNull ProductUser prodUser,
+                                                          //@RequestParam(value="rating",required = false) Integer rating,
                                                           @PathVariable int commentId,
                                                           @PathVariable int id,
                                                           HttpServletRequest httpServletRequest) {
@@ -156,6 +161,9 @@ public class ProductUserController {
 
         Object token = httpServletRequest.getAttribute("token");
         map.put("token",token);
+
+        String comment = prodUser.getComment();
+        int rating = prodUser.getRating();
 
         if(this.productService.getProductsById(id)!=null && this.productUserService.editComment(comment,rating,commentId)){
             map.put("message","Edited successfully!");

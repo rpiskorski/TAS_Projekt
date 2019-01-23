@@ -1,8 +1,0 @@
-.ex{
-	height:250px;
-	transition: linear 0.25s;
-}
-
-.ex:hover{
-	background:#F0F0F0;
-}

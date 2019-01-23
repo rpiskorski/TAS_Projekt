@@ -28,7 +28,7 @@ public class ServUser implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="service_id" ,nullable = false)
-    @JsonIgnore
+    @JsonIgnoreProperties({"name","owner_name","localization","raiting","num","cat","servUsers"})
     private Serv service;
 
     @ManyToOne
@@ -39,6 +39,12 @@ public class ServUser implements Serializable {
 
     public ServUser(){
         this.timestamp = Calendar.getInstance(TimeZone.getTimeZone("Europe/Warsaw")).getTimeInMillis();
+    }
+
+    public ServUser(ServUser servUser){
+        this.timestamp = Calendar.getInstance(TimeZone.getTimeZone("Europe/Warsaw")).getTimeInMillis();
+        this.comment = servUser.getComment();
+        this.rating = servUser.getRating();
     }
 
     public int getId() {

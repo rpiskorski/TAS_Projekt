@@ -100,7 +100,7 @@ public class ProductController {
         }
         else{
             map.put("message","Product does not exist!");
-            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
         }
     }
 
