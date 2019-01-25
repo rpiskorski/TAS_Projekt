@@ -17,7 +17,7 @@ public class Role implements Serializable {
     @Column(name="name",nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role",orphanRemoval = true, cascade = CascadeType.PERSIST)
     @JsonIgnore
     private List<User> user;
 

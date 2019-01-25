@@ -72,6 +72,23 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     List<Product> findByCatOrderedByRaitingDesc(@Param("cat_id") int cat_id,Pageable pageable);
 
 
+//    //Find All Products In Category Order BY Name In Category Ascending
+//    @Query(value="SELECT * FROM products p WHERE p.category_id=:cat_id ORDER BY p.name ASC", nativeQuery = true)
+//    List<Product> findByCatOrderedByNameAsc(@Param("cat_id") int cat_id,Pageable pageable);
+//
+//    //Find All Products In Category Order BY Name In Category Descending
+//    @Query(value="SELECT * FROM products p WHERE p.category_id=:cat_id ORDER BY p.name DESC", nativeQuery = true)
+//    List<Product> findByCatOrderedByNameDesc(@Param("cat_id") int cat_id,Pageable pageable);
+//
+//    //Find All Products In Category Order BY Raiting In Category Ascending
+//    @Query(value="SELECT * FROM products p WHERE p.category_id=:cat_id ORDER BY p.avg_rating ASC", nativeQuery = true)
+//    List<Product> findByCatOrderedByRaitingAsc(@Param("cat_id") int cat_id,Pageable pageable);
+//
+//    //Find All Products In Category Order By Raiting In Category Descending
+//    @Query(value="SELECT * FROM products p WHERE p.category_id=:cat_id ORDER BY p.avg_rating DESC", nativeQuery = true)
+//    List<Product> findByCatOrderedByRaitingDesc(@Param("cat_id") int cat_id,Pageable pageable);
+
+
     //Find All Products Order BY Name Ascending
     @Query(value="SELECT * FROM products p ORDER BY p.name ASC",nativeQuery = true)
     List<Product> findProductOrderByNameAsc(Pageable pageable);
@@ -91,27 +108,27 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     //***************************************
 
     //Count number of products by manufacturer
-    @Query(value = "SELECT COUNT(p.id) FROM products p WHERE p.manufacturer_name=:manufacturer_name",nativeQuery = true)
+    @Query(value = "SELECT COUNT(p.id) FROM products p WHERE p.manufacturer_name LIKE %:manufacturer_name%",nativeQuery = true)
     int getNumberOfProductsByManufacturer(@Param("manufacturer_name") String manufacturer_name);
 
     //Find All Products By Manufacturer
-    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name=:manufacturer_name", nativeQuery = true)
+    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name LIKE %:manufacturer_name%", nativeQuery = true)
     List<Product> findByManufacturer(@Param("manufacturer_name") String manufacturer_name,Pageable pageable);
 
     //Find All Products By Manufacturer Order BY Name Ascending
-    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name=:manufacturer_name ORDER BY p.name ASC", nativeQuery = true)
+    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name LIKE %:manufacturer_name% ORDER BY p.name ASC", nativeQuery = true)
     List<Product> findByManufacturerOrderedByNameAsc(@Param("manufacturer_name") String manufacturer_name,Pageable pageable);
 
     //Find All Products By Manufacturer Order BY Name Descending
-    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name=:manufacturer_name ORDER BY p.name DESC", nativeQuery = true)
+    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name LIKE %:manufacturer_name% ORDER BY p.name DESC", nativeQuery = true)
     List<Product> findByManufacturerOrderedByNameDesc(@Param("manufacturer_name") String manufacturer_name,Pageable pageable);
 
     //Find All Products By Manufacturer Order BY Raiting Ascending
-    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name=:manufacturer_name ORDER BY p.avg_raiting ASC", nativeQuery = true)
+    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name LIKE %:manufacturer_name% ORDER BY p.avg_rating ASC", nativeQuery = true)
     List<Product> findByManufacturerOrderedByRaitingAsc(@Param("manufacturer_name") String manufacturer_name,Pageable pageable);
 
     //Find All Products By Manufacturer Order By Raiting Descending
-    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name=:manufacturer_name ORDER BY p.avg_raiting DESC", nativeQuery = true)
+    @Query(value="SELECT * FROM products p WHERE p.manufacturer_name LIKE %:manufacturer_name% ORDER BY p.avg_rating DESC", nativeQuery = true)
     List<Product> findByManufacturerOrderedByRaitingDesc(@Param("manufacturer_name") String manufacturer_name,Pageable pageable);
 
 }

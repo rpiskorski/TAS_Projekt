@@ -20,11 +20,11 @@ public class Category implements Serializable {
     @Column(name ="Name")
     private String name;
 
-    @OneToMany(mappedBy = "cat")
+    @OneToMany(mappedBy = "cat",orphanRemoval = true, cascade = CascadeType.PERSIST)
     @JsonIgnore
     private List<Product> products;
 
-    @OneToMany(mappedBy = "cat")
+    @OneToMany(mappedBy = "cat",orphanRemoval = true, cascade = CascadeType.PERSIST)
     @JsonIgnore
     private List<Serv> services;
 

@@ -39,10 +39,12 @@ public class ServController {
         Serv service1 = servService.addService(service);
         if(service1 == null){
             map.put("message","Failed to add service!");
+            map.put("service","empty");
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
         else {
             map.put("message","Service added successfully!");
+            map.put("service",service1);
             return new ResponseEntity<Map<String,Object>>(map, HttpStatus.CREATED);
         }
 

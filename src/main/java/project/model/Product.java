@@ -35,7 +35,7 @@ public class Product implements Serializable {
     @JoinColumn(name = "Category_ID",nullable = false)
     private Category cat;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",orphanRemoval = true, cascade = CascadeType.PERSIST)
     @JsonIgnore
     private List<ProductUser> productUsers;
 

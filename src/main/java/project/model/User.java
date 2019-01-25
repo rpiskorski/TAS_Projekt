@@ -34,7 +34,7 @@ public class User implements Serializable {
     @JoinColumn(name = "role",nullable=false)
     private Role role;
 
-    @OneToMany(mappedBy = "userP")
+    @OneToMany(mappedBy = "userP",orphanRemoval = true, cascade = CascadeType.PERSIST)
 //    @JsonIgnore
     private List<ProductUser> usersP;
 

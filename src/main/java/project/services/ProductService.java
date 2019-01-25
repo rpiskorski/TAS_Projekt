@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface ProductService {
@@ -57,6 +58,10 @@ public interface ProductService {
     public List<Product> getProductsOrderByNameAsc(Pageable pageable);
     public List<Product> getProductsOrderByNameDesc(Pageable pageable);
 //
+
+
+    Map<String,Object> getProductsAdvancedSearch(String name, String manuName,Integer categoryId,
+                                                 boolean Sort, String type, String order, Integer page);
 
     public Product addProduct(Product product);
 

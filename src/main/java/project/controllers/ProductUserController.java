@@ -73,29 +73,21 @@ public class ProductUserController {
                 } else {
 
                     ProductUser productUser = new ProductUser();
-                    if(rating==0){
-                        if(comment == null){
-                            map.put("message","Add a comment or rating first!");
-                            return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
-                        }
-                        else{
-                            map.put("message","Rating has to be greater than 0 and equal or less than 6!");
-                            return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
-                        }
-                        }
-                    else {
-                        if (rating > 0 && rating <=6) {
+                        if (rating == 1 || rating == 2 || rating == 3 || rating == 4 || rating == 5 || rating == 6) {
                             productUser.setRating(rating);
                         }else{
                             map.put("message","Rating has to be greater than 0 and equal or less than 6!");
+                            map.put("comment","empty");
                             return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
                         }
-                    }
+
+
                     productUser.setComment(comment);
                     productUser.setProduct(p);
                     productUser.setUserP(currentUser);
-                    this.productUserService.add(productUser);
+                    ProductUser productUser1 = this.productUserService.add(productUser);
                     map.put("message","Comment added successfully!");
+                    map.put("comment",productUser1);
                     return new ResponseEntity<Map<String,Object>>(map, HttpStatus.CREATED);
                 }
             }
@@ -162,15 +154,28 @@ public class ProductUserController {
         Object token = httpServletRequest.getAttribute("token");
         map.put("token",token);
 
+        int rating = 0;
+//        System.out.println(prodUser.getRating());
         String comment = prodUser.getComment();
-        int rating = prodUser.getRating();
+        if(prodUser.getRating() == 1 || prodUser.getRating() == 2 || prodUser.getRating() == 3 || prodUser.getRating() == 4 || prodUser.getRating() == 5 || prodUser.getRating() == 6){
+            rating = prodUser.getRating();
+//            System.out.println(rating);
+        }else{
+            map.put("message","Rating has to be greater than 0 and equal or less than 6!");
+            map.put("comment","empty");
+            return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
+        }
 
-        if(this.productService.getProductsById(id)!=null && this.productUserService.editComment(comment,rating,commentId)){
+        ProductUser pu = this.productUserService.editComment(comment,rating,commentId);
+
+        if(this.productService.getProductsById(id)!=null && pu!=null){
             map.put("message","Edited successfully!");
+            map.put("comment",pu);
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
         }
         else{
             map.put("message","Comment does not exist or you don't have permission!");
+            map.put("comment","empty");
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
    }

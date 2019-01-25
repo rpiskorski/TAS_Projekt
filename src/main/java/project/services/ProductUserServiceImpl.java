@@ -113,27 +113,27 @@ public class ProductUserServiceImpl implements ProductUserService{
         else return null;
     }
 
-    public boolean editComment(String comment,Integer rating,int id){
+    public ProductUser editComment(String comment,int rating,int id){
         if(isOwner(id)){
-            int newRating = 0;
+//            int newRating = 0;
             String newComment = "";
-            if(rating!=null){
-                if(rating.intValue()>=0 && rating.intValue()<=6)
-                {
-                    newRating = rating.intValue();
-                }
-            }
+
             if(newComment != null){
                 newComment = comment;
             }
+            ProductUser pu = getProductUser(id);
 
             long date = Calendar.getInstance(TimeZone.getTimeZone("Europe/Warsaw")).getTimeInMillis();
 
-            this.productUserRespository.updateComment(newComment, newRating, date, id);
-            return true;
+            this.productUserRespository.updateComment(newComment, rating, date, id);
+            pu.setComment(newComment);
+            pu.setRating(rating);
+            pu.setTimestamp(date);
+
+            return pu;
 
         }
-        return false;
+        return null;
     }
 
     public List<ProductUser> getAllProductUsers(int productID,Pageable pageable){

@@ -35,7 +35,7 @@ public class Serv implements Serializable {
     @JoinColumn(name = "Category_ID",nullable = false)
     private Category cat;
 
-    @OneToMany(mappedBy = "service")
+    @OneToMany(mappedBy = "service",orphanRemoval = true, cascade = CascadeType.PERSIST)
     @JsonIgnore
     private List<ServUser> servUsers;
 

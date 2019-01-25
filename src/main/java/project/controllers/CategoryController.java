@@ -39,12 +39,15 @@ public class CategoryController {
         Object token = httpServletRequest.getAttribute("token");
         map.put("token",token);
 
-        if(this.categoryService.addCategory(category)!=null) {
+        Category category1 =this.categoryService.addCategory(category);
+        if(category1!=null) {
             map.put("message","Category added successfully!");
-            return new ResponseEntity<Map<String, Object>>(map,HttpStatus.CREATED);
+            map.put("category",category1);
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.CREATED);
         }else{
-            map.put("message","Failed to add product!");
-            return new ResponseEntity<Map<String, Object>>(map,HttpStatus.BAD_REQUEST);
+            map.put("message","Failed to add category!");
+            map.put("category","empty");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
     }
     //Delete Category
@@ -98,8 +101,12 @@ public class CategoryController {
 
         List<Category> categoryList;
         categoryList = this.categoryService.getCategories();
+        if(categoryList!=null){
+            map.put("listOfCategories",categoryList);
+        }else{
+            map.put("listOfCategories","empty");
+        }
 
-        map.put("listOfCategories",categoryList);
 
 
         return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
