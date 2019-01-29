@@ -31,7 +31,7 @@ public interface ServUserRepository extends JpaRepository<ServUser,Integer> {
     @Query(value = "SELECT COUNT(su.id) FROM serv_user su WHERE su.service_id=:serviceID",nativeQuery = true)
     int getNumberOfServiceUsersForService(@Param("serviceID")int serviceID);
 
-    //Count number of serviceUsers for service
+    //Count number of serviceUsers for user
     @Query(value = "SELECT COUNT(su.id) FROM serv_user su WHERE su.user_id=:userID",nativeQuery = true)
     int getNumberOfServiceUsersForUser(@Param("userID")int userID);
 

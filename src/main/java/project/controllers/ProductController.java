@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import project.model.Category;
 import project.model.Product;
 import project.services.CategoryService;
 import project.services.ProductService;
@@ -33,18 +34,69 @@ public class ProductController {
     public ResponseEntity<Map<String,Object>> create(@RequestBody @Valid @NotNull Product product,
                                                      HttpServletRequest httpServletRequest)
     {
+        //TODO sprawdzic regexem czy nazwa produktu i i nne parametry moga wystepowac
+        String pname = product.getName();
+        String pmanuName= product.getManufacturer_name();
+        int catId = product.getCat().getId();
+
         Map<String,Object> map = new HashMap<>();
         Object token = httpServletRequest.getAttribute("token");
         map.put("token",token);
 
+        if(this.categoryService.getCategory(catId)==null || !pname.matches("^[a-zA-ZążśźęćńółĄŻŚŹĘĆŃÓŁ0-9]{1}([a-zA-ZążśźęćńółĄŻŚŹĘĆŃÓŁ0-9]+|\\s{1,2})*$") || pname.length()>50
+                || !pmanuName.matches("^[a-zA-ZążśźęćńółĄŻŚŹĘĆŃÓŁ0-9]{1}([a-zA-ZążśźęćńółĄŻŚŹĘĆŃÓŁ0-9]+|\\s{1,2})*$") || pmanuName.length()>50){
+            map.put("message","Wprowadzono niepoprawne dane");
+            map.put("product","empty");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
+        }
+
+
         Product product1 = productService.addProduct(product);
         if(product1 == null){
-            map.put("message","Failed to add product!");
+            map.put("message","Nie udało się wprowadzić produktu");
             map.put("product","empty");
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
         else {
             map.put("message","Product added successfully!");
+            map.put("product",product1);
+            return new ResponseEntity<Map<String,Object>>(map, HttpStatus.CREATED);
+        }
+    }
+
+    //Edit Product
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @RequestMapping(value="/products/{id}",method= RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String,Object>> edit(@RequestBody @Valid @NotNull Product product,
+                                                     @PathVariable int id,
+                                                     HttpServletRequest httpServletRequest)
+    {
+
+        String pname = product.getName();
+        String pmanuName= product.getManufacturer_name();
+        int catId = product.getCat().getId();
+
+        Map<String,Object> map = new HashMap<>();
+        Object token = httpServletRequest.getAttribute("token");
+        map.put("token",token);
+
+        Category c = this.categoryService.getCategory(catId);
+        if(c==null || !pname.matches("^[a-zA-ZążśźęćńółĄŻŚŹĘĆŃÓŁ0-9]{1}([a-zA-ZążśźęćńółĄŻŚŹĘĆŃÓŁ0-9]+|\\s{1,2})*$") || pname.length()>50
+                || !pmanuName.matches("^[a-zA-ZążśźęćńółĄŻŚŹĘĆŃÓŁ0-9]{1}([a-zA-ZążśźęćńółĄŻŚŹĘĆŃÓŁ0-9]+|\\s{1,2})*$") || pmanuName.length()>50){
+            map.put("message","Wprowadzono niepoprawne dane");
+            map.put("product","empty");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
+        }
+
+
+        Product product1 = productService.editProduct(pname,pmanuName,c,id);
+        if(product1 == null){
+            map.put("message","Nie udało się edytować produktu");
+            map.put("product","empty");
+            return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
+        }
+        else {
+            map.put("message","Produkt został pomyślnie edytowany");
             map.put("product",product1);
             return new ResponseEntity<Map<String,Object>>(map, HttpStatus.CREATED);
         }
@@ -102,7 +154,7 @@ public class ProductController {
 
         boolean sortFlag = false;
 
-        if(name!=null && !name.matches("^[a-zA-ZążśźęćńółĄŻŚŹĘĆŃÓŁ0-9]{1}([a-zA-ZążśźęćńółĄŻŚŹĘĆŃÓŁ0-9]+|\\s{1,2})*"))
+        if(name!=null && !name.matches("^[a-zA-ZążśźęćńółĄŻŚŹĘĆŃÓŁ0-9]{1}([a-zA-ZążśźęćńółĄŻŚŹĘĆŃÓŁ0-9]+|\\s{1,2})*$"))
         {
             name=null;
         }

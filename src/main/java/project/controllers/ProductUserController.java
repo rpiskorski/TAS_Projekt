@@ -166,9 +166,11 @@ public class ProductUserController {
             return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
         }
 
+        //TODO
         ProductUser pu = this.productUserService.editComment(comment,rating,commentId);
 
         if(this.productService.getProductsById(id)!=null && pu!=null){
+
             map.put("message","Edited successfully!");
             map.put("comment",pu);
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);

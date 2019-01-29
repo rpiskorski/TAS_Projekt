@@ -78,28 +78,23 @@ public class ServUserController {
 
                     ServUser servUser = new ServUser();
 
-                    if(rating==0){
-                        if(comment==null){
 
-                            map.put("message","Add a comment or rating first!");
-                            return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
-                        }
-                    }
-                    else{
-                        if (rating > 0 && rating<=6) {
+                        if (rating == 1 || rating == 2 || rating == 3 || rating == 4 || rating == 5 || rating == 6) {
                             servUser.setRating(rating);
                         }else{
-                            map.put("message","Rating has to be equal or greater than 0 and equal or greater than 6!");
+                            map.put("message","Rating has to be greater than 0 and equal or less than 6!");
+                            map.put("comment","empty");
                             return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
                         }
-                       }
+
 
                     servUser.setComment(comment);
                     servUser.setService(s);
                     servUser.setUserS(currentUser);
-                    this.servUserService.add(servUser);
+                    ServUser serviceUser1 = this.servUserService.add(servUser);
 
                     map.put("message","Comment added successfully!");
+                    map.put("comment",serviceUser1);
                     return new ResponseEntity<Map<String,Object>>(map, HttpStatus.CREATED);
                 }
             }
@@ -149,6 +144,7 @@ public class ServUserController {
 //        }
     }
 
+    //Edit
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value="/services/{id}/comments/{commentId}",method=RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> editComment(@RequestBody @Valid @NotNull ServUser serviceUser,
@@ -157,21 +153,35 @@ public class ServUserController {
                                               HttpServletRequest httpServletRequest)
     {
 
-        String comment = serviceUser.getComment();
-        int rating = serviceUser.getRating();
-
         Map<String,Object> map = new HashMap<>();
 
         Object token = httpServletRequest.getAttribute("token");
         map.put("token",token);
 
-        if(this.servService.getServicesById(id)!=null && this.servUserService.editComment(comment,rating,commentId)){
+        int rating = 0;
+
+        String comment = serviceUser.getComment();
+        if(serviceUser.getRating() == 1 || serviceUser.getRating() == 2 || serviceUser.getRating() == 3 || serviceUser.getRating() == 4 || serviceUser.getRating() == 5 || serviceUser.getRating() == 6){
+            rating = serviceUser.getRating();
+//            System.out.println(rating);
+        }else{
+            map.put("message","Rating has to be greater than 0 and equal or less than 6!");
+            map.put("comment","empty");
+            return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
+        }
+
+        ServUser su = this.servUserService.editComment(comment,rating,commentId);
+
+        //TODO dokonczyc
+        if(this.servService.getServicesById(id)!=null && su!=null){
 
             map.put("message","Edited successfully!");
+            map.put("comment",su);
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
         }
         else{
             map.put("message","Comment does not exist or you don't have permission!");
+            map.put("comment","empty");
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
 

@@ -17,7 +17,7 @@ public interface ServUserService {
 
     public ServUser getServUser(int id);
 
-    public boolean editComment(String comment,Integer rating,int id);
+    public ServUser editComment(String comment,int rating,int id);
 
     public boolean isOwner(int id);
 

@@ -33,7 +33,7 @@ public class ProductUserServiceImpl implements ProductUserService{
         ProductUser pu = getProductUser(id);
 
         //Check if current user is the owner of that comment
-        if(pu!=null && pu.getUserP().getId()==currentUser.getId()){
+        if(pu!=null && (pu.getUserP().getId()==currentUser.getId() || currentUser.getRole().getName().contentEquals("ADMIN"))){
             return true;
         }
         else return false;
@@ -118,7 +118,7 @@ public class ProductUserServiceImpl implements ProductUserService{
 //            int newRating = 0;
             String newComment = "";
 
-            if(newComment != null){
+            if(comment != null){
                 newComment = comment;
             }
             ProductUser pu = getProductUser(id);

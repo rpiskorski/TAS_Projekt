@@ -4,10 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import project.model.Category;
 import project.model.Product;
+import project.model.User;
+import project.repositories.CategoryRepository;
 import project.repositories.ProductRepository;
+import project.repositories.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -21,6 +26,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
 
     @Autowired
@@ -74,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
 
         }
 
-        System.out.println(Q);
+//        System.out.println(Q);
         Query q = entityManager.createNativeQuery(Q,Product.class);
         for(int i=0;i<3;i++){
             if(stringTable[i]!=null && i==0){
@@ -275,6 +286,22 @@ public class ProductServiceImpl implements ProductService {
         }
         else return this.productRepository.save(product);
 
+    }
+    @Override
+    public Product editProduct(String name,String manuName,Category cat,int id){
+
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser=userRepository.findOneByName(userDetails.getUsername());
+        Product p = this.getProductsById(id);
+        int catId = cat.getId();
+        if(currentUser.getRole().getName().contentEquals("ADMIN")){
+            this.productRepository.updateProduct(name,manuName,catId,id);
+            p.setName(name);
+            p.setManufacturer_name(manuName);
+            p.setCat(cat);
+            return p;
+        }
+        return null;
     }
 
     @Override

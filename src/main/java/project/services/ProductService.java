@@ -65,6 +65,8 @@ public interface ProductService {
 
     public Product addProduct(Product product);
 
+    public Product editProduct(String name,String manuName,Category cat,int id);
+
     public void deleteProduct(int productID);
 
 

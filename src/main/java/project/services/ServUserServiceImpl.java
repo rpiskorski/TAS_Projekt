@@ -64,29 +64,7 @@ public class ServUserServiceImpl implements ServUserService {
         }
     }
 
-    public boolean editComment(String comment,Integer rating,int id){
 
-        if(isOwner(id)){
-            int newRating = 0;
-            String newComment = "";
-            if(rating!=null){
-                if(rating.intValue()>=0 && rating.intValue()<=6)
-                {
-                    newRating = rating.intValue();
-                }
-            }
-            if(newComment != null){
-                newComment = comment;
-            }
-
-            long date = Calendar.getInstance(TimeZone.getTimeZone("Europe/Warsaw")).getTimeInMillis();
-
-            this.servUserRepository.updateComment(newComment, newRating, date, id);
-            return true;
-
-        }
-        return false;
-    }
 
     public boolean isOwner(int id){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -94,7 +72,7 @@ public class ServUserServiceImpl implements ServUserService {
 
         ServUser su = this.getServUser(id);
 
-        if(su!=null && currentUser.getId()==su.getUserS().getId()){
+        if(su!=null && (currentUser.getId()==su.getUserS().getId() || currentUser.getRole().getName().contentEquals("ADMIN"))){
             return true;
         }else{
             return false;
@@ -124,6 +102,34 @@ public class ServUserServiceImpl implements ServUserService {
     public List<ServUser> getAllServiceUsersForUser(int userID,Pageable pageable){
         return this.servUserRepository.findAllServiceUsersByUser(userID,pageable);
     }
+
+
+    public ServUser editComment(String comment,int rating,int id){
+//TODO dokończyć edycje komentarza
+        if(isOwner(id)){
+//            int newRating = 0;
+            String newComment = "";
+
+            if(comment != null){
+                newComment = comment;
+            }
+            ServUser su = getServUser(id);
+
+            long date = Calendar.getInstance(TimeZone.getTimeZone("Europe/Warsaw")).getTimeInMillis();
+
+            this.servUserRepository.updateComment(newComment, rating, date, id);
+            su.setComment(newComment);
+            su.setRating(rating);
+            su.setTimestamp(date);
+            return su;
+
+        }
+        return null;
+    }
+
+
+
+
 
     public int getNumberOfServiceUsersForUsers(int id){
         return this.servUserRepository.getNumberOfServiceUsersForUser(id);
