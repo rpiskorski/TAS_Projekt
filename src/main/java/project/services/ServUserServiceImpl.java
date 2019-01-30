@@ -105,9 +105,9 @@ public class ServUserServiceImpl implements ServUserService {
 
 
     public ServUser editComment(String comment,int rating,int id){
-//TODO dokończyć edycje komentarza
+
         if(isOwner(id)){
-//            int newRating = 0;
+
             String newComment = "";
 
             if(comment != null){

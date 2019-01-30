@@ -117,12 +117,12 @@ public class UserController {
 
 
         if(user==null){
-            map.put("message","This user does not exist");
+            map.put("message","Użytkonik nie istnieje");
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
         else {
             this.userService.deleteUser(id);
-            map.put("message","User deleted successfully");
+            map.put("message","Użytkownik został usunięty");
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.ACCEPTED);
         }
     }

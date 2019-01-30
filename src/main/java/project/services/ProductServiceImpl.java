@@ -85,7 +85,6 @@ public class ProductServiceImpl implements ProductService {
 
         }
 
-//        System.out.println(Q);
         Query q = entityManager.createNativeQuery(Q,Product.class);
         for(int i=0;i<3;i++){
             if(stringTable[i]!=null && i==0){
@@ -139,17 +138,7 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    @Override
-    public List<Product> getAllProducts(Pageable pageable)
-    {
-        return this.productRepository.findAllProducts(pageable);
-    }
 
-    @Override
-    public int getNumberOfProducts()
-    {
-        return this.productRepository.getNumberOfProducts();
-    }
 
     @Override
     public int getNumberOfPages(int numberOfProducts){
@@ -167,115 +156,9 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public int getNumberOfProductsInCategory(int cat_id){
-        return this.productRepository.getNumberOfProductsInCategory(cat_id);
-    }
-
-    @Override
-    public int getNumberOfProductsByManufacturer(String manufacturer_name){
-        return this.productRepository.getNumberOfProductsByManufacturer(manufacturer_name);
-    }
-
-    @Override
     public Product getProductsById(int id){
         return this.productRepository.findById(id);
     }
-
-    @Override
-    public List<Product> getProductsByName(String name, Pageable pageable){
-        return this.productRepository.findByName(name,pageable);
-    }
-
-    @Override
-    public List<Product> getProductsByNameInCategory(int cat_id, String name, Pageable pageable) {
-        return this.productRepository.findByNameInCategory(cat_id,name,pageable);
-    }
-
-    @Override
-    public int getNumberOfProductsWithName(String name){
-        return this.productRepository.getNumberOfProductsWithName(name);
-    }
-
-
-
-    public int getNumberOfProductsWithNameInCategory(int cat_id,String name){
-        return this.productRepository.getNumberOfProductsWithNameInCategory(cat_id,name);
-    }
-
-
-    @Override
-    public List<Product> getAllProductsByManufacturer(String manufacturer_name,Pageable pageable){
-        return this.productRepository.findByManufacturer(manufacturer_name,pageable);
-    }
-
-    @Override
-    public List<Product> getProductsOrderByNameByManufacturerAsc(String manufacturer_name,Pageable pageable){
-        return this.productRepository.findByManufacturerOrderedByNameAsc(manufacturer_name,pageable);
-    }
-
-    @Override
-    public List<Product> getProductsOrderByNameByManufacturerDesc(String manufacturer_name,Pageable pageable){
-        return this.productRepository.findByManufacturerOrderedByNameDesc(manufacturer_name,pageable);
-    }
-
-    @Override
-    public List<Product> getProductsOrderByRaitingByManufacturerAsc(String manufacturer_name,Pageable pageable){
-        return this.productRepository.findByManufacturerOrderedByRaitingAsc(manufacturer_name,pageable);
-    }
-
-    @Override
-    public List<Product> getProductsOrderByRaitingByManufacturerDesc(String manufacturer_name,Pageable pageable){
-        return this.productRepository.findByManufacturerOrderedByRaitingDesc(manufacturer_name,pageable);
-    }
-
-
-
-    @Override
-    public List<Product> getAllProductsInCategory(int cat_id,Pageable pageable){
-        return this.productRepository.findByCat(cat_id,pageable);
-    }
-
-    @Override
-    public List<Product> getProductsOrderByNameInCategoryAsc(int cat_id,Pageable pageable){
-        return this.productRepository.findByCatOrderedByNameAsc(cat_id,pageable);
-    }
-
-    @Override
-    public List<Product> getProductsOrderByRaitingInCategoryAsc(int cat_id,Pageable pageable){
-        return this.productRepository.findByCatOrderedByRaitingAsc(cat_id,pageable);
-    }
-
-    @Override
-    public List<Product> getProductsOrderByNameInCategoryDesc(int cat_id,Pageable pageable){
-        return this.productRepository.findByCatOrderedByNameDesc(cat_id,pageable);
-    }
-
-    @Override
-    public List<Product> getProductsOrderByRaitingInCategoryDesc(int cat_id,Pageable pageable){
-        return this.productRepository.findByCatOrderedByRaitingDesc(cat_id,pageable);
-    }
-
-
-    @Override
-    public List<Product> getProductsOrderByRaitingAsc(Pageable pageable){
-        return this.productRepository.findProductOrderByRaitingAsc(pageable);
-    }
-
-    @Override
-    public List<Product> getProductsOrderByRaitingDesc(Pageable pageable){
-        return this.productRepository.findProductOrderByRaitingDesc(pageable);
-    }
-
-    @Override
-    public List<Product> getProductsOrderByNameAsc(Pageable pageable){
-        return this.productRepository.findProductOrderByNameAsc(pageable);
-    }
-
-    @Override
-    public List<Product> getProductsOrderByNameDesc(Pageable pageable){
-        return this.productRepository.findProductOrderByNameDesc(pageable);
-    }
-
 
 
     @Override

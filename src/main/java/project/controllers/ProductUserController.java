@@ -63,12 +63,12 @@ public class ProductUserController {
 
 
             if(p==null){
-                map.put("message","Product does not exist!");
+                map.put("message","Produkt nie istnieje");
                 return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
             }else {
 
                 if (this.productUserService.checkIfExists(id, currentUser.getId())) {
-                    map.put("message","Your comment already exists!");
+                    map.put("message","Twój komentarz już istnieje");
                     return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
                 } else {
 
@@ -76,7 +76,7 @@ public class ProductUserController {
                         if (rating == 1 || rating == 2 || rating == 3 || rating == 4 || rating == 5 || rating == 6) {
                             productUser.setRating(rating);
                         }else{
-                            map.put("message","Rating has to be greater than 0 and equal or less than 6!");
+                            map.put("message","Ocena musi być wieksza od 0 i mniejsza bądź równa 6");
                             map.put("comment","empty");
                             return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
                         }
@@ -86,7 +86,7 @@ public class ProductUserController {
                     productUser.setProduct(p);
                     productUser.setUserP(currentUser);
                     ProductUser productUser1 = this.productUserService.add(productUser);
-                    map.put("message","Comment added successfully!");
+                    map.put("message","Komentarz został pomyślnie dodany");
                     map.put("comment",productUser1);
                     return new ResponseEntity<Map<String,Object>>(map, HttpStatus.CREATED);
                 }
@@ -114,7 +114,7 @@ public class ProductUserController {
 
 
             if (this.productService.getProductsById(id) == null) {
-                map.put("message","Product does not exist!");
+                map.put("message","Produkt nie istnieje");
                 return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
             } else {
                 if (this.productUserService.checkIfExists(commentId)) {
@@ -124,14 +124,14 @@ public class ProductUserController {
 
                     if (currentUser.getId() == OwnerId || currentUser.getRole().getName().contentEquals("ADMIN")) {
                         this.productUserService.delete(commentId);
-                        map.put("message","Comment deleted successfully!");
+                        map.put("message","Komentarz został usunięty");
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     } else {
-                        map.put("message","You don't have permission to delete this comment!");
+                        map.put("message","Nie masz uprawnień by usunąć ten komentarz");
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     }
                 } else {
-                    map.put("message","Comment does not exist!");
+                    map.put("message","Komentarz nie istnieje");
                     return new ResponseEntity<Map<String,Object>>(map, HttpStatus.NOT_FOUND);
                 }
             }
@@ -155,13 +155,13 @@ public class ProductUserController {
         map.put("token",token);
 
         int rating = 0;
-//        System.out.println(prodUser.getRating());
+
         String comment = prodUser.getComment();
         if(prodUser.getRating() == 1 || prodUser.getRating() == 2 || prodUser.getRating() == 3 || prodUser.getRating() == 4 || prodUser.getRating() == 5 || prodUser.getRating() == 6){
             rating = prodUser.getRating();
-//            System.out.println(rating);
+
         }else{
-            map.put("message","Rating has to be greater than 0 and equal or less than 6!");
+            map.put("message","Ocena musi być wieksza od 0 i mniejsza bądź równa 6");
             map.put("comment","empty");
             return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
         }
@@ -170,12 +170,12 @@ public class ProductUserController {
 
         if(this.productService.getProductsById(id)!=null && pu!=null){
 
-            map.put("message","Edited successfully!");
+            map.put("message","Komentarz został pomyślnie edytowany");
             map.put("comment",pu);
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
         }
         else{
-            map.put("message","Comment does not exist or you don't have permission!");
+            map.put("message","Komentarz nie istnieje albo nie masz uprawnień do jego edycji");
             map.put("comment","empty");
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }

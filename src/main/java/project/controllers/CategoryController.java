@@ -41,11 +41,11 @@ public class CategoryController {
 
         Category category1 =this.categoryService.addCategory(category);
         if(category1!=null) {
-            map.put("message","Category added successfully!");
+            map.put("message","Kategoria została pomyślnie dodana");
             map.put("category",category1);
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.CREATED);
         }else{
-            map.put("message","Failed to add category!");
+            map.put("message","Nie udało się wprowadzić kategorii");
             map.put("category","empty");
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
@@ -62,10 +62,10 @@ public class CategoryController {
 
         if(this.categoryService.getCategory(id)!=null){
             this.categoryService.deleteCategory(id);
-            map.put("message","Category has been deleted");
+            map.put("message","Kategoria została pomyślnie usunięta");
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
         }else{
-            map.put("message","Category does not exist");
+            map.put("message","Kategoria nie istnieje");
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }
 
@@ -106,8 +106,6 @@ public class CategoryController {
         }else{
             map.put("listOfCategories","empty");
         }
-
-
 
         return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
 

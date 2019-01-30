@@ -63,14 +63,14 @@ public class ServUserController {
         Serv s = this.servService.getServicesById(id);
 
             if(s==null){
-                map.put("message","Service does not exist!");
+                map.put("message","Usługa nie istnieje");
 
                 return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
             }else {
 
                 if (this.servUserService.checkIfExists(id, currentUser.getId())) {
 
-                    map.put("message","Your comment already exists!");
+                    map.put("message","Twój komentarz już istnieje");
                     return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
 
                 } else {
@@ -82,7 +82,7 @@ public class ServUserController {
                         if (rating == 1 || rating == 2 || rating == 3 || rating == 4 || rating == 5 || rating == 6) {
                             servUser.setRating(rating);
                         }else{
-                            map.put("message","Rating has to be greater than 0 and equal or less than 6!");
+                            map.put("message","Ocena musi być wieksza od 0 i mniejsza bądź równa 6");
                             map.put("comment","empty");
                             return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
                         }
@@ -93,7 +93,7 @@ public class ServUserController {
                     servUser.setUserS(currentUser);
                     ServUser serviceUser1 = this.servUserService.add(servUser);
 
-                    map.put("message","Comment added successfully!");
+                    map.put("message","Komentarz został pomyślnie dodany");
                     map.put("comment",serviceUser1);
                     return new ResponseEntity<Map<String,Object>>(map, HttpStatus.CREATED);
                 }
@@ -119,7 +119,7 @@ public class ServUserController {
         User currentUser=userRepository.findOneByName(userDetails.getUsername());
 
             if (this.servService.getServicesById(id) == null) {
-                map.put("message","Service does not exist!");
+                map.put("message","Usługa nie istnieje");
                 return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
             } else {
                 if (this.servUserService.checkIfExists(commentId)) {
@@ -130,14 +130,14 @@ public class ServUserController {
                     if (currentUser.getId() == OwnerId || currentUser.getRole().getName().contentEquals("ADMIN")) {
                         this.servUserService.delete(commentId);
 
-                        map.put("message","Comment deleted successfully!");
+                        map.put("message","Komentarz został usunięty");
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     } else {
-                        map.put("message","You don't have permission to delete this comment!");
+                        map.put("message","Nie masz uprawnień by usunąć ten komentarz");
                         return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
                     }
                 } else {
-                    map.put("message","Comment does not exist!");
+                    map.put("message","Komentarz nie istnieje");
                     return new ResponseEntity<Map<String,Object>>(map, HttpStatus.NOT_FOUND);
                 }
             }
@@ -165,22 +165,21 @@ public class ServUserController {
             rating = serviceUser.getRating();
 //            System.out.println(rating);
         }else{
-            map.put("message","Rating has to be greater than 0 and equal or less than 6!");
+            map.put("message","Ocena musi być wieksza od 0 i mniejsza bądź równa 6");
             map.put("comment","empty");
             return new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
         }
 
         ServUser su = this.servUserService.editComment(comment,rating,commentId);
 
-        //TODO dokonczyc
         if(this.servService.getServicesById(id)!=null && su!=null){
 
-            map.put("message","Edited successfully!");
+            map.put("message","Komentarz został pomyślnie edytowany");
             map.put("comment",su);
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
         }
         else{
-            map.put("message","Comment does not exist or you don't have permission!");
+            map.put("message","Komentarz nie istnieje albo nie masz uprawnień do jego edycji");
             map.put("comment","empty");
             return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST);
         }

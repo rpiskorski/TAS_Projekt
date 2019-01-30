@@ -83,7 +83,6 @@ public class ServServiceImpl implements ServService {
 
         }
 
-        //System.out.println(Q);
         Query q = entityManager.createNativeQuery(Q,Serv.class);
         for(int i=0;i<4;i++){
             if(stringTable[i]!=null && i==0){
@@ -139,11 +138,6 @@ public class ServServiceImpl implements ServService {
     }
 
     @Override
-    public int getNumberOfServices(){
-        return this.serviceRepository.getNumberOfServices();
-    }
-
-    @Override
     public int getNumberOfPages(int numberOfServices){
 
         int numberOfPages = 0;
@@ -156,77 +150,12 @@ public class ServServiceImpl implements ServService {
         return numberOfPages;
     }
 
-    @Override
-    public int getNumberOfServicesInCategory(int cat_id){
-        return this.serviceRepository.getNumberOfSerivcesInCategory(cat_id);
-    }
-
-
-
-    @Override
-    public List<Serv> getAllServices(Pageable pageable) {
-        return this.serviceRepository.findAllServices(pageable);
-    }
 
     @Override
     public Serv getServicesById(int id){
         return this.serviceRepository.findById(id);
     }
 
-    @Override
-    public List<Serv> getServicesByName(String name,Pageable pageable){
-        return this.serviceRepository.findByName(name,pageable);
-    }
-
-    @Override
-    public int getNumberOfServicesWithName(String name){
-        return this.serviceRepository.getNumberOfServicesWithName(name);
-    }
-
-
-    @Override
-    public List<Serv> getAllServicesInCategory(int cat_id,Pageable pageable){
-        return this.serviceRepository.findByCat(cat_id,pageable);
-    }
-
-
-    @Override
-    public List<Serv> getServicesOrderByNameInCategoryAsc(int cat_id,Pageable pageable){
-        return this.serviceRepository.findByCatOrderedByNameAsc(cat_id,pageable);
-    }
-    @Override
-    public List<Serv> getServicesOrderByNameInCategoryDesc(int cat_id,Pageable pageable){
-        return this.serviceRepository.findByCatOrderedByNameDesc(cat_id,pageable);
-    }
-    @Override
-    public List<Serv> getServicesOrderByRaitingInCategoryAsc(int cat_id,Pageable pageable){
-        return this.serviceRepository.findByCatOrderedByRaitingAsc(cat_id,pageable);
-    }
-    @Override
-    public List<Serv> getServicesOrderByRaitingInCategoryDesc(int cat_id,Pageable pageable){
-        return this.serviceRepository.findByCatOrderedByRaitingDesc(cat_id,pageable);
-    }
-
-    @Override
-    public List<Serv> getServicesOrderByNameAsc(Pageable pageable) {
-        return this.serviceRepository.findServiceOrderByNameAsc(pageable);
-    }
-
-    @Override
-    public List<Serv> getServicesOrderByNameDesc(Pageable pageable) {
-        return this.serviceRepository.findServiceOrderByNameDesc(pageable);
-    }
-
-    @Override
-    public List<Serv> getServicesOrderByRaitingAsc(Pageable pageable){
-
-        return this.serviceRepository.findServiceOrderByRaitingAsc(pageable);
-    }
-
-    @Override
-    public List<Serv> getServicesOrderByRaitingDesc(Pageable pageable){
-        return this.serviceRepository.findServiceOrderByRaitingDesc(pageable);
-    }
 
     @Override
     public Serv addService(Serv service) {

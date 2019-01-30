@@ -13,7 +13,6 @@ import java.util.TimeZone;
 
 @Entity
 @Table(name="ProductUser")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class ProductUser implements Serializable {
 
     @Id
@@ -32,13 +31,13 @@ public class ProductUser implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="product_id" ,nullable = false)
-//    @JsonIgnore
+
     @JsonIgnoreProperties({"name","manufacturer_name","raiting","num","cat"})
     private Product product;
 
     @ManyToOne
     @JoinColumn(name="user_id" ,nullable = false)
- //   @JsonIgnore
+
     @JsonIgnoreProperties({"id","password","enabled","role","usersP","usersS"})
     private User userP;
 
