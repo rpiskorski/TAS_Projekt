@@ -61,7 +61,7 @@ public class AuthenticationController {
 
             token = this.tokenHelper.generateToken(userFromDatabase.get());
             map.put("token",token);
-            //map.put("message","Jesteś zalogowany jako "+loginForm.getName());
+            map.put("message","Jesteś zalogowany jako "+loginForm.getName());
             httpServletResponse.setStatus(200);
             return map;
         }

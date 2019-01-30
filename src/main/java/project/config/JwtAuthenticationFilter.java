@@ -47,24 +47,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 logger.error("an error occured during getting username from token", e);
             } catch (ExpiredJwtException e) {
                 request.setAttribute("token","token is expired");
-                //filterChain.doFilter(request,response);
                 logger.warn("the token is expired and not valid anymore", e);
             } catch(SignatureException e){
                 request.setAttribute("token","token is invalid");
                 logger.error("Authentication Failed. Username or Password not valid.");
             }
 
-//            if(this.tokenHelper.isTokenExpired(tokenAuth)){
-//                httpServletRequest.setAttribute("token","token is expired");
-//                filterChain.doFilter(httpServletRequest,httpServletResponse);
-//            }else{
-//                try {
-//                    name = tokenHelper.getUsernameFromToken(tokenAuth);
-//                }catch (IllegalArgumentException e) {
-//                logger.error("an error occured during getting username from token", e);
-//                }catch(SignatureException e){
-//                logger.error("Authentication Failed. Username or Password not valid.");
-//            }}
         }else{
             logger.warn("Couldn't find Bearer String");
         }
@@ -76,7 +64,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails,SecurityContextHolder.getContext().getAuthentication(),userDetails.getAuthorities());
                 String token = this.tokenHelper.refreshToken(tokenAuth);
 
-//                httpServletRequest.setAttribute("token",token);
                 request.setAttribute("token",token);
 
                 SecurityContextHolder.getContext().setAuthentication(auth);
@@ -85,7 +72,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
 
-//        filterChain.doFilter(httpServletRequest,httpServletResponse);
+
         filterChain.doFilter(request,response);
 
     }

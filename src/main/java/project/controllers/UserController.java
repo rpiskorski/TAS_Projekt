@@ -58,56 +58,53 @@ public class UserController {
         Object token = request.getAttribute("token");
         map.put("token",token);
 
-        if(!user.getName().matches("^[a-zA-Z]{3,}[0-9]+") || !user.getPassword().matches("^[a-zA-Z]{3,}[0-9]+")){
+        Optional<User> users = this.userService.getUsersByName(user.getName());
+        if(users.isPresent()){
 
+            map.put("message","Wprowadzony użytkownik już istnieje");
+            httpServletResponse.setStatus(462);
+            return map;
+
+        }
+        else if(user.getName().length()<5 || user.getName().length()>15 || user.getPassword().length()<5 || user.getPassword().length()>10){
+
+            map.put("message","Niepoprawna długość loginu lub hasła");
+
+            httpServletResponse.setStatus(461);
+            return map;}
+        else if(!user.getName().matches("^[a-zA-Z]{3,}[0-9]+") || !user.getPassword().matches("^[a-zA-Z]{3,}[0-9]+")){
             map.put("message","Niepoprawne login lub hasło");
             httpServletResponse.setStatus(460);
             return map;
         }
 
-        if(user.getName().length()<5 || user.getName().length()>15 || user.getPassword().length()<5 || user.getPassword().length()>10){
-            map.put("message","Niepoprawna długość loginu lub hasła");
-
-            httpServletResponse.setStatus(461);
-            return map;
-
-        }
-
-
-       Optional<User> users = this.userService.getUsersByName(user.getName());
-        if(!users.isPresent()){
-            User registerUser = new User();
-
-            //Set name
-            registerUser.setName(user.getName());
-
-            //set enabled
-            registerUser.setEnabled(true);
-
-            //Set Role
-            Role role = this.roleService.getRoleByName("USER");
-            registerUser.setRole(role);
-
-            //Set Password
-            String pass= this.bCryptPasswordEncoder.encode(user.getPassword());
-            registerUser.setPassword(pass);
-
-            this.userService.addUser(registerUser);
-            //map.put("message","Zostałeś pomyślnie zarejestrowany");
-            httpServletResponse.setStatus(201);
-            return map;
-
-        }
         else{
-            map.put("message","Wprowadzony użytkownik już istnieje");
-            httpServletResponse.setStatus(462);
-            return map;
+                User registerUser = new User();
 
+                //Set name
+                registerUser.setName(user.getName());
 
+                //set enabled
+                registerUser.setEnabled(true);
+
+                //Set Role
+                Role role = this.roleService.getRoleByName("USER");
+                registerUser.setRole(role);
+
+                //Set Password
+                String pass = this.bCryptPasswordEncoder.encode(user.getPassword());
+                registerUser.setPassword(pass);
+
+                this.userService.addUser(registerUser);
+                map.put("message", "Zostałeś pomyślnie zarejestrowany");
+                httpServletResponse.setStatus(201);
+                return map;
         }
 
 
     }
+
+
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @RequestMapping(value = "/users/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)

@@ -39,7 +39,7 @@ public class User implements Serializable {
     private List<ProductUser> usersP;
 
 
-    @OneToMany(mappedBy = "userS")
+    @OneToMany(mappedBy = "userS",orphanRemoval = true, cascade = CascadeType.PERSIST)
 //    @JsonIgnore
     private List<ServUser> usersS;
 
